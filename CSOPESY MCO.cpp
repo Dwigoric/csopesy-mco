@@ -85,4 +85,6 @@ void clear() {
 #elif defined (__APPLE__)
 	system("clear");
 #endif
+
+	printHeader();
 }
