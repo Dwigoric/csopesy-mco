@@ -6,7 +6,7 @@
 int main() {
 	printHeader();
 
-	std:bool terminate = false;
+	bool terminate = false;
 	std::string command;
 
 	do {
