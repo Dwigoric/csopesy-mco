@@ -12,7 +12,7 @@ endif()
 project ("CSOPESY MCO")
 
 # Add source to this project's executable.
-add_executable (CMakeTarget "CSOPESY MCO.cpp" "CSOPESY MCO.h" "console/ConsoleManager.cpp"   "console/AConsole.h" "console/ConsoleManager.h" )
+add_executable (CMakeTarget  "console/ConsoleManager.cpp"   "console/AConsole.h" "console/ConsoleManager.h"   "console/BaseScreen.h" "process/Process.h"   "CSOPESY MCO.cpp" "CSOPESY MCO.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)

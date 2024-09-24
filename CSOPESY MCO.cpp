@@ -4,6 +4,8 @@
 #include "CSOPESY MCO.h"
 
 int main() {
+	ConsoleManager::initialize();
+
 	printHeader();
 
 	bool terminate = false;
@@ -32,6 +34,8 @@ int main() {
 			std::cout << "report-util - display the report utility" << std::endl;
 		}
 	} while (!terminate);
+
+	ConsoleManager::destroy();
 
 	return 0;
 }

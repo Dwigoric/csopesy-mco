@@ -1,13 +1,17 @@
+// ConsoleManager.h : Headers for ConsoleManager class.
+
+#include <iostream>
 #include <memory>
 #include <unordered_map>
 
 #include <Windows.h>
 
 #include "AConsole.h"
+#include "BaseScreen.h"
 
 class ConsoleManager {
 public:
-	typedef std::unordered_map<std::string, std::shared_ptr<AConsole>> ConsoleTable;
+	typedef std::unordered_map<std::string, std::shared_ptr<BaseScreen>> ConsoleTable;
 
 	static ConsoleManager* getInstance();
 	static void initialize();
@@ -15,9 +19,9 @@ public:
 
 	void drawConsole() const;
 	void process() const;
-	void switchConsole() const;
+	// void switchConsole() const;
 
-	void registerScreen(std::shared_ptr<AConsole> screenRef);
+	void registerScreen(std::shared_ptr<BaseScreen> screenRef);
 	void switchToScreen(std::string name);
 	void unregisterScreen(std::string name);
 
@@ -25,9 +29,9 @@ public:
 	void exitApplication();
 	bool isRunning() const;
 
-	HANDLE getConsoleHandle() const;
+	// HANDLE getConsoleHandle() const;
 
-	void setCursorPosition(int posX, int posY) const;
+	// void setCursorPosition(int posX, int posY) const;
 
 private:
 	ConsoleManager();
@@ -41,6 +45,8 @@ private:
 	std::shared_ptr<AConsole> currentConsole;
 	std::shared_ptr<AConsole> previousConsole;
 
-	HANDLE consoleHandle;
+	// HANDLE consoleHandle;
 	bool running = true;
+
+	void clearScreen() const;
 };

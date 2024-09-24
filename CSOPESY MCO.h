@@ -5,6 +5,8 @@
 
 #include <iostream>
 
+#include "console/ConsoleManager.h"
+
 // Printer functions
 void printHeader();
 void printCommandPrefix();
