@@ -17,7 +17,7 @@ void MainConsole::process()
 
 	printCommandPrefix();
 
-	std::cin >> command;
+	std::getline(std::cin, command);
 
 	if (command == "exit") ConsoleManager::getInstance()->exitApplication();
 	else if (command == "clear") clear();
