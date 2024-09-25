@@ -27,8 +27,7 @@ void ConsoleManager::destroy()
 void ConsoleManager::drawConsole() const
 {
 	if (this->currentConsole == nullptr) {
-		std::cerr << "Attempted to draw current console, but current console is null"
-			<< std::endl;
+		std::cerr << "Attempted to draw current console, but current console is null\n";
 
 		return;
 	}
@@ -40,8 +39,7 @@ void ConsoleManager::drawConsole() const
 void ConsoleManager::process() const
 {
 	if (this->currentConsole == nullptr) {
-		std::cerr << "Attempted to process current console, but current console is null"
-			<< std::endl;
+		std::cerr << "Attempted to process current console, but current console is null\n";
 
 		return;
 	}
@@ -68,8 +66,7 @@ void ConsoleManager::switchToScreen(std::string name)
 	if (!consoleTable.contains(name)) {
 		std::cerr << "Error: Attempted to switch to screen "
 			<< name
-			<< ", but no screen with that name was found"
-			<< std::endl;
+			<< ", but no screen with that name was found\n";
 
 		return;	
 	}
@@ -90,8 +87,7 @@ void ConsoleManager::unregisterScreen(std::string name)
 	if (!consoleTable.contains(name)) {
 		std::cerr << "Error: Attempted to unregister screen "
 			<< name
-			<< ", but no screen with that name was found"
-			<< std::endl;
+			<< ", but no screen with that name was found\n";
 
 		return;
 	}
@@ -103,8 +99,7 @@ void ConsoleManager::unregisterScreen(std::string name)
 void ConsoleManager::returnToPreviousConsole()
 {
 	if (this->previousConsole == nullptr) {
-		std::cerr << "Error: Attempted to return to previous console, but previous console was null"
-			<< std::endl;
+		std::cerr << "Error: Attempted to return to previous console, but previous console was null\n";
 
 		return;
 	}
