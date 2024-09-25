@@ -10,8 +10,8 @@ public:
 
 private:
 	// Printer functions
-	void printHeader();
-	void printCommandPrefix();
+	static void printHeader();
+	static void printCommandPrefix();
 
 	// Command functions
 	void clear();

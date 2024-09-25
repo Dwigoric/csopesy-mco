@@ -2,6 +2,7 @@
 //						between screens.
 
 #include "ConsoleManager.h"
+#include "MainConsole.h"
 
 ConsoleManager* ConsoleManager::sharedInstance = nullptr;
 
@@ -142,6 +143,12 @@ ConsoleManager::ConsoleManager()
 
 	this->currentConsole = nullptr;
 	this->previousConsole = nullptr;
+
+	const std::shared_ptr<MainConsole> mainConsole = std::make_shared<MainConsole>();
+
+	this->consoleTable[MAIN_CONSOLE] = mainConsole;
+
+	this->switchToScreen(MAIN_CONSOLE); 
 }
 
 // clearScreen() : Platform-wide utility function for clearing screens

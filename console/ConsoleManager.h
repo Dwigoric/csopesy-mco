@@ -9,6 +9,8 @@
 #include "AConsole.h"
 #include "BaseScreen.h"
 
+const std::string MAIN_CONSOLE = "MAIN_CONSOLE";
+
 class ConsoleManager {
 public:
 	typedef std::unordered_map<std::string, std::shared_ptr<AConsole>> ConsoleTable;
