@@ -35,6 +35,8 @@ public:
 
 	// void setCursorPosition(int posX, int posY) const;
 
+	void clearScreen() const;
+
 private:
 	ConsoleManager();
 	~ConsoleManager() = default;
@@ -49,6 +51,4 @@ private:
 
 	// HANDLE consoleHandle;
 	bool running = true;
-
-	void clearScreen() const;
 };
