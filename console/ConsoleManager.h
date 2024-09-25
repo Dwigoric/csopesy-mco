@@ -11,7 +11,7 @@
 
 class ConsoleManager {
 public:
-	typedef std::unordered_map<std::string, std::shared_ptr<BaseScreen>> ConsoleTable;
+	typedef std::unordered_map<std::string, std::shared_ptr<AConsole>> ConsoleTable;
 
 	static ConsoleManager* getInstance();
 	static void initialize();
