@@ -13,12 +13,14 @@ public:
     Process(int id, std::string name);
     ~Process() = default;
     std::string getName();
+    std::string getCore();
     int getCurrentInstructionLine() const;
     int getMaxInstructionLine() const;
 
 private:
     int id;
     std::string name;
+    std::string core = "N/A";
     int currentInstructionLine = 0;
     int maxInstructionLine = 50;
 };

@@ -13,6 +13,10 @@ std::string Process::getName() {
     return this->name;
 }
 
+std::string Process::getCore() {
+    return this->core;
+}
+
 int Process::getCurrentInstructionLine() const {
     return this->currentInstructionLine;
 }
