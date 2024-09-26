@@ -8,6 +8,8 @@ int main() {
 
 	bool terminate = false;
 
+
+
 	do {
 		ConsoleManager::getInstance()->process();
 		ConsoleManager::getInstance()->drawConsole();
