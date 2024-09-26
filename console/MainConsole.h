@@ -1,6 +1,11 @@
 #pragma once
 
 #include "AConsole.h"
+#include "../process/Process.h"
+#include <vector>
+
+constexpr int DUMMY_PROCESS_COUNT = 50;
+
 
 class MainConsole : public AConsole {
 public:
@@ -20,4 +25,7 @@ private:
 	void scheduler_test();
 	void scheduler_stop();
 	void report_util();
+	void display_processes();
+
+	std::vector<Process> processes;
 };

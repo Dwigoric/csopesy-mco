@@ -1,8 +1,14 @@
 #include "MainConsole.h"
 #include "ConsoleManager.h"
+#include "../process/Process.h"
 
 void MainConsole::onEnabled() 
 {
+	// Practice: Set 50 dummy processes
+	for (int i = 0; i < DUMMY_PROCESS_COUNT; i++) {
+		processes.push_back(Process(i, "process_" + std::to_string(i)));
+	}
+
 	printHeader();
 }
 
@@ -26,6 +32,7 @@ void MainConsole::process()
 	else if (command == "scheduler-test") scheduler_test();
 	else if (command == "scheduler-stop") scheduler_stop();
 	else if (command == "report-util") report_util();
+	else if (command == "screen -ls") display_processes();
 	else {
 		std::cout << "Commands list:\n";
 		std::cout << "exit - exit the program\n";
@@ -57,6 +64,13 @@ void MainConsole::scheduler_stop() {
 
 void MainConsole::report_util() {
 	std::cout << "`report-util` command recognized. Doing something.\n";
+}
+
+void MainConsole::display_processes() {
+	for (Process& process: processes) {
+		std::cout << "Name: " << process.getName() << " | Core: " << process.getCore() << " | " <<
+			process.getCurrentInstructionLine() << " / " << process.getMaxInstructionLine() << " |\n";
+	}
 }
 
 // Basic display functions
