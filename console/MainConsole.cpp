@@ -9,7 +9,7 @@ void MainConsole::onEnabled()
 {
 	// Practice: Set 50 dummy processes
 	for (int i = 0; i < DUMMY_PROCESS_COUNT; i++) {
-		processes.push_back(Process(i, "process_" + std::to_string(i)));
+		processes.emplace_back(i, "process_" + std::to_string(i));
 	}
 
 	printHeader();
@@ -39,7 +39,7 @@ void MainConsole::process()
 	else if (command == "scheduler-stop") scheduler_stop();
 	else if (command == "report-util") report_util();
 	else if (command == "screen") {
-		ScreenCommand::execute(commandParameters);
+		ScreenCommand::execute(commandParameters, processes);
 	}
 	else {
 		std::cout << "Commands list:\n";
