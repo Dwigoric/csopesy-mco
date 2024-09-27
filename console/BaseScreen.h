@@ -11,15 +11,18 @@
 
 class BaseScreen : public AConsole {
 public:
-	BaseScreen(std::shared_ptr<Process> process, std::string processName);
+	BaseScreen(const std::shared_ptr<Process>& process, const std::string& processName);
 		
 	void onEnabled() override;
 	void display() override;
 	void process() override;
 
-	void printProcessInfo() const;
+	static void printProcessInfo();
 	std::shared_ptr<Process> attachedProcess;
 	bool refreshed = false;
+
+private:
+	void printCommandPrefix();
 };
 
 #endif //BASESCREEN_H

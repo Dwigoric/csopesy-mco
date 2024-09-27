@@ -28,6 +28,7 @@ add_executable (CMakeTarget
         commands/ScreenCommand.cpp
         commands/ScreenCommand.h
         commands/ACommand.h
+        console/BaseScreen.cpp
 )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
