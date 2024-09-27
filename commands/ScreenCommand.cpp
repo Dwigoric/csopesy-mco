@@ -13,7 +13,8 @@ void ScreenCommand::execute(std::vector<std::string> parameters, std::vector<Pro
     else {
         if (parameters[0] == "-ls") {
             // TODO: Get list of processes
-            displayProcesses(processes);
+            std::cout << "`screen -ls` command recognized. Doing something.\n";
+            //displayProcesses(processes);
         }
         else if (parameters[0] == "-r") {
             if (parameters.size() == 1) {
@@ -43,9 +44,12 @@ void ScreenCommand::execute(std::vector<std::string> parameters, std::vector<Pro
     }
 }
 
+/*
 void ScreenCommand::displayProcesses(std::vector<Process>& processes) {
+    std::cout << "Process count: " << processes.size() << "\n";
     for (Process& process: processes) {
         std::cout << "Name: " << process.getName() << " | Core: " << process.getCore() << " | " <<
             process.getCurrentInstructionLine() << " / " << process.getMaxInstructionLine() << " |\n";
     }
 }
+*/
