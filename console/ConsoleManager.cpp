@@ -55,9 +55,22 @@ void ConsoleManager::process() const
 
 // registerScreen() : Add a BaseScreen to the Console manager's list of registered screens
 //					  to display.
-void ConsoleManager::registerScreen(const std::shared_ptr<BaseScreen>& screenRef)
+// 
+bool ConsoleManager::registerScreen(const std::shared_ptr<BaseScreen>& screenRef)
 {
-	this->consoleTable.insert(std::make_pair(screenRef->getName(), screenRef));
+	std::string name = screenRef->getName();
+
+	if (consoleTable.contains(name)) {
+		std::cerr << "Error: Attempted to create screen with name "
+			<< name
+			<< ", but a screen with that name already exists\n";
+
+		return false;
+	}
+
+	this->consoleTable.insert(std::make_pair(name, screenRef));
+
+	return true;
 }
 
 // switchToScreen() : Switch the current screen to another registered screen defined by the

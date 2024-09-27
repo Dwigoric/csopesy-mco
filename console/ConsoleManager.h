@@ -23,7 +23,7 @@ public:
 	void process() const;
 	// void switchConsole() const;
 
-	void registerScreen(const std::shared_ptr<BaseScreen>& screenRef);
+	bool registerScreen(const std::shared_ptr<BaseScreen>& screenRef);
 	void switchToScreen(const std::string& name);
 	void unregisterScreen(const std::string& name);
 

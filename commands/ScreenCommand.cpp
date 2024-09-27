@@ -30,8 +30,11 @@ void ScreenCommand::execute(std::vector<std::string> parameters, std::vector<Pro
             else {
                 std::shared_ptr<Process> someProcess = std::make_shared<Process>(123123, parameters[1]);
                 std::shared_ptr<BaseScreen> newScreen = std::make_shared<BaseScreen>(someProcess, parameters[1]);
-                ConsoleManager::getInstance()->registerScreen(newScreen);
-                ConsoleManager::getInstance()->switchToScreen(parameters[1]);
+                if (ConsoleManager::getInstance()->registerScreen(newScreen)) {
+                    // only switch screens if the registration was successful
+                    ConsoleManager::getInstance()->switchToScreen(parameters[1]);
+                }
+                
             }
         }
         else {
