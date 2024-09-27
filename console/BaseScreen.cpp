@@ -5,9 +5,12 @@
 #include "../console/ConsoleManager.h"
 
 BaseScreen::BaseScreen(const std::shared_ptr<Process>& process, const std::string& processName) {
+    this->attachedProcess = process;
+    this->name = processName;
 }
 
 void BaseScreen::onEnabled() {
+    
 }
 
 void BaseScreen::display() {
@@ -40,5 +43,5 @@ void BaseScreen::printProcessInfo() {
 }
 
 void BaseScreen::printCommandPrefix() {
-    // TODO: Implement this function
+    std::cout << "user@CSOPESY:~$ ";
 }
