@@ -10,7 +10,11 @@ BaseScreen::BaseScreen(const std::shared_ptr<Process>& process, const std::strin
 }
 
 void BaseScreen::onEnabled() {
-    
+    std::cout << "Process: " << attachedProcess->getName() << "\n";
+    std::cout << "ID: " << attachedProcess->getId() << "\n\n";
+    std::cout << "Current instruction line: " << attachedProcess->getCurrentInstructionLine() << "\n";
+    std::cout << "Lines of code: " << attachedProcess->getMaxInstructionLine() << "\n";
+    std::cout << "Time created: " << attachedProcess->getTimeCreated() << "\n";
 }
 
 void BaseScreen::display() {

@@ -5,7 +5,7 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 #include <string>
-
+#include <chrono>
 
 class Process {
 
@@ -16,6 +16,8 @@ public:
     std::string getCore();
     int getCurrentInstructionLine() const;
     int getMaxInstructionLine() const;
+    int getId() const;
+    std::chrono::system_clock::time_point getTimeCreated() const;
 
 private:
     int id;
@@ -23,6 +25,7 @@ private:
     std::string core = "N/A";
     int currentInstructionLine = 0;
     int maxInstructionLine = 50;
+    std::chrono::system_clock::time_point timeCreated;
 };
 
 

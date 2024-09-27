@@ -7,6 +7,7 @@
 Process::Process(int id, std::string name) {
     this->id = id;
     this->name = name;
+    this->timeCreated = std::chrono::system_clock::now();
 }
 
 std::string Process::getName() {
@@ -23,4 +24,12 @@ int Process::getCurrentInstructionLine() const {
 
 int Process::getMaxInstructionLine() const {
     return this->maxInstructionLine;
+}
+
+int Process::getId() const {
+    return this->id;
+}
+
+std::chrono::system_clock::time_point Process::getTimeCreated() const {
+    return this->timeCreated;
 }
