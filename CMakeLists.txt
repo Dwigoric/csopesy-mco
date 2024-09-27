@@ -22,7 +22,9 @@ add_executable (CMakeTarget
         "CSOPESY MCO.h"
 "CSOPESY MCO.cpp"
         process/Process.cpp
-        process/Process.h)
+        process/Process.h
+        util/string-tokenizer.cpp
+        util/string-tokenizer.h)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)
