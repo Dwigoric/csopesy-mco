@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MAINCONSOLE_H
+#define MAINCONSOLE_H
 
 #include "AConsole.h"
 #include "../process/Process.h"
@@ -29,3 +30,5 @@ private:
 
 	std::vector<Process> processes;
 };
+
+#endif //MAINCONSOLE_H

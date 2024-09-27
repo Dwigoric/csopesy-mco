@@ -1,6 +1,7 @@
 // AConsole.h : Abstract class describing generic console interfaces.
+#ifndef ACONSOLE_H
+#define ACONSOLE_H
 
-#pragma once
 #include <string>
 
 class AConsole {
@@ -25,3 +26,5 @@ public:
 	std::string name;
 	friend class ConsoleManager;
 };
+
+#endif //ACONSOLE_H

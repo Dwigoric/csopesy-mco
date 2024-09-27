@@ -1,6 +1,7 @@
 // BaseScreen.h : Headers for BaseScreen class.
+#ifndef BASESCREEN_H
+#define BASESCREEN_H
 
-#pragma once
 #include <memory>
 #include <string>
 #include <iostream>
@@ -20,3 +21,5 @@ public:
 	std::shared_ptr<Process> attachedProcess;
 	bool refreshed = false;
 };
+
+#endif //BASESCREEN_H

@@ -1,4 +1,6 @@
 // ConsoleManager.h : Headers for ConsoleManager class.
+#ifndef CONSOLEMANAGER_H
+#define CONSOLEMANAGER_H
 
 #include <iostream>
 #include <memory>
@@ -50,3 +52,5 @@ private:
 	// HANDLE consoleHandle;
 	bool running = true;
 };
+
+#endif //CONSOLEMANAGER_H
