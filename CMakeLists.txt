@@ -24,7 +24,11 @@ add_executable (CMakeTarget
         process/Process.cpp
         process/Process.h
         util/string-tokenizer.cpp
-        util/string-tokenizer.h)
+        util/string-tokenizer.h
+        commands/ScreenCommand.cpp
+        commands/ScreenCommand.h
+        commands/ACommand.h
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)

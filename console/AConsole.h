@@ -8,7 +8,7 @@ class AConsole {
 public:
 	AConsole() = default;
 	AConsole(std::string name);
-	~AConsole() = default;
+	virtual ~AConsole() = default;
 
 	std::string getName() {
 		return name;

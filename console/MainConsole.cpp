@@ -1,6 +1,9 @@
 #include "MainConsole.h"
 #include "ConsoleManager.h"
 #include "../process/Process.h"
+#include "../util/string-tokenizer.h"
+
+#include "../commands/ScreenCommand.h"
 
 void MainConsole::onEnabled() 
 {
@@ -19,29 +22,34 @@ void MainConsole::display()
 
 void MainConsole::process()
 {
-	std::string command;
+	std::string fullCommand;
 
 	printCommandPrefix();
 
-	std::getline(std::cin, command);
+	std::getline(std::cin, fullCommand);
+
+	const std::vector<std::string> commandTokens = tokenize(fullCommand, "[ ]+");
+	const std::string& command = commandTokens[0];
+	const auto commandParameters = std::vector(commandTokens.begin() + 1, commandTokens.end());
 
 	if (command == "exit") ConsoleManager::getInstance()->exitApplication();
 	else if (command == "clear") clear();
 	else if (command == "initialize") initialize();
-	else if (command == "screen") screen();
 	else if (command == "scheduler-test") scheduler_test();
 	else if (command == "scheduler-stop") scheduler_stop();
 	else if (command == "report-util") report_util();
-	else if (command == "screen -ls") display_processes();
+	else if (command == "screen") {
+		ScreenCommand::execute(commandParameters);
+	}
 	else {
 		std::cout << "Commands list:\n";
 		std::cout << "exit - exit the program\n";
 		std::cout << "clear - clear the screen\n";
 		std::cout << "initialize - initialize the program\n";
-		std::cout << "screen - display the screen\n";
 		std::cout << "scheduler-test - test the scheduler\n";
 		std::cout << "scheduler-stop - stop the scheduler\n";
 		std::cout << "report-util - display the report utility\n";
+		std::cout << "screen - manage screens\n";
 	}
 }
 
@@ -64,13 +72,6 @@ void MainConsole::scheduler_stop() {
 
 void MainConsole::report_util() {
 	std::cout << "`report-util` command recognized. Doing something.\n";
-}
-
-void MainConsole::display_processes() {
-	for (Process& process: processes) {
-		std::cout << "Name: " << process.getName() << " | Core: " << process.getCore() << " | " <<
-			process.getCurrentInstructionLine() << " / " << process.getMaxInstructionLine() << " |\n";
-	}
 }
 
 // Basic display functions

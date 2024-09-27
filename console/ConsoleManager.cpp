@@ -55,14 +55,14 @@ void ConsoleManager::process() const
 
 // registerScreen() : Add a BaseScreen to the Console manager's list of registered screens
 //					  to display.
-void ConsoleManager::registerScreen(std::shared_ptr<BaseScreen> screenRef)
+void ConsoleManager::registerScreen(const std::shared_ptr<BaseScreen>& screenRef)
 {
 	this->consoleTable.insert(std::make_pair(screenRef->getName(), screenRef));
 }
 
 // switchToScreen() : Switch the current screen to another registered screen defined by the
 //					  screen name.
-void ConsoleManager::switchToScreen(std::string name)
+void ConsoleManager::switchToScreen(const std::string& name)
 {
 	if (!consoleTable.contains(name)) {
 		std::cerr << "Error: Attempted to switch to screen "
@@ -83,7 +83,7 @@ void ConsoleManager::switchToScreen(std::string name)
 //						Note: If the screen being removed is currently being displayed, 
 //                      the screen will still be available to display until the screen is
 //						switched out.
-void ConsoleManager::unregisterScreen(std::string name)
+void ConsoleManager::unregisterScreen(const std::string& name)
 {
 	if (!consoleTable.contains(name)) {
 		std::cerr << "Error: Attempted to unregister screen "
