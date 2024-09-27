@@ -28,7 +28,8 @@ void ScreenCommand::execute(std::vector<std::string> parameters, std::vector<Pro
                 std::cout << "screen create: missing argument (screen name). Use `screen -s <screen name>` to create a screen.\n";
             }
             else {
-                // Create a new screen
+                std::shared_ptr<Process> someProcess = std::make_shared<Process>(123123, parameters[1]);
+                std::shared_ptr<BaseScreen> newScreen = std::make_shared<BaseScreen>(someProcess, parameters[1]);
             }
         }
         else {
