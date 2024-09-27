@@ -22,7 +22,7 @@ public:
 	bool refreshed = false;
 
 private:
-	void printCommandPrefix();
+	static void printCommandPrefix();
 };
 
 #endif //BASESCREEN_H

@@ -38,3 +38,7 @@ void BaseScreen::process() {
 void BaseScreen::printProcessInfo() {
     // TODO: Implement this function
 }
+
+void BaseScreen::printCommandPrefix() {
+    // TODO: Implement this function
+}

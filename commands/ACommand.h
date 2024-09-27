@@ -6,7 +6,7 @@
 
 class ACommand {
 public:
-    static void execute(std::vector<std::string> parameters) = 0;
+    static void execute(std::vector<std::string> parameters);
     virtual ~ACommand() = default;
 };
 
