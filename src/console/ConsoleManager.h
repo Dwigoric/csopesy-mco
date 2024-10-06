@@ -2,7 +2,6 @@
 #ifndef CONSOLEMANAGER_H
 #define CONSOLEMANAGER_H
 
-#include <iostream>
 #include <memory>
 #include <unordered_map>
 

@@ -13,22 +13,22 @@ project ("CSOPESY MCO")
 
 # Add source to this project's executable.
 add_executable (CMakeTarget  
-"console/ConsoleManager.h"  
-"console/ConsoleManager.cpp"   
-"console/AConsole.h"
-"console/MainConsole.h"
-"console/MainConsole.cpp"
-"console/BaseScreen.h"
-        "CSOPESY MCO.h"
-"CSOPESY MCO.cpp"
-        process/Process.cpp
-        process/Process.h
-        util/string-tokenizer.cpp
-        util/string-tokenizer.h
-        commands/ScreenCommand.cpp
-        commands/ScreenCommand.h
-        commands/ACommand.h
-        console/BaseScreen.cpp
+"src/console/ConsoleManager.h"
+"src/console/ConsoleManager.cpp"
+"src/console/AConsole.h"
+"src/console/MainConsole.h"
+"src/console/MainConsole.cpp"
+"src/console/BaseScreen.h"
+        "src/main.h"
+"src/main.cpp"
+        src/process/Process.cpp
+        src/process/Process.h
+        src/util/string-tokenizer.cpp
+        src/util/string-tokenizer.h
+        src/commands/ScreenCommand.cpp
+        src/commands/ScreenCommand.h
+        src/commands/ACommand.h
+        src/console/BaseScreen.cpp
 )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)

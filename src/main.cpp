@@ -1,14 +1,9 @@
-﻿// CSOPESY MCO.cpp : Defines the entry point for the application.
-//
-
-#include "CSOPESY MCO.h"
+﻿#include "main.h"
 
 int main() {
 	ConsoleManager::initialize();
 
 	bool terminate = false;
-
-
 
 	do {
 		ConsoleManager::getInstance()->process();
