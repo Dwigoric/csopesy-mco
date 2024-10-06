@@ -4,6 +4,7 @@
 
 #ifndef PROCESS_H
 #define PROCESS_H
+
 #include <string>
 #include <chrono>
 
@@ -27,7 +28,5 @@ private:
     int maxInstructionLine = 50;
     std::chrono::system_clock::time_point timeCreated;
 };
-
-
 
 #endif //PROCESS_H
