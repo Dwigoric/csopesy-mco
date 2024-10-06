@@ -9,15 +9,28 @@
 #include <chrono>
 
 class Process {
-
 public:
+    enum ProcessState {
+        READY,
+        RUNNING,
+        WAITING,
+        FINISHED,
+    };
+
     Process(int id, std::string name);
+
     ~Process() = default;
+
     std::string getName();
+
     std::string getCore();
+
     int getCurrentInstructionLine() const;
+
     int getMaxInstructionLine() const;
+
     int getId() const;
+
     std::chrono::system_clock::time_point getTimeCreated() const;
 
 private:
