@@ -5,6 +5,7 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
+
 #include <string>
 #include <chrono>
 
@@ -17,29 +18,35 @@ public:
         FINISHED,
     };
 
-    Process(int id, std::string name);
+    Process(int id, std::string name, int maxInstructionLine);
 
     ~Process() = default;
+
+    void incrementInstructionLine();
+
+    void setState(ProcessState state);
 
     std::string getName();
 
     std::string getCore();
 
-    int getCurrentInstructionLine() const;
+    [[nodiscard]] int getCurrentInstructionLine() const;
 
-    int getMaxInstructionLine() const;
+    [[nodiscard]] int getMaxInstructionLine() const;
 
-    int getId() const;
+    [[nodiscard]] int getId() const;
 
-    std::chrono::system_clock::time_point getTimeCreated() const;
+    [[nodiscard]] std::chrono::system_clock::time_point getTimeCreated() const;
 
 private:
     int id;
     std::string name;
     std::string core = "N/A";
     int currentInstructionLine = 0;
-    int maxInstructionLine = 50;
+    int maxInstructionLine;
     std::chrono::system_clock::time_point timeCreated;
+    ProcessState state = READY;
 };
+
 
 #endif //PROCESS_H

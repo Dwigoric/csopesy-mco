@@ -4,10 +4,21 @@
 
 #include "Process.h"
 
-Process::Process(int id, std::string name) {
+#include <utility>
+
+Process::Process(int id, std::string name, int maxInstructionLine) {
     this->id = id;
-    this->name = name;
+    this->name = std::move(name);
     this->timeCreated = std::chrono::system_clock::now();
+    this->maxInstructionLine = maxInstructionLine;
+}
+
+void Process::incrementInstructionLine() {
+    this->currentInstructionLine++;
+}
+
+void Process::setState(const ProcessState state) {
+    this->state = state;
 }
 
 std::string Process::getName() {

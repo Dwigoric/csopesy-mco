@@ -31,6 +31,8 @@ add_executable (CMakeTarget
         src/console/BaseScreen.cpp
         src/process/AScheduler.cpp
         src/process/AScheduler.h
+        src/process/FCFSScheduler.cpp
+        src/process/FCFSScheduler.h
 )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
