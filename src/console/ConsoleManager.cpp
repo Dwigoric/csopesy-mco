@@ -4,29 +4,24 @@
 #include "ConsoleManager.h"
 #include "MainConsole.h"
 
-ConsoleManager* ConsoleManager::sharedInstance = nullptr;
+ConsoleManager *ConsoleManager::sharedInstance = nullptr;
 
-ConsoleManager* ConsoleManager::getInstance()
-{
+ConsoleManager *ConsoleManager::getInstance() {
 	return sharedInstance;
 }
 
 // static
-void ConsoleManager::initialize()
-{
+void ConsoleManager::initialize() {
 	sharedInstance = new ConsoleManager();
 }
 
 // static
-void ConsoleManager::destroy()
-{
+void ConsoleManager::destroy() {
 	delete sharedInstance;
-	
 }
 
 // drawConsole() : Call every frame to display the current console screen.
-void ConsoleManager::drawConsole() const
-{
+void ConsoleManager::drawConsole() const {
 	if (this->currentConsole == nullptr) {
 		std::cerr << "Attempted to draw current console, but current console is null\n";
 
@@ -37,8 +32,7 @@ void ConsoleManager::drawConsole() const
 }
 
 // process() : Call every time console logic needs to be processed.
-void ConsoleManager::process() const
-{
+void ConsoleManager::process() const {
 	if (this->currentConsole == nullptr) {
 		std::cerr << "Attempted to process current console, but current console is null\n";
 
@@ -56,14 +50,13 @@ void ConsoleManager::process() const
 // registerScreen() : Add a BaseScreen to the Console manager's list of registered screens
 //					  to display.
 // 
-bool ConsoleManager::registerScreen(const std::shared_ptr<BaseScreen>& screenRef)
-{
+bool ConsoleManager::registerScreen(const std::shared_ptr<BaseScreen> &screenRef) {
 	std::string name = screenRef->getName();
 
 	if (consoleTable.contains(name)) {
 		std::cerr << "Error: Attempted to create screen with name "
-			<< name
-			<< ", but a screen with that name already exists\n";
+				<< name
+				<< ", but a screen with that name already exists\n";
 
 		return false;
 	}
@@ -75,14 +68,13 @@ bool ConsoleManager::registerScreen(const std::shared_ptr<BaseScreen>& screenRef
 
 // switchToScreen() : Switch the current screen to another registered screen defined by the
 //					  screen name.
-void ConsoleManager::switchToScreen(const std::string& name)
-{
+void ConsoleManager::switchToScreen(const std::string &name) {
 	if (!consoleTable.contains(name)) {
 		std::cerr << "Error: Attempted to switch to screen "
-			<< name
-			<< ", but no screen with that name was found\n";
+				<< name
+				<< ", but no screen with that name was found\n";
 
-		return;	
+		return;
 	}
 
 	this->clearScreen();
@@ -96,12 +88,11 @@ void ConsoleManager::switchToScreen(const std::string& name)
 //						Note: If the screen being removed is currently being displayed, 
 //                      the screen will still be available to display until the screen is
 //						switched out.
-void ConsoleManager::unregisterScreen(const std::string& name)
-{
+void ConsoleManager::unregisterScreen(const std::string &name) {
 	if (!consoleTable.contains(name)) {
 		std::cerr << "Error: Attempted to unregister screen "
-			<< name
-			<< ", but no screen with that name was found\n";
+				<< name
+				<< ", but no screen with that name was found\n";
 
 		return;
 	}
@@ -110,8 +101,7 @@ void ConsoleManager::unregisterScreen(const std::string& name)
 }
 
 // returnToPreviousConsole : Switches screen to the previously accessed screen.
-void ConsoleManager::returnToPreviousConsole()
-{
+void ConsoleManager::returnToPreviousConsole() {
 	if (this->previousConsole == nullptr) {
 		std::cerr << "Error: Attempted to return to previous console, but previous console was null\n";
 
@@ -125,13 +115,11 @@ void ConsoleManager::returnToPreviousConsole()
 	this->currentConsole->onEnabled();
 }
 
-void ConsoleManager::exitApplication()
-{
+void ConsoleManager::exitApplication() {
 	this->running = false;
 }
 
-bool ConsoleManager::isRunning() const
-{
+bool ConsoleManager::isRunning() const {
 	return this->running;
 }
 
@@ -149,8 +137,7 @@ void ConsoleManager::setCursorPosition(int posX, int posY) const
 }
 */
 
-ConsoleManager::ConsoleManager()
-{
+ConsoleManager::ConsoleManager() {
 	// TEMP: not using Windows.h console handles yet
 	// consoleHandle = nullptr;
 
@@ -161,7 +148,7 @@ ConsoleManager::ConsoleManager()
 
 	this->consoleTable[MAIN_CONSOLE] = mainConsole;
 
-	this->switchToScreen(MAIN_CONSOLE); 
+	this->switchToScreen(MAIN_CONSOLE);
 }
 
 // clearScreen() : Platform-wide utility function for clearing screens
@@ -175,4 +162,8 @@ void ConsoleManager::clearScreen() const {
 #elif defined (__APPLE__)
 	system("clear");
 #endif
+}
+
+ConsoleManager ConsoleManager::operator=(ConsoleManager const &) {
+	return *this;
 }
