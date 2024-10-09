@@ -5,23 +5,19 @@
 
 #include "../commands/ScreenCommand.h"
 
-void MainConsole::onEnabled() 
-{
+void MainConsole::onEnabled() {
 	// Practice: Set 50 dummy processes
 	for (int i = 0; i < DUMMY_PROCESS_COUNT; i++) {
-		processes.emplace_back(i, "process_" + std::to_string(i));
+		processes.emplace_back(i, "process_" + std::to_string(i), 150);
 	}
 
 	printHeader();
 }
 
-void MainConsole::display()
-{
-
+void MainConsole::display() {
 }
 
-void MainConsole::process()
-{
+void MainConsole::process() {
 	std::string fullCommand;
 
 	printCommandPrefix();
@@ -29,7 +25,7 @@ void MainConsole::process()
 	std::getline(std::cin, fullCommand);
 
 	const std::vector<std::string> commandTokens = tokenize(fullCommand, "[ ]+");
-	const std::string& command = commandTokens[0];
+	const std::string &command = commandTokens[0];
 	const auto commandParameters = std::vector(commandTokens.begin() + 1, commandTokens.end());
 
 	if (command == "exit") ConsoleManager::getInstance()->exitApplication();
@@ -40,8 +36,7 @@ void MainConsole::process()
 	else if (command == "report-util") report_util();
 	else if (command == "screen") {
 		ScreenCommand::execute(commandParameters, processes);
-	}
-	else {
+	} else {
 		std::cout << "Commands list:\n";
 		std::cout << "exit - exit the program\n";
 		std::cout << "clear - clear the screen\n";
