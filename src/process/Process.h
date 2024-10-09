@@ -22,7 +22,7 @@ public:
 
     ~Process() = default;
 
-    void incrementInstructionLine();
+    void executeCurrentInstruction();
 
     void setState(ProcessState state);
 

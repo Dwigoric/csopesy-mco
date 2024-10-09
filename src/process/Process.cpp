@@ -13,7 +13,7 @@ Process::Process(int id, std::string name, int maxInstructionLine) {
     this->maxInstructionLine = maxInstructionLine;
 }
 
-void Process::incrementInstructionLine() {
+void Process::executeCurrentInstruction() {
     this->currentInstructionLine++;
 }
 

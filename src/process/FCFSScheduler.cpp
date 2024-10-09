@@ -25,7 +25,7 @@ void FCFSScheduler::execute() {
         currentProcess.setState(Process::RUNNING);
         while (currentProcess.getCurrentInstructionLine() < currentProcess.getMaxInstructionLine()) {
             // Simulate instruction execution
-            currentProcess.incrementInstructionLine();
+            currentProcess.executeCurrentInstruction();
         }
         currentProcess.setState(Process::FINISHED);
 
