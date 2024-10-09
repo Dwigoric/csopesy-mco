@@ -35,7 +35,8 @@ add_executable (CMakeTarget
         src/process/FCFSScheduler.h
         src/threading/Thread.cpp
         src/threading/Thread.h
-)
+        src/instructions/AInstruction.h
+ "src/instructions/PrintInstruction.h" "src/instructions/PrintInstruction.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)
