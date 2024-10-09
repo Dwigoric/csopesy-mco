@@ -20,6 +20,8 @@ public:
 
     explicit AScheduler(SchedulingAlgorithm algorithm);
 
+    void scheduleProcess(Process process);
+
     void run();
 
     void stop();
