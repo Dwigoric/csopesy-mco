@@ -33,6 +33,8 @@ add_executable (CMakeTarget
         src/process/AScheduler.h
         src/process/FCFSScheduler.cpp
         src/process/FCFSScheduler.h
+        src/threading/Thread.cpp
+        src/threading/Thread.h
 )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
