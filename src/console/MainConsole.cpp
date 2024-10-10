@@ -8,7 +8,7 @@
 void MainConsole::onEnabled() {
 	// Practice: Set 50 dummy processes
 	for (int i = 0; i < DUMMY_PROCESS_COUNT; i++) {
-		processes.emplace_back(i, "process_" + std::to_string(i), 150);
+		processes.emplace_back(i, "process_" + std::to_string(i));
 	}
 
 	printHeader();

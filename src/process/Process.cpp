@@ -6,15 +6,32 @@
 
 #include <utility>
 
-Process::Process(int id, std::string name, int maxInstructionLine) {
+#include "../instructions/PrintInstruction.h"
+
+Process::Process(int id, std::string name) {
     this->id = id;
     this->name = std::move(name);
     this->timeCreated = std::chrono::system_clock::now();
-    this->maxInstructionLine = maxInstructionLine;
+}
+
+void Process::addCommand(AInstruction::InstructionType instructionType) {
+    std::shared_ptr<AInstruction> instruction;
+
+	if (instructionType == AInstruction::PRINT) {
+        std::string toPrint = "This is a sample print.";
+        instruction = std::make_shared<PrintInstruction>(this->id, toPrint);
+	}
+
+    this->instructionList.push_back(instruction);
 }
 
 void Process::executeCurrentInstruction() {
-    this->currentInstructionLine++;
+    this->instructionList[this->currentInstructionLine]->execute();
+    this->currentInstructionLine++; // not sure if needed to put in separate function moveToNextLine()?
+}
+
+bool Process::isFinished() const {
+    return this->currentInstructionLine == this->instructionList.size();
 }
 
 void Process::setState(const ProcessState state) {
@@ -34,7 +51,7 @@ int Process::getCurrentInstructionLine() const {
 }
 
 int Process::getMaxInstructionLine() const {
-    return this->maxInstructionLine;
+    return this->instructionList.size();
 }
 
 int Process::getId() const {

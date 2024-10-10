@@ -9,6 +9,8 @@
 #include <string>
 #include <chrono>
 
+#include "../instructions/AInstruction.h"
+
 class Process {
 public:
     enum ProcessState {
@@ -18,11 +20,15 @@ public:
         FINISHED,
     };
 
-    Process(int id, std::string name, int maxInstructionLine);
+    Process(int id, std::string name);
 
     ~Process() = default;
 
+    void addCommand(AInstruction::InstructionType instructionType);
+
     void executeCurrentInstruction();
+
+    bool isFinished() const;
 
     void setState(ProcessState state);
 
@@ -43,9 +49,9 @@ private:
     std::string name;
     std::string core = "N/A";
     int currentInstructionLine = 0;
-    int maxInstructionLine;
     std::chrono::system_clock::time_point timeCreated;
     ProcessState state = READY;
+    std::vector<std::shared_ptr<AInstruction>> instructionList;
 };
 
 
