@@ -13,6 +13,7 @@ const std::string MAIN_CONSOLE = "MAIN_CONSOLE";
 class ConsoleManager {
 public:
 	typedef std::unordered_map<std::string, std::shared_ptr<AConsole> > ConsoleTable;
+	typedef std::unordered_map<std::string, std::string> ConfigTable;
 
 	static ConsoleManager *getInstance();
 
@@ -44,6 +45,10 @@ public:
 
 	void clearScreen() const;
 
+	void loadConfigs();
+
+	ConfigTable getConfigs();
+
 private:
 	ConsoleManager();
 
@@ -62,6 +67,11 @@ private:
 
 	// HANDLE consoleHandle;
 	bool running = true;
+
+	ConfigTable configs;
+	const ConfigTable defaultConfigs = {
+		std::make_pair<>("num-cpu", "4")
+	};
 };
 
 #endif //CONSOLEMANAGER_H

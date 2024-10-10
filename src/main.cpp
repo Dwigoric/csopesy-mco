@@ -3,6 +3,10 @@
 int main() {
 	ConsoleManager::initialize();
 
+	// TEMP: should only be called on `initialize` command
+	// but called on startup for now
+	ConsoleManager::getInstance()->loadConfigs();
+
 	bool terminate = false;
 
 	do {

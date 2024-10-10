@@ -1,7 +1,7 @@
 #include "PrintInstruction.h"
 #include <iostream>
 
-PrintInstruction::PrintInstruction(int pid, std::string& toPrint, const std::string filename = "") : AInstruction(pid, PRINT) {
+PrintInstruction::PrintInstruction(int pid, std::string& toPrint, const std::string filename) : AInstruction(pid, PRINT) {
 	this->toPrint = toPrint;
 	this->filename = filename;
 }

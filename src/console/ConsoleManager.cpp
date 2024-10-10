@@ -4,6 +4,12 @@
 #include "ConsoleManager.h"
 #include "MainConsole.h"
 
+#include "../util/string-tokenizer.h"
+
+#include <fstream>
+
+typedef std::unordered_map < std::string, std::string > ConfigTable;
+
 ConsoleManager *ConsoleManager::sharedInstance = nullptr;
 
 ConsoleManager *ConsoleManager::getInstance() {
@@ -162,6 +168,37 @@ void ConsoleManager::clearScreen() const {
 #elif defined (__APPLE__)
 	system("clear");
 #endif
+}
+
+void ConsoleManager::loadConfigs()
+{
+	this->configs = {};
+
+	std::ifstream fs("config.txt");
+	std::string line;
+	std::vector<std::string> tokens;
+
+	// get all user-defined configs
+	while (fs.peek() != EOF) {
+		std::getline(fs, line);
+		tokens = tokenize(line);
+
+		this->configs.insert(std::make_pair<>(tokens[0], tokens[1]));
+	}
+
+	// fill up the rest with default configs
+	for (auto it = this->defaultConfigs.begin(); it != this->defaultConfigs.end(); it++) {
+		if (!this->configs.contains(it->first)) {
+			this->configs.insert(std::make_pair<>(it->first, it->second));
+		}
+	}
+
+	fs.close();
+}
+
+ConfigTable ConsoleManager::getConfigs()
+{
+	return configs;
 }
 
 ConsoleManager ConsoleManager::operator=(ConsoleManager const &) {
