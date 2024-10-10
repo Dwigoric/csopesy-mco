@@ -1,5 +1,7 @@
 #include "Thread.h"
 
+#include <thread>
+
 void Thread::start() {
 	std::thread(&Thread::run, this).detach();
 }

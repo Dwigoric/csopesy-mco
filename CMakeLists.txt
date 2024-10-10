@@ -1,26 +1,26 @@
 ﻿# CMakeList.txt : CMake project for CSOPESY MCO, include source and define
 # project specific logic here.
 #
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required(VERSION 3.8)
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
-  cmake_policy(SET CMP0141 NEW)
-  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
-endif()
+    cmake_policy(SET CMP0141 NEW)
+    set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
+endif ()
 
-project ("CSOPESY MCO")
+project("CSOPESY MCO")
 
 # Add source to this project's executable.
-add_executable (CMakeTarget  
-"src/console/ConsoleManager.h"
-"src/console/ConsoleManager.cpp"
-"src/console/AConsole.h"
-"src/console/MainConsole.h"
-"src/console/MainConsole.cpp"
-"src/console/BaseScreen.h"
+add_executable(CMakeTarget
+        "src/console/ConsoleManager.h"
+        "src/console/ConsoleManager.cpp"
+        "src/console/AConsole.h"
+        "src/console/MainConsole.h"
+        "src/console/MainConsole.cpp"
+        "src/console/BaseScreen.h"
         "src/main.h"
-"src/main.cpp"
+        "src/main.cpp"
         src/process/Process.cpp
         src/process/Process.h
         src/util/string-tokenizer.cpp
@@ -36,10 +36,13 @@ add_executable (CMakeTarget
         src/threading/Thread.cpp
         src/threading/Thread.h
         src/instructions/AInstruction.h
- "src/instructions/PrintInstruction.h" "src/instructions/PrintInstruction.cpp")
+        "src/instructions/PrintInstruction.h" "src/instructions/PrintInstruction.cpp"
+        src/threading/SchedulerThread.cpp
+        src/threading/SchedulerThread.h
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)
-endif()
+    set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)
+endif ()
 
 # TODO: Add tests and install targets if needed.
