@@ -9,11 +9,11 @@ class SchedulerThread final : public Thread {
 public:
     static SchedulerThread *getInstance();
 
-    SchedulerThread(SchedulerThread const &) = delete;
-
     SchedulerThread &operator=(SchedulerThread const &) = delete;
 
     static void destroy();
+
+    static void initialize();
 
     void switchScheduler(const std::string &scheduler);
 
@@ -23,6 +23,9 @@ private:
     SchedulerThread();
 
     ~SchedulerThread() override = default;
+
+    SchedulerThread(SchedulerThread const &) {
+    };
 
     static SchedulerThread *instance;
 

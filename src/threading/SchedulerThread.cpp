@@ -27,3 +27,9 @@ SchedulerThread *SchedulerThread::getInstance() {
 void SchedulerThread::destroy() {
     delete getInstance();
 }
+
+void SchedulerThread::initialize() {
+    if (instance == nullptr) {
+        instance = new SchedulerThread();
+    }
+}
