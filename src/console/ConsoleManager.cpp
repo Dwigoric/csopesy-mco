@@ -201,6 +201,11 @@ ConfigTable ConsoleManager::getConfigs()
 	return configs;
 }
 
+void ConsoleManager::test_create10PrintProcesses()
+{
+	// TO BE IMPLEMENTED
+}
+
 ConsoleManager ConsoleManager::operator=(ConsoleManager const &) {
 	return *this;
 }

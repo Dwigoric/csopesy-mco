@@ -1,17 +1,17 @@
 ﻿#include "main.h"
 
 #include "instructions/PrintInstruction.h"
+#include <fstream>
 
 int main() {
 	ConsoleManager::initialize();
 
-	std::string toPrint = "hello world";
-	PrintInstruction p(1, toPrint);
-	p.execute();
-
 	// TEMP: should only be called on `initialize` command
 	// but called on startup for now
 	ConsoleManager::getInstance()->loadConfigs();
+
+	// TEMP: run test case - for Homework 6 Only
+
 
 	bool terminate = false;
 

@@ -5,6 +5,7 @@
 #include "Process.h"
 
 #include <utility>
+#include <fstream>
 
 #include "../instructions/PrintInstruction.h"
 
@@ -12,6 +13,8 @@ Process::Process(int id, std::string name) {
     this->id = id;
     this->name = std::move(name);
     this->timeCreated = std::chrono::system_clock::now();
+
+    this->outfile = name + "_log.txt";
 }
 
 void Process::addCommand(AInstruction::InstructionType instructionType) {
@@ -19,7 +22,7 @@ void Process::addCommand(AInstruction::InstructionType instructionType) {
 
 	if (instructionType == AInstruction::PRINT) {
         std::string toPrint = "This is a sample print.";
-        instruction = std::make_shared<PrintInstruction>(this->id, toPrint);
+        instruction = std::make_shared<PrintInstruction>(this->id, toPrint, this->outfile);
 	}
 
     this->instructionList.push_back(instruction);

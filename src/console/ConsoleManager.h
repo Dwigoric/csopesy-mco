@@ -49,6 +49,9 @@ public:
 
 	ConfigTable getConfigs();
 
+	// TEMP: For Homework 6 Only
+	void test_create10PrintProcesses();
+
 private:
 	ConsoleManager();
 

@@ -18,14 +18,14 @@ void PrintInstruction::execute(int core) {
 		std::cout << "(" << ss.str() << ") Core:" << core << " \"" << this->toPrint << "\"\n";
 	}
 	else {
-		std::fstream fs(this->filename);
+		std::ofstream fs(this->filename);
 
 		time_t now = time(0);
 		std::tm* localTime = std::localtime(&now);
 		std::stringstream ss;
 		ss << std::put_time(localTime, "%m/%d/%Y %I:%M:%S%p");
 
-		std::cout << "(" << ss.str() << ") Core:" << core << "\"" << this->toPrint << "\"\n";
+		fs << "(" << ss.str() << ") Core:" << core << " \"" << this->toPrint << "\"\n";
 		fs.close();
 	}
 }

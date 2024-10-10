@@ -22,8 +22,6 @@ public:
 
     Process(int id, std::string name);
 
-    ~Process() = default;
-
     void addCommand(AInstruction::InstructionType instructionType);
 
     void executeCurrentInstruction();
@@ -52,6 +50,9 @@ private:
     std::chrono::system_clock::time_point timeCreated;
     ProcessState state = READY;
     std::vector<std::shared_ptr<AInstruction>> instructionList;
+
+    // TEMP: For Homework 6 Only
+    std::string outfile;
 };
 
 
