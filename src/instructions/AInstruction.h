@@ -9,7 +9,7 @@ public:
 
 	AInstruction(int pid, InstructionType instructionType);
 	InstructionType getInstructionType() const;
-	virtual void execute() = 0;
+	virtual void execute(int core) = 0;
 
 protected:
 	int pid;

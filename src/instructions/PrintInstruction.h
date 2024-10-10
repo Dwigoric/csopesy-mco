@@ -9,7 +9,7 @@
 class PrintInstruction : public AInstruction {
 public:
 	PrintInstruction(int pid, std::string& toPrint, const std::string filename="");
-	void execute() override;
+	void execute(int core=0) override;
 
 private:
 	std::string toPrint;

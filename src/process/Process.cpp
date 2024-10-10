@@ -26,7 +26,8 @@ void Process::addCommand(AInstruction::InstructionType instructionType) {
 }
 
 void Process::executeCurrentInstruction() {
-    this->instructionList[this->currentInstructionLine]->execute();
+    // TEMP: execute should get core information
+    this->instructionList[this->currentInstructionLine]->execute(0);
     this->currentInstructionLine++; // not sure if needed to put in separate function moveToNextLine()?
 }
 
