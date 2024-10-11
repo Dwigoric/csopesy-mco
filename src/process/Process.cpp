@@ -34,7 +34,7 @@ void Process::addCommand(AInstruction::InstructionType instructionType) {
 
 void Process::executeCurrentInstruction() {
     // TEMP: execute should get core information
-    this->instructionList[this->currentInstructionLine]->execute(0);
+    this->instructionList[this->currentInstructionLine]->execute(this->core);
     this->currentInstructionLine++; // not sure if needed to put in separate function moveToNextLine()?
 }
 
@@ -46,11 +46,15 @@ void Process::setState(const ProcessState state) {
     this->state = state;
 }
 
+void Process::setCore(int core) {
+    this->core = core;
+}
+
 std::string Process::getName() {
     return this->name;
 }
 
-std::string Process::getCore() {
+int Process::getCore() {
     return this->core;
 }
 

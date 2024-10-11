@@ -30,9 +30,11 @@ public:
 
     void setState(ProcessState state);
 
+    void setCore(int core);
+
     std::string getName();
 
-    std::string getCore();
+    int getCore();
 
     [[nodiscard]] int getCurrentInstructionLine() const;
 
@@ -45,7 +47,7 @@ public:
 private:
     int id;
     std::string name;
-    std::string core = "N/A";
+    int core = -1;
     int currentInstructionLine = 0;
     std::chrono::system_clock::time_point timeCreated;
     ProcessState state = READY;
