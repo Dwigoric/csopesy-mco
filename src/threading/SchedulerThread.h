@@ -19,6 +19,8 @@ public:
 
     void stopSpawning();
 
+    void stopScheduler() const;
+
     void switchScheduler(const std::string &scheduler);
 
     void run() override;

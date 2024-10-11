@@ -26,10 +26,22 @@ void SchedulerThread::stopSpawning() {
     this->isSpawning = false;
 }
 
+void SchedulerThread::stopScheduler() const {
+    this->currentScheduler->stop();
+}
+
 void SchedulerThread::switchScheduler(const std::string &scheduler) {
+    this->currentScheduler->stop();
+
     if (scheduler == "FCFS") {
         this->currentScheduler = this->schedulerFCFS;
     }
+    // Add more schedulers here
+    else {
+        throw std::runtime_error("Invalid scheduler");
+    }
+
+    this->currentScheduler->run();
 }
 
 void SchedulerThread::run() {
@@ -37,7 +49,7 @@ void SchedulerThread::run() {
         throw std::runtime_error("Invalid scheduler");
     }
 
-    this->currentScheduler->execute();
+    this->startSpawning();
 }
 
 SchedulerThread *SchedulerThread::getInstance() {
