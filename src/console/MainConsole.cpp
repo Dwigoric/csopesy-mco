@@ -1,6 +1,7 @@
 #include "MainConsole.h"
 #include "ConsoleManager.h"
-#include "../process/Process.h"
+#include "../commands/SchedulerStopCommand.h"
+#include "../commands/SchedulerTestCommand.h"
 #include "../util/string-tokenizer.h"
 
 #include "../commands/ScreenCommand.h"
@@ -31,8 +32,8 @@ void MainConsole::process() {
 	if (command == "exit") ConsoleManager::getInstance()->exitApplication();
 	else if (command == "clear") clear();
 	else if (command == "initialize") initialize();
-	else if (command == "scheduler-test") scheduler_test();
-	else if (command == "scheduler-stop") scheduler_stop();
+	else if (command == "scheduler-test") SchedulerTestCommand::execute();
+	else if (command == "scheduler-stop") SchedulerStopCommand::execute();
 	else if (command == "report-util") report_util();
 	else if (command == "screen") {
 		ScreenCommand::execute(commandParameters, processes);
@@ -51,18 +52,6 @@ void MainConsole::process() {
 // Command functions
 void MainConsole::initialize() {
 	std::cout << "`initialize` command recognized. Doing something.\n";
-}
-
-void MainConsole::screen() {
-	std::cout << "`screen` command recognized. Doing something.\n";
-}
-
-void MainConsole::scheduler_test() {
-	std::cout << "`scheduler-test` command recognized. Doing something.\n";
-}
-
-void MainConsole::scheduler_stop() {
-	std::cout << "`scheduler-stop` command recognized. Doing something.\n";
 }
 
 void MainConsole::report_util() {

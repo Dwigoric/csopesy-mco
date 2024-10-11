@@ -39,6 +39,10 @@ add_executable(CMakeTarget
         "src/instructions/PrintInstruction.h" "src/instructions/PrintInstruction.cpp"
         src/threading/SchedulerThread.cpp
         src/threading/SchedulerThread.h
+        src/commands/SchedulerTestCommand.cpp
+        src/commands/SchedulerTestCommand.h
+        src/commands/SchedulerStopCommand.cpp
+        src/commands/SchedulerStopCommand.h
 )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
