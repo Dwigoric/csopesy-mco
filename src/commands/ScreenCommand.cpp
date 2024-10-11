@@ -11,7 +11,6 @@ void ScreenCommand::execute(std::vector<std::string> parameters, std::vector<Pro
     } else {
         if (parameters[0] == "-ls") {
             // TODO: Get list of processes
-            std::cout << "`screen -ls` command recognized. Doing something.\n";
             displayProcesses(processes);
         } else if (parameters[0] == "-r") {
             if (parameters.size() == 1) {
@@ -42,6 +41,7 @@ void ScreenCommand::execute(std::vector<std::string> parameters, std::vector<Pro
  */
 
 void ScreenCommand::displayProcesses(std::vector<Process>& processes) {
+    std::cout << "---------------------------------------------\n";
     std::cout << "Running processes:\n";
     for (std::shared_ptr<Process> process: SchedulerThread::getInstance()->getProcessList()) {
         if (process->getState() == Process::RUNNING) {
@@ -51,7 +51,7 @@ void ScreenCommand::displayProcesses(std::vector<Process>& processes) {
         }
     }
 
-    std::cout << "Finished processes:\n";
+    std::cout << "\nFinished processes:\n";
     for (std::shared_ptr<Process> process: SchedulerThread::getInstance()->getProcessList()) {
         if (process->getState() == Process::FINISHED) {
             auto timeCreated_time_t = std::chrono::system_clock::to_time_t(process->getTimeExecuted());
@@ -59,5 +59,7 @@ void ScreenCommand::displayProcesses(std::vector<Process>& processes) {
                 process->getCurrentInstructionLine() << " / " << process->getMaxInstructionLine() << "\n";
         }
     }
+
+    std::cout << "---------------------------------------------\n";
 }
 
