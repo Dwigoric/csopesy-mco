@@ -20,8 +20,6 @@ public:
 
     explicit AScheduler(SchedulingAlgorithm algorithm);
 
-    static void onCreateProcess(const Process &process);
-
     void scheduleProcess(Process process);
 
     void run();
@@ -33,7 +31,6 @@ public:
     virtual void execute() = 0;
 
 protected:
-    static std::vector<Process> processes;
     std::vector<Process> readyQueue;
 
 private:

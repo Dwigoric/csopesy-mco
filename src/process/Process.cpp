@@ -9,9 +9,10 @@
 
 #include "AScheduler.h"
 #include "../instructions/PrintInstruction.h"
+#include "../threading/SchedulerThread.h"
 
 Process::Process(const int id, std::string name) {
-    AScheduler::onCreateProcess(*this);
+    SchedulerThread::getInstance()->registerProcess(*this);
 
     this->id = id;
     this->name = std::move(name);
@@ -19,7 +20,6 @@ Process::Process(const int id, std::string name) {
 
     this->outfile = name + "_log.txt";
 }
-
 
 void Process::addCommand(AInstruction::InstructionType instructionType) {
     std::shared_ptr<AInstruction> instruction;

@@ -15,6 +15,10 @@ public:
 
     static void initialize();
 
+    void registerProcess(const Process &process);
+
+    std::vector<Process> getProcessList();
+
     void startSpawning();
 
     void stopSpawning();
@@ -36,8 +40,8 @@ private:
     static SchedulerThread *instance;
 
     bool isSpawning = false;
-
     int processCounter = 0;
+    std::vector<Process> processes;
 
     FCFSScheduler *schedulerFCFS = nullptr;
     // Add other schedulers here

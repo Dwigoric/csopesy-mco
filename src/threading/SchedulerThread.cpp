@@ -53,6 +53,14 @@ void SchedulerThread::run() {
     this->currentScheduler->run();
 }
 
+void SchedulerThread::registerProcess(const Process &process) {
+    this->processes.push_back(process);
+}
+
+std::vector<Process> SchedulerThread::getProcessList() {
+    return this->processes;
+}
+
 SchedulerThread *SchedulerThread::getInstance() {
     return instance;
 }

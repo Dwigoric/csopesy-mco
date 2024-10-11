@@ -4,10 +4,6 @@ AScheduler::AScheduler(SchedulingAlgorithm algorithm) {
     this->algorithm = algorithm;
 }
 
-void AScheduler::onCreateProcess(const Process &process) {
-    processes.push_back(process);
-}
-
 void AScheduler::scheduleProcess(Process process) {
     this->readyQueue.push_back(process);
     process.setState(Process::READY);
