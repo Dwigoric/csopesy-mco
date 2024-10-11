@@ -4,9 +4,9 @@ AScheduler::AScheduler(SchedulingAlgorithm algorithm) {
     this->algorithm = algorithm;
 }
 
-void AScheduler::scheduleProcess(Process process) {
+void AScheduler::scheduleProcess(std::shared_ptr<Process> process) {
     this->readyQueue.push_back(process);
-    process.setState(Process::READY);
+    process->setState(Process::READY);
 }
 
 void AScheduler::run() {

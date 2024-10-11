@@ -7,10 +7,8 @@ int main() {
 	CPUManager::initialize(4);
 	SchedulerThread::initialize();
 
-	CPUManager::getInstance()->startAllCores();	
+	CPUManager::getInstance()->startAllCores();
 	SchedulerThread::getInstance()->start();
-
-	SchedulerThread::getInstance()->sleep(100);
 
 	ConsoleManager::initialize();
 
@@ -19,7 +17,6 @@ int main() {
 	ConsoleManager::getInstance()->loadConfigs();
 
 	// TEMP: run test case - for Homework 6 Only
-
 
 	bool terminate = false;
 

@@ -21,7 +21,7 @@ public:
 
     explicit AScheduler(SchedulingAlgorithm algorithm);
 
-    void scheduleProcess(Process process);
+    void scheduleProcess(std::shared_ptr<Process> process);
 
     void run();
 
@@ -32,7 +32,7 @@ public:
     virtual void execute() = 0;
 
 protected:
-    std::vector<Process> readyQueue;
+    std::vector<std::shared_ptr<Process>> readyQueue;
 
     std::mutex queueMutex;
 

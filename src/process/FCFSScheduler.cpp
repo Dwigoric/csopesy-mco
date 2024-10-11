@@ -53,7 +53,7 @@ void FCFSScheduler::execute() {
             
             if (!this->readyQueue.empty()) {
                 //std::cout << "Queueing process!";
-                std::shared_ptr<Process> nextProcess = std::make_shared<Process>(this->readyQueue.front());
+                std::shared_ptr<Process> nextProcess = this->readyQueue.front();
                 this->readyQueue.erase(this->readyQueue.begin());
 
                 nextProcess->setCore(std::distance(cores.begin(), it));

@@ -15,9 +15,9 @@ public:
 
     static void initialize();
 
-    void registerProcess(const Process &process);
+    void registerProcess(std::shared_ptr<Process> process);
 
-    std::vector<Process> getProcessList();
+    std::vector<std::shared_ptr<Process>> getProcessList();
 
     void startSpawning();
 
@@ -41,7 +41,7 @@ private:
 
     bool isSpawning = false;
     int processCounter = 0;
-    std::vector<Process> processes;
+    std::vector<std::shared_ptr<Process>> processes;
 
     FCFSScheduler *schedulerFCFS = nullptr;
     // Add other schedulers here

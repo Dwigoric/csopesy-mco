@@ -43,18 +43,18 @@ void ScreenCommand::execute(std::vector<std::string> parameters, std::vector<Pro
 
 void ScreenCommand::displayProcesses(std::vector<Process>& processes) {
     std::cout << "Running processes:\n";
-    for (Process& process: SchedulerThread::getInstance()->getProcessList()) {
-        if (process.getState() != Process::FINISHED) {
-            std::cout << process.getName() << " " << process.getTimeCreated() << " Core:" << process.getCore() << "   " <<
-                process.getCurrentInstructionLine() << " / " << process.getMaxInstructionLine() << "\n";
+    for (std::shared_ptr<Process> process: SchedulerThread::getInstance()->getProcessList()) {
+        if (process->getState() == Process::RUNNING) {
+            std::cout << process->getName() << " " << process->getTimeCreated() << " Core:" << process->getCore() << "   " <<
+                process->getCurrentInstructionLine() << " / " << process->getMaxInstructionLine() << "\n";
         }
     }
 
     std::cout << "Finished processes:\n";
-    for (Process& process: SchedulerThread::getInstance()->getProcessList()) {
-        if (process.getState() == Process::FINISHED) {
-            std::cout << process.getName() << " " << process.getTimeCreated() << " Core:" << process.getCore() << "   " <<
-                process.getCurrentInstructionLine() << " / " << process.getMaxInstructionLine() << "\n";
+    for (std::shared_ptr<Process> process: SchedulerThread::getInstance()->getProcessList()) {
+        if (process->getState() == Process::FINISHED) {
+            std::cout << process->getName() << " " << process->getTimeCreated() << " Core:" << process->getCore() << "   " <<
+                process->getCurrentInstructionLine() << " / " << process->getMaxInstructionLine() << "\n";
         }
     }
 }

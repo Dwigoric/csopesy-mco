@@ -12,8 +12,6 @@
 #include "../threading/SchedulerThread.h"
 
 Process::Process(const int id, std::string name) {
-    SchedulerThread::getInstance()->registerProcess(*this);
-
     this->id = id;
     this->name = std::move(name);
     this->timeCreated = std::chrono::system_clock::now();

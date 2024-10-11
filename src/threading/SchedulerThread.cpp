@@ -29,7 +29,8 @@ void SchedulerThread::startSpawning() {
             process->addCommand(AInstruction::PRINT);
         }
 
-        this->currentScheduler->scheduleProcess(*process);
+        this->registerProcess(process);
+        this->currentScheduler->scheduleProcess(process);
     }
 }
 
@@ -64,11 +65,11 @@ void SchedulerThread::run() {
     this->currentScheduler->run();
 }
 
-void SchedulerThread::registerProcess(const Process &process) {
+void SchedulerThread::registerProcess(std::shared_ptr<Process> process) {
     this->processes.push_back(process);
 }
 
-std::vector<Process> SchedulerThread::getProcessList() {
+std::vector<std::shared_ptr<Process>> SchedulerThread::getProcessList() {
     return this->processes;
 }
 
