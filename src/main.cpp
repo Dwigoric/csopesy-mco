@@ -3,6 +3,7 @@
 #include "threading/SchedulerThread.h"
 
 int main() {
+	SchedulerThread::initialize();
 	ConsoleManager::initialize();
 
 	// TEMP: should only be called on `initialize` command
@@ -13,8 +14,6 @@ int main() {
 
 
 	bool terminate = false;
-
-	SchedulerThread::initialize();
 
 	do {
 		ConsoleManager::getInstance()->process();
