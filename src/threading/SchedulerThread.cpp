@@ -50,6 +50,7 @@ void SchedulerThread::run() {
     }
 
     this->startSpawning();
+    this->currentScheduler->run();
 }
 
 SchedulerThread *SchedulerThread::getInstance() {
