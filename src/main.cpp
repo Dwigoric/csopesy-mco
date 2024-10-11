@@ -1,7 +1,6 @@
 ﻿#include "main.h"
 
-#include "instructions/PrintInstruction.h"
-#include <fstream>
+#include "threading/SchedulerThread.h"
 
 int main() {
 	ConsoleManager::initialize();
@@ -14,6 +13,8 @@ int main() {
 
 
 	bool terminate = false;
+
+	SchedulerThread::initialize();
 
 	do {
 		ConsoleManager::getInstance()->process();

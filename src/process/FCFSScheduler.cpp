@@ -6,14 +6,7 @@ FCFSScheduler::FCFSScheduler() : AScheduler(FCFS) {
 }
 
 void FCFSScheduler::init() {
-    // TODO: Replace dummy processes with real ones
-    this->processes = {
-        Process(1, "example_1"),
-        Process(2, "example_2"),
-        Process(3, "example_3"),
-        Process(4, "example_4"),
-        Process(5, "example_5"),
-    };
+    // Empty
 }
 
 void FCFSScheduler::execute() {

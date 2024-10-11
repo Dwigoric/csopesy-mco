@@ -15,6 +15,10 @@ public:
 
     static void initialize();
 
+    void startSpawning();
+
+    void stopSpawning();
+
     void switchScheduler(const std::string &scheduler);
 
     void run() override;
@@ -28,6 +32,10 @@ private:
     };
 
     static SchedulerThread *instance;
+
+    bool isSpawning = false;
+
+    int processCounter = 0;
 
     FCFSScheduler *schedulerFCFS = nullptr;
     // Add other schedulers here
