@@ -6,7 +6,7 @@ class Thread {
 public:
 	virtual ~Thread() = default;
 
-	void start();
+	virtual void start();
 
 	static void sleep(int ms);
 
