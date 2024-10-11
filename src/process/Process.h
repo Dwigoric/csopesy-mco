@@ -46,12 +46,17 @@ public:
 
     [[nodiscard]] std::chrono::system_clock::time_point getTimeCreated() const;
 
+    [[nodiscard]] std::chrono::system_clock::time_point getTimeExecuted() const;
+
+    void setTimeExecuted();
+
 private:
     int id;
     std::string name;
     int core = -1;
     int currentInstructionLine = 0;
     std::chrono::system_clock::time_point timeCreated;
+    std::chrono::system_clock::time_point timeExecuted;
     ProcessState state = READY;
     std::vector<std::shared_ptr<AInstruction> > instructionList;
 

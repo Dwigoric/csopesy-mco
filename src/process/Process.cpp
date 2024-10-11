@@ -27,7 +27,7 @@ void Process::addCommand(AInstruction::InstructionType instructionType) {
     std::shared_ptr<AInstruction> instruction;
 
     if (instructionType == AInstruction::PRINT) {
-        std::string toPrint = "This is a sample print.";
+        std::string toPrint = "Hello world from " + this->name + "!";
         instruction = std::make_shared<PrintInstruction>(this->id, toPrint, this->outfile);
     }
 
@@ -78,4 +78,12 @@ int Process::getId() const {
 
 std::chrono::system_clock::time_point Process::getTimeCreated() const {
     return this->timeCreated;
+}
+
+std::chrono::system_clock::time_point Process::getTimeExecuted() const {
+    return this->timeExecuted;
+}
+
+void Process::setTimeExecuted() {
+	this->timeExecuted = std::chrono::system_clock::now();
 }

@@ -45,7 +45,8 @@ void ScreenCommand::displayProcesses(std::vector<Process>& processes) {
     std::cout << "Running processes:\n";
     for (std::shared_ptr<Process> process: SchedulerThread::getInstance()->getProcessList()) {
         if (process->getState() == Process::RUNNING) {
-            std::cout << process->getName() << " " << process->getTimeCreated() << " Core:" << process->getCore() << "   " <<
+            auto timeCreated_time_t = std::chrono::system_clock::to_time_t(process->getTimeExecuted());
+            std::cout << process->getName() << "   " << std::put_time(std::localtime(&timeCreated_time_t), "(%m/%d/%Y %I:%M:%S%p)") << "   Core: " << process->getCore() << "    " <<
                 process->getCurrentInstructionLine() << " / " << process->getMaxInstructionLine() << "\n";
         }
     }
@@ -53,7 +54,8 @@ void ScreenCommand::displayProcesses(std::vector<Process>& processes) {
     std::cout << "Finished processes:\n";
     for (std::shared_ptr<Process> process: SchedulerThread::getInstance()->getProcessList()) {
         if (process->getState() == Process::FINISHED) {
-            std::cout << process->getName() << " " << process->getTimeCreated() << " Core:" << process->getCore() << "   " <<
+            auto timeCreated_time_t = std::chrono::system_clock::to_time_t(process->getTimeExecuted());
+            std::cout << process->getName() << "   " << std::put_time(std::localtime(&timeCreated_time_t), "(%m/%d/%Y %I:%M:%S%p)") << "   Finished   " <<
                 process->getCurrentInstructionLine() << " / " << process->getMaxInstructionLine() << "\n";
         }
     }

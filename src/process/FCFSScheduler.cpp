@@ -42,6 +42,14 @@ void FCFSScheduler::execute() {
         currentCore = *it;
         std::shared_ptr<Process> runningProcess = currentCore->getProcess();
 
+        if (runningProcess != nullptr && runningProcess->isFinished()) {
+            // Remove it from CPU
+            // Put it in finished list
+            // Set state to finished
+            runningProcess->setState(Process::FINISHED);
+            currentCore->assignProcess(nullptr);
+        }
+
         if (!runningProcess) {
             //std::cout << "CPU " << std::distance(cores.begin(), it) << " is idle. ";
             // CPU is idle; Is ready queue empty?
@@ -58,6 +66,7 @@ void FCFSScheduler::execute() {
 
                 nextProcess->setCore(std::distance(cores.begin(), it));
                 nextProcess->setState(Process::RUNNING);
+                nextProcess->setTimeExecuted();
                 currentCore->assignProcess(nextProcess);
             }
             else {
@@ -65,14 +74,6 @@ void FCFSScheduler::execute() {
             }
             //lock.unlock();
             //std::cout << "\n";
-        }
-
-        else if (runningProcess->isFinished()) {
-            // Remove it from CPU
-            // Put it in finished list
-            // Set state to finished
-            runningProcess->setState(Process::FINISHED);
-            currentCore->assignProcess(nullptr);
         }
     }
 }
