@@ -8,7 +8,7 @@ int main() {
 	SchedulerThread::initialize();
 
 	// UNCOMMENT FOR TESTING
-	/*std::shared_ptr<Process> process = std::make_shared<Process>(1, "test");
+	std::shared_ptr<Process> process = std::make_shared<Process>(1, "test");
 	process->addCommand(AInstruction::PRINT);
 	process->addCommand(AInstruction::PRINT);
 	process->addCommand(AInstruction::PRINT);
@@ -24,7 +24,7 @@ int main() {
 	CPUManager::getInstance()->getCores()[1]->assignProcess(process1);
 	process1->setCore(1);
 
-	SchedulerThread::getInstance()->sleep(100);*/
+	SchedulerThread::getInstance()->sleep(100);
 
 	ConsoleManager::initialize();
 

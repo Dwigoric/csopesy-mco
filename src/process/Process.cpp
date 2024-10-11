@@ -18,7 +18,7 @@ Process::Process(const int id, std::string name) {
     this->name = std::move(name);
     this->timeCreated = std::chrono::system_clock::now();
 
-    this->outfile = name + "_log.txt";
+    this->outfile = this->name + "_log.txt";
 }
 
 void Process::addCommand(AInstruction::InstructionType instructionType) {
