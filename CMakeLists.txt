@@ -45,6 +45,8 @@ add_executable(CMakeTarget
         src/commands/SchedulerStopCommand.h
         src/cpu/CPUWorker.h 
         src/cpu/CPUWorker.cpp
+        src/cpu/CPUManager.cpp 
+        src/cpu/CPUManager.h
 )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
