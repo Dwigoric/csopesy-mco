@@ -29,5 +29,7 @@ void CPUWorker::run() {
                 this->runningProcess->executeCurrentInstruction();
             }
         }
+
+        sleep(20);
     }
 }
