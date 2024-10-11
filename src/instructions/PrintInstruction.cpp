@@ -18,7 +18,8 @@ void PrintInstruction::execute(int core) {
 		std::cout << "(" << ss.str() << ") Core:" << core << " \"" << this->toPrint << "\"\n";
 	}
 	else {
-		std::ofstream fs(this->filename);
+		std::ofstream fs;
+		fs.open(this->filename, std::ios_base::app);
 
 		time_t now = time(0);
 		std::tm* localTime = std::localtime(&now);
