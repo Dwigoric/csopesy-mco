@@ -10,8 +10,8 @@ void FCFSScheduler::init() {
 }
 
 void FCFSScheduler::execute() {
-    if (!this->processes.empty()) {
-        Process &currentProcess = this->processes.front();
+    if (!this->readyQueue.empty()) {
+        Process &currentProcess = this->readyQueue.front();
         std::cout << "Executing process: " << currentProcess.getName() << std::endl;
 
         // Simulate process execution
@@ -25,7 +25,7 @@ void FCFSScheduler::execute() {
         std::cout << "Finished process: " << currentProcess.getName() << std::endl;
 
         // Remove the process from the queue
-        this->processes.erase(this->processes.begin());
+        this->readyQueue.erase(this->readyQueue.begin());
     } else {
         std::cout << "No more processes to execute." << std::endl;
         this->stop();

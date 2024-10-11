@@ -7,9 +7,12 @@
 #include <utility>
 #include <fstream>
 
+#include "AScheduler.h"
 #include "../instructions/PrintInstruction.h"
 
-Process::Process(int id, std::string name) {
+Process::Process(const int id, std::string name) {
+    AScheduler::onCreateProcess(*this);
+
     this->id = id;
     this->name = std::move(name);
     this->timeCreated = std::chrono::system_clock::now();
@@ -17,13 +20,14 @@ Process::Process(int id, std::string name) {
     this->outfile = name + "_log.txt";
 }
 
+
 void Process::addCommand(AInstruction::InstructionType instructionType) {
     std::shared_ptr<AInstruction> instruction;
 
-	if (instructionType == AInstruction::PRINT) {
+    if (instructionType == AInstruction::PRINT) {
         std::string toPrint = "This is a sample print.";
         instruction = std::make_shared<PrintInstruction>(this->id, toPrint, this->outfile);
-	}
+    }
 
     this->instructionList.push_back(instruction);
 }

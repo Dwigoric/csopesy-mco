@@ -4,9 +4,13 @@ AScheduler::AScheduler(SchedulingAlgorithm algorithm) {
     this->algorithm = algorithm;
 }
 
+void AScheduler::onCreateProcess(const Process &process) {
+    processes.push_back(process);
+}
+
 void AScheduler::scheduleProcess(Process process) {
-    this->processes.push_back(process);
-    process.setState(Process::WAITING);
+    this->readyQueue.push_back(process);
+    process.setState(Process::READY);
 }
 
 void AScheduler::run() {

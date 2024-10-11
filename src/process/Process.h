@@ -26,7 +26,7 @@ public:
 
     void executeCurrentInstruction();
 
-    bool isFinished() const;
+    [[nodiscard]] bool isFinished() const;
 
     void setState(ProcessState state);
 
@@ -49,7 +49,7 @@ private:
     int currentInstructionLine = 0;
     std::chrono::system_clock::time_point timeCreated;
     ProcessState state = READY;
-    std::vector<std::shared_ptr<AInstruction>> instructionList;
+    std::vector<std::shared_ptr<AInstruction> > instructionList;
 
     // TEMP: For Homework 6 Only
     std::string outfile;
