@@ -1,4 +1,6 @@
 #include "CPUManager.h"
+#include <mutex>
+#include <chrono>
 
 CPUManager* CPUManager::instance = nullptr;
 
@@ -15,10 +17,14 @@ void CPUManager::initialize(int numCores) {
 }
 
 CPUManager::~CPUManager() {
-	this->stopAllCores();
+	//this->stopAllCores();
 	CPUWorker* temp;
 	for (auto it = this->cores.begin(); it != this->cores.end(); it++) {
 		temp = *it;
+		std::unique_lock<std::mutex> lock(temp->mutex);
+		temp->stop();
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		lock.unlock();
 		delete temp;
 	}
 	this->cores.clear();

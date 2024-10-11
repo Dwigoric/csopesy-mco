@@ -11,14 +11,25 @@ SchedulerThread::SchedulerThread() {
 }
 
 void SchedulerThread::startSpawning() {
-    while (this->isSpawning) {
+    //while (this->isSpawning) {
+    //    std::shared_ptr<Process> process = std::make_shared<Process>(this->processCounter++,
+    //                                                                 std::format("process_{}", this->processCounter));;
+
+    //    this->currentScheduler->scheduleProcess(*process);
+
+    //    // Add delay of 0.5s
+    //    sleep(500);
+    //}
+
+    for (int i = 0; i < 10; i++) {
         std::shared_ptr<Process> process = std::make_shared<Process>(this->processCounter++,
-                                                                     std::format("process_{}", this->processCounter));;
+            std::format("screen_{}", this->processCounter));
+
+        for (int j = 0; j < 100; j++) {
+            process->addCommand(AInstruction::PRINT);
+        }
 
         this->currentScheduler->scheduleProcess(*process);
-
-        // Add delay of 0.5s
-        sleep(500);
     }
 }
 

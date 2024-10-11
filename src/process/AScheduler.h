@@ -3,6 +3,7 @@
 
 
 #include <vector>
+#include <mutex>
 
 #include "Process.h"
 
@@ -32,6 +33,8 @@ public:
 
 protected:
     std::vector<Process> readyQueue;
+
+    std::mutex queueMutex;
 
 private:
     SchedulingAlgorithm algorithm;

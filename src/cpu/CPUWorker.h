@@ -3,6 +3,7 @@
 
 #include "../threading/Thread.h"
 #include "../process/Process.h"
+#include <mutex>
 
 class CPUWorker : public Thread {
 public:
@@ -11,6 +12,8 @@ public:
 
     void start() override;
     void stop();
+
+    std::mutex mutex;
 
 private:
     void run() override;
