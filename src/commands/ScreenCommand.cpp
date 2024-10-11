@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "ScreenCommand.h"
-#include "../console/ConsoleManager.h"
 
 void ScreenCommand::execute(std::vector<std::string> parameters, std::vector<Process> &processes) {
     if (parameters.size() == 0) {
@@ -13,7 +12,7 @@ void ScreenCommand::execute(std::vector<std::string> parameters, std::vector<Pro
         if (parameters[0] == "-ls") {
             // TODO: Get list of processes
             std::cout << "`screen -ls` command recognized. Doing something.\n";
-            //displayProcesses(processes);
+            displayProcesses(processes);
         } else if (parameters[0] == "-r") {
             if (parameters.size() == 1) {
                 std::cout << "screen switch: missing argument (screen name). Use -ls to list screens.\n";
@@ -39,11 +38,24 @@ void ScreenCommand::execute(std::vector<std::string> parameters, std::vector<Pro
 }
 
 /*
+ * Format: process_name date_stamp, Core, current_instruction / max_instruction
+ */
+
 void ScreenCommand::displayProcesses(std::vector<Process>& processes) {
-    std::cout << "Process count: " << processes.size() << "\n";
-    for (Process& process: processes) {
-        std::cout << "Name: " << process.getName() << " | Core: " << process.getCore() << " | " <<
-            process.getCurrentInstructionLine() << " / " << process.getMaxInstructionLine() << " |\n";
+    std::cout << "Running processes:\n";
+    for (Process& process: SchedulerThread::getInstance()->getProcessList()) {
+        if (process.getState() != Process::FINISHED) {
+            std::cout << process.getName() << " " << process.getTimeCreated() << " Core:" << process.getCore() << "   " <<
+                process.getCurrentInstructionLine() << " / " << process.getMaxInstructionLine() << "\n";
+        }
+    }
+
+    std::cout << "Finished processes:\n";
+    for (Process& process: SchedulerThread::getInstance()->getProcessList()) {
+        if (process.getState() == Process::FINISHED) {
+            std::cout << process.getName() << " " << process.getTimeCreated() << " Core:" << process.getCore() << "   " <<
+                process.getCurrentInstructionLine() << " / " << process.getMaxInstructionLine() << "\n";
+        }
     }
 }
-*/
+

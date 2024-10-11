@@ -62,6 +62,10 @@ int Process::getCore() {
     return this->core;
 }
 
+Process::ProcessState Process::getState() {
+    return this->state;
+}
+
 int Process::getCurrentInstructionLine() const {
     return this->currentInstructionLine;
 }

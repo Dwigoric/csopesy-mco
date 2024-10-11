@@ -36,6 +36,8 @@ public:
 
     int getCore();
 
+    [[nodiscard]] ProcessState getState();
+
     [[nodiscard]] int getCurrentInstructionLine() const;
 
     [[nodiscard]] int getMaxInstructionLine() const;

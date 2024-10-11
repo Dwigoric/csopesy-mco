@@ -7,12 +7,16 @@
 #include "ACommand.h"
 
 #include "../process/Process.h"
+#include "../console/ConsoleManager.h"
+#include "../threading/SchedulerThread.h"
 
 class ScreenCommand : public ACommand {
 public:
     static void execute(std::vector<std::string> parameters, std::vector<Process>& processes);
 
+
 private:
+
     static void displayProcesses(std::vector<Process>& processes);
 };
 
