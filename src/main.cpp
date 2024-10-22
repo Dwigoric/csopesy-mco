@@ -29,9 +29,6 @@ int main() {
 
 	ConsoleManager::destroy();
 	SchedulerThread::getInstance()->stopScheduler();
-	
-	SchedulerThread::getInstance()->sleep(100);
-
 	SchedulerThread::destroy();
 	CPUManager::destroy();
 
