@@ -3,5 +3,5 @@
 #include "../threading/SchedulerThread.h"
 
 void SchedulerTestCommand::execute() {
-    SchedulerThread::getInstance()->start();
+	SchedulerThread::getInstance()->startSpawning();
 }
