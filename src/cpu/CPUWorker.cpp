@@ -1,6 +1,8 @@
 #include "CPUWorker.h"
 #include <iostream>
 
+int CPUWorker::delayPerExec = 0;
+
 void CPUWorker::assignProcess(std::shared_ptr<Process> queuedProcess) {
     std::unique_lock<std::mutex> lock(this->mutex);
 
@@ -22,14 +24,14 @@ void CPUWorker::stop() {
 
 void CPUWorker::run() {
     while (isRunning) {
-        std::unique_lock<std::mutex> lock(this->mutex);
+    	std::unique_lock<std::mutex> lock(this->mutex);
 
-        if (this->runningProcess != nullptr) {
-            if (!this->runningProcess->isFinished()) {
-                this->runningProcess->executeCurrentInstruction();
+        if (this->cycles++ % (delayPerExec + 1) ==  0) {
+            if (this->runningProcess != nullptr) {
+                if (!this->runningProcess->isFinished()) {
+                    this->runningProcess->executeCurrentInstruction();
+                }
             }
         }
-
-        sleep(20);
     }
 }

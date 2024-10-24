@@ -2,6 +2,7 @@
 #include "../console/ConsoleManager.h"
 #include "../cpu/CPUManager.h"
 #include "../threading/SchedulerThread.h"
+#include "../cpu/CPUWorker.h"
 
 #include <iostream>
 
@@ -9,6 +10,7 @@ void InitializeCommand::execute()
 {
 	ConsoleManager::getInstance()->loadConfigs();
 
+	CPUWorker::delayPerExec = std::stoi(ConsoleManager::getInstance()->getConfigs().at("delay-per-exec"));
 	CPUManager::initialize(std::stoi(ConsoleManager::getInstance()->getConfigs().at("num-cpu")));
 	CPUManager::getInstance()->startAllCores();
 
