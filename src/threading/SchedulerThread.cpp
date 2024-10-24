@@ -1,4 +1,6 @@
 #include "SchedulerThread.h"
+#include "../console/BaseScreen.h"
+#include "../console/ConsoleManager.h"
 
 #include <thread>
 
@@ -22,15 +24,7 @@ void SchedulerThread::startSpawning() {
     //}
 
     for (int i = 0; i < 10; i++) {
-        std::shared_ptr<Process> process = std::make_shared<Process>(this->processCounter++,
-            std::format("screen_{}", this->processCounter));
-
-        for (int j = 0; j < 100; j++) {
-            process->addCommand(AInstruction::PRINT);
-        }
-
-        this->registerProcess(process);
-        this->currentScheduler->scheduleProcess(process);
+        this->createProcess(std::format("screen_{}", this->processCounter));
     }
 }
 
@@ -63,6 +57,27 @@ void SchedulerThread::run() {
 
     // this->startSpawning();
     this->currentScheduler->run();
+}
+
+bool SchedulerThread::createProcess(std::string name) {
+    std::shared_ptr<Process> process = std::make_shared<Process>(this->processCounter, name);
+    std::shared_ptr<BaseScreen> screen = std::make_shared<BaseScreen>(process, name);
+
+    if (!ConsoleManager::getInstance()->registerScreen(screen)) {
+        // only switch screens if the registration was successful
+        return false;
+    }
+
+    this->processCounter++;
+
+    for (int j = 0; j < 100; j++) {
+        process->addCommand(AInstruction::PRINT);
+    }
+
+    this->registerProcess(process);
+    this->currentScheduler->scheduleProcess(process);
+
+    return true;
 }
 
 void SchedulerThread::registerProcess(std::shared_ptr<Process> process) {
