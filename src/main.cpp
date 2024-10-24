@@ -4,19 +4,7 @@
 #include "threading/SchedulerThread.h"
 
 int main() {
-	CPUManager::initialize(4);
-	SchedulerThread::initialize();
-
-	CPUManager::getInstance()->startAllCores();
-	SchedulerThread::getInstance()->start();
-
 	ConsoleManager::initialize();
-
-	// TEMP: should only be called on `initialize` command
-	// but called on startup for now
-	ConsoleManager::getInstance()->loadConfigs();
-
-	// TEMP: run test case - for Homework 6 Only
 
 	bool terminate = false;
 
@@ -28,9 +16,6 @@ int main() {
 	} while (!terminate);
 
 	ConsoleManager::destroy();
-	SchedulerThread::getInstance()->stopScheduler();
-	SchedulerThread::destroy();
-	CPUManager::destroy();
 
 	return 0;
 }

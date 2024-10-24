@@ -23,7 +23,9 @@ void ConsoleManager::initialize() {
 
 // static
 void ConsoleManager::destroy() {
-	delete sharedInstance;
+	if (sharedInstance != nullptr) {
+		delete sharedInstance;
+	}
 }
 
 // drawConsole() : Call every frame to display the current console screen.
@@ -204,6 +206,16 @@ ConfigTable ConsoleManager::getConfigs()
 void ConsoleManager::test_create10PrintProcesses()
 {
 	// TO BE IMPLEMENTED
+}
+
+void ConsoleManager::setConfigInitialized()
+{
+	this->configInitialized = true;
+}
+
+bool ConsoleManager::getConfigInitialized()
+{
+	return this->configInitialized;
 }
 
 ConsoleManager ConsoleManager::operator=(ConsoleManager const &) {

@@ -5,6 +5,8 @@
 #include "../util/string-tokenizer.h"
 
 #include "../commands/ScreenCommand.h"
+#include "../commands/InitializeCommand.h"
+#include "../commands/ExitCommand.h"
 
 void MainConsole::onEnabled() {
 	printHeader();
@@ -24,29 +26,36 @@ void MainConsole::process() {
 	const std::string &command = commandTokens[0];
 	const auto commandParameters = std::vector(commandTokens.begin() + 1, commandTokens.end());
 
-	if (command == "exit") ConsoleManager::getInstance()->exitApplication();
-	else if (command == "clear") clear();
-	else if (command == "initialize") initialize();
-	else if (command == "scheduler-test") SchedulerTestCommand::execute();
-	else if (command == "scheduler-stop") SchedulerStopCommand::execute();
-	else if (command == "report-util") report_util();
-	else if (command == "screen") {
-		ScreenCommand::execute(commandParameters, processes);
-	} else {
-		std::cout << "Commands list:\n";
-		std::cout << "exit - exit the program\n";
-		std::cout << "clear - clear the screen\n";
-		std::cout << "initialize - initialize the program\n";
-		std::cout << "scheduler-test - test the scheduler\n";
-		std::cout << "scheduler-stop - stop the scheduler\n";
-		std::cout << "report-util - display the report utility\n";
-		std::cout << "screen - manage screens\n";
+	if (command == "exit") ExitCommand::execute();
+	else if (ConsoleManager::getInstance()->getConfigInitialized()) {
+		if (command == "clear") clear();
+		
+		else if (command == "scheduler-test") SchedulerTestCommand::execute();
+		else if (command == "scheduler-stop") SchedulerStopCommand::execute();
+		else if (command == "report-util") report_util();
+		else if (command == "screen") {
+			ScreenCommand::execute(commandParameters, processes);
+		}
+		else {
+			std::cout << "Commands list:\n";
+			std::cout << "exit - exit the program\n";
+			std::cout << "clear - clear the screen\n";
+			std::cout << "initialize - initialize the program\n";
+			std::cout << "scheduler-test - test the scheduler\n";
+			std::cout << "scheduler-stop - stop the scheduler\n";
+			std::cout << "report-util - display the report utility\n";
+			std::cout << "screen - manage screens\n";
+		}
 	}
+	else if (command == "initialize") initialize();
+	else {
+		std::cerr << "Error: Must enter 'initialize' command before accessing any other commands.\n";
+	}	
 }
 
 // Command functions
 void MainConsole::initialize() {
-	std::cout << "`initialize` command recognized. Doing something.\n";
+	InitializeCommand::execute();
 }
 
 void MainConsole::report_util() {

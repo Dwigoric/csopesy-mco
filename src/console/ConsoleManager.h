@@ -52,6 +52,8 @@ public:
 	// TEMP: For Homework 6 Only
 	void test_create10PrintProcesses();
 
+	void setConfigInitialized();
+	bool getConfigInitialized();
 private:
 	ConsoleManager();
 
@@ -70,6 +72,7 @@ private:
 
 	// HANDLE consoleHandle;
 	bool running = true;
+	bool configInitialized = false;
 
 	ConfigTable configs;
 	const ConfigTable defaultConfigs = {

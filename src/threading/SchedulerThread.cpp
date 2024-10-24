@@ -61,7 +61,7 @@ void SchedulerThread::run() {
         throw std::runtime_error("Invalid scheduler");
     }
 
-    this->startSpawning();
+    // this->startSpawning();
     this->currentScheduler->run();
 }
 
