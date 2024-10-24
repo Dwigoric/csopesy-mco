@@ -1,6 +1,7 @@
 #include "SchedulerThread.h"
 #include "../console/BaseScreen.h"
 #include "../console/ConsoleManager.h"
+#include "../util/randint.h"
 
 #include <thread>
 
@@ -70,7 +71,11 @@ bool SchedulerThread::createProcess(std::string name) {
 
     this->processCounter++;
 
-    for (int j = 0; j < 100; j++) {
+    int minInstructions = std::stoi(ConsoleManager::getInstance()->getConfigs()["min-ins"]);
+    int maxInstructions = std::stoi(ConsoleManager::getInstance()->getConfigs()["max-ins"]);
+    int numInstructions = randint(minInstructions, maxInstructions);
+
+    for (int i = 0; i < numInstructions; i++) {
         process->addCommand(AInstruction::PRINT);
     }
 

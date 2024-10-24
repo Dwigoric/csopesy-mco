@@ -47,7 +47,10 @@ add_executable(CMakeTarget
         src/cpu/CPUWorker.cpp
         src/cpu/CPUManager.cpp 
         src/cpu/CPUManager.h
- "src/commands/InitializeCommand.cpp" "src/commands/InitializeCommand.h" "src/commands/ExitCommand.cpp" "src/commands/ExitCommand.h" "src/commands/ReportUtilCommand.h" "src/commands/ReportUtilCommand.cpp")
+ "src/commands/InitializeCommand.cpp" "src/commands/InitializeCommand.h" "src/commands/ExitCommand.cpp" "src/commands/ExitCommand.h" "src/commands/ReportUtilCommand.h" "src/commands/ReportUtilCommand.cpp"
+        src/util/randint.h 
+        src/util/randint.cpp
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
     set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)
