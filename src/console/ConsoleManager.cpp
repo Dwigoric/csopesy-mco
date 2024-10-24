@@ -203,9 +203,10 @@ ConfigTable ConsoleManager::getConfigs()
 	return configs;
 }
 
-void ConsoleManager::test_create10PrintProcesses()
-{
-	// TO BE IMPLEMENTED
+void ConsoleManager::test_printConfigs() {
+	for (auto it = this->configs.begin(); it != this->configs.end(); it++) {
+		std::cout << it->first << ": " << it->second << "\n";
+	}
 }
 
 void ConsoleManager::setConfigInitialized()

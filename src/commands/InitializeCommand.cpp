@@ -16,4 +16,7 @@ void InitializeCommand::execute()
 	SchedulerThread::getInstance()->start();
 
 	ConsoleManager::getInstance()->setConfigInitialized();
+	
+	// DEBUG: display current configs
+	ConsoleManager::getInstance()->test_printConfigs();
 }

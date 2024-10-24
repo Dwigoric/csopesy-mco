@@ -49,8 +49,7 @@ public:
 
 	ConfigTable getConfigs();
 
-	// TEMP: For Homework 6 Only
-	void test_create10PrintProcesses();
+	void test_printConfigs();
 
 	void setConfigInitialized();
 	bool getConfigInitialized();
@@ -76,7 +75,13 @@ private:
 
 	ConfigTable configs;
 	const ConfigTable defaultConfigs = {
-		std::make_pair<>("num-cpu", "4")
+		std::make_pair<>("num-cpu", "4"),
+		std::make_pair<>("scheduler", "rr"),
+		std::make_pair<>("quantum-cycles", "5"),
+		std::make_pair<>("batch-process-freq", "1"),
+		std::make_pair<>("min-ins", "1000"),
+		std::make_pair<>("max-ins", "2000"),
+		std::make_pair<>("delay-per-exec", "0")
 	};
 };
 
