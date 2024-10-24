@@ -59,7 +59,7 @@ void MainConsole::initialize() {
 }
 
 void MainConsole::report_util() {
-	std::cout << "`report-util` command recognized. Doing something.\n";
+	ReportUtilCommand::execute();
 }
 
 // Basic display functions

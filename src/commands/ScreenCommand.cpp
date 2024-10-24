@@ -41,40 +41,6 @@ void ScreenCommand::execute(std::vector<std::string> parameters, std::vector<Pro
  */
 
 void ScreenCommand::displayProcesses(std::vector<Process>& processes) {
-    int max_cpu = std::stoi(ConsoleManager::getInstance()->getConfigs()["num-cpu"]);
-    int used_cpu = 0;
-
-    for (std::shared_ptr<Process> process : SchedulerThread::getInstance()->getProcessList()) {
-        if (process->getState() == Process::RUNNING) {
-            used_cpu++;
-        }
-    }
-
-    float utilization = (float)used_cpu / (float)max_cpu;
-
-    std::cout << "CPU Utilization: " << utilization * 100 << "%\n";
-    std::cout << "Cores used: " << used_cpu << "\n";
-    std::cout << "Cores available: " << max_cpu - used_cpu << "\n\n";
-        
-    std::cout << "---------------------------------------------\n";
-    std::cout << "Running processes:\n";
-    for (std::shared_ptr<Process> process: SchedulerThread::getInstance()->getProcessList()) {
-        if (process->getState() == Process::RUNNING) {
-            auto timeCreated_time_t = std::chrono::system_clock::to_time_t(process->getTimeExecuted());
-            std::cout << process->getName() << "   " << std::put_time(std::localtime(&timeCreated_time_t), "(%m/%d/%Y %I:%M:%S%p)") << "   Core: " << process->getCore() << "    " <<
-                process->getCurrentInstructionLine() << " / " << process->getMaxInstructionLine() << "\n";
-        }
-    }
-
-    std::cout << "\nFinished processes:\n";
-    for (std::shared_ptr<Process> process: SchedulerThread::getInstance()->getProcessList()) {
-        if (process->getState() == Process::FINISHED) {
-            auto timeCreated_time_t = std::chrono::system_clock::to_time_t(process->getTimeExecuted());
-            std::cout << process->getName() << "   " << std::put_time(std::localtime(&timeCreated_time_t), "(%m/%d/%Y %I:%M:%S%p)") << "   Finished   " <<
-                process->getCurrentInstructionLine() << " / " << process->getMaxInstructionLine() << "\n";
-        }
-    }
-
-    std::cout << "---------------------------------------------\n";
+    ReportUtilCommand::printProcesses(std::cout);
 }
 

@@ -9,6 +9,7 @@
 #include "../process/Process.h"
 #include "../console/ConsoleManager.h"
 #include "../threading/SchedulerThread.h"
+#include "ReportUtilCommand.h"
 
 class ScreenCommand : public ACommand {
 public:
