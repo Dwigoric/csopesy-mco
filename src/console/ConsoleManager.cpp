@@ -78,9 +78,7 @@ bool ConsoleManager::registerScreen(const std::shared_ptr<BaseScreen> &screenRef
 //					  screen name.
 void ConsoleManager::switchToScreen(const std::string &name) {
 	if (!consoleTable.contains(name)) {
-		std::cerr << "Error: Attempted to switch to screen "
-				<< name
-				<< ", but no screen with that name was found\n";
+		std::cerr << "Process " << name << " not found.\n";
 
 		return;
 	}

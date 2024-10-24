@@ -4,6 +4,7 @@
 #include <mutex>
 #include "../cpu/CPUManager.h"
 #include "../cpu/CPUWorker.h"
+#include "../console/ConsoleManager.h"
 
 FCFSScheduler::FCFSScheduler() : AScheduler(FCFS) {
     
@@ -46,7 +47,9 @@ void FCFSScheduler::execute() {
             // Remove it from CPU
             // Put it in finished list
             // Set state to finished
+            // Unregister from console manager
             runningProcess->setState(Process::FINISHED);
+            ConsoleManager::getInstance()->unregisterScreen(runningProcess->getName());
             currentCore->assignProcess(nullptr);
         }
 
