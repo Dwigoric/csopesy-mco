@@ -10,11 +10,7 @@ BaseScreen::BaseScreen(const std::shared_ptr<Process>& process, const std::strin
 }
 
 void BaseScreen::onEnabled() {
-    std::cout << "Process: " << attachedProcess->getName() << "\n";
-    std::cout << "ID: " << attachedProcess->getId() << "\n\n";
-    std::cout << "Current instruction line: " << attachedProcess->getCurrentInstructionLine() << "\n";
-    std::cout << "Lines of code: " << attachedProcess->getMaxInstructionLine() << "\n";
-    std::cout << "Time created: " << attachedProcess->getTimeCreated() << "\n";
+    printProcessInfo();
 }
 
 void BaseScreen::display() {
@@ -43,9 +39,24 @@ void BaseScreen::process() {
 }
 
 void BaseScreen::printProcessInfo() {
-    // TODO: Implement this function
+    std::cout << "Process: " << attachedProcess->getName() << "\n";
+    std::cout << "ID: " << attachedProcess->getId() << "\n\n";
+
+    if (attachedProcess->isFinished()) {
+        std::cout << "Finished!" << "\n\n";
+    }
+    else {
+        std::cout << "Current instruction line: " << attachedProcess->getCurrentInstructionLine() << "\n";
+        std::cout << "Lines of code: " << attachedProcess->getMaxInstructionLine() << "\n";
+    }
+    
+    // Time created is not seen in the screenshot in the specs, but can reenable if needed
+    // std::cout << "Time created: " << attachedProcess->getTimeCreated() << "\n";
+
+    std::cout << "\n";
 }
 
 void BaseScreen::printCommandPrefix() {
     std::cout << "user@CSOPESY:~$ ";
 }
+

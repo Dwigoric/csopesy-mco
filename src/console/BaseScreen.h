@@ -17,7 +17,7 @@ public:
 	void display() override;
 	void process() override;
 
-	static void printProcessInfo();
+	void printProcessInfo();
 	std::shared_ptr<Process> attachedProcess;
 	bool refreshed = false;
 
