@@ -34,7 +34,7 @@ void MainConsole::process() {
 		else if (command == "scheduler-stop") SchedulerStopCommand::execute();
 		else if (command == "report-util") report_util();
 		else if (command == "screen") {
-			ScreenCommand::execute(commandParameters, processes);
+			ScreenCommand::execute(commandParameters);
 		}
 		else {
 			std::cout << "Commands list:\n";

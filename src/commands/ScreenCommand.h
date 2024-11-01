@@ -13,12 +13,11 @@
 
 class ScreenCommand : public ACommand {
 public:
-    static void execute(std::vector<std::string> parameters, std::vector<Process>& processes);
+    static void execute(std::vector<std::string> parameters);
 
 
 private:
-
-    static void displayProcesses(std::vector<Process>& processes);
+    static void displayProcesses();
 };
 
 #endif //SCREENCOMMAND_H

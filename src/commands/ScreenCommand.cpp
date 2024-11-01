@@ -3,7 +3,7 @@
 #include "ScreenCommand.h"
 #include "../threading/SchedulerThread.h"
 
-void ScreenCommand::execute(std::vector<std::string> parameters, std::vector<Process> &processes) {
+void ScreenCommand::execute(std::vector<std::string> parameters) {
     if (parameters.size() == 0) {
         std::cout << "screen: missing argument\n";
         std::cout << "screen: use -ls to list screens\n";
@@ -12,7 +12,7 @@ void ScreenCommand::execute(std::vector<std::string> parameters, std::vector<Pro
     } else {
         if (parameters[0] == "-ls") {
             // TODO: Get list of processes
-            displayProcesses(processes);
+            displayProcesses();
         } else if (parameters[0] == "-r") {
             if (parameters.size() == 1) {
                 std::cout << "screen switch: missing argument (screen name). Use -ls to list screens.\n";
@@ -39,7 +39,7 @@ void ScreenCommand::execute(std::vector<std::string> parameters, std::vector<Pro
  * Format: process_name date_stamp, Core, current_instruction / max_instruction
  */
 
-void ScreenCommand::displayProcesses(std::vector<Process>& processes) {
+void ScreenCommand::displayProcesses() {
     ReportUtilCommand::printProcesses(std::cout);
 }
 
