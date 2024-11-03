@@ -10,6 +10,7 @@ class CPUWorker : public Thread {
 public:
     void assignProcess(std::shared_ptr<Process> queuedProcess);
     std::shared_ptr<Process> getProcess() const;
+    int getProcessCycles() const;
 
     void start() override;
     void stop();
@@ -23,6 +24,7 @@ private:
     std::shared_ptr<Process> runningProcess = nullptr;
     bool isRunning = false;
     int cycles = 0;
+    int processCycles = 0;
 };
 
 #endif //CPUWORKER_H

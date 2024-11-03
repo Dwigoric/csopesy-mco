@@ -52,7 +52,7 @@ add_executable(CMakeTarget
         src/util/randint.cpp
         src/threading/CustomThread.cpp
         src/threading/CustomThread.h
-)
+ "src/process/RoundRobinScheduler.h" "src/process/RoundRobinScheduler.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
     set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)
