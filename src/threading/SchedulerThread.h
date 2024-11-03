@@ -16,9 +16,9 @@ public:
 
     static void initialize();
 
-    bool createProcess(std::string name);
+    bool createProcess(const std::string &name);
 
-    void registerProcess(std::shared_ptr<Process> process);
+    void registerProcess(const std::shared_ptr<Process> &process);
 
     std::vector<std::shared_ptr<Process> > getProcessList();
 

@@ -3,8 +3,6 @@
 #include "../console/ConsoleManager.h"
 #include "../util/randint.h"
 
-#include <thread>
-
 SchedulerThread *SchedulerThread::instance = nullptr;
 
 SchedulerThread::SchedulerThread() {
@@ -57,7 +55,7 @@ void SchedulerThread::run() {
     this->currentScheduler->run();
 }
 
-bool SchedulerThread::createProcess(std::string name) {
+bool SchedulerThread::createProcess(const std::string &name) {
     auto process = std::make_shared<Process>(this->processCounter, name);
     auto screen = std::make_shared<BaseScreen>(process, name);
 
@@ -68,9 +66,9 @@ bool SchedulerThread::createProcess(std::string name) {
 
     this->processCounter++;
 
-    int minInstructions = std::stoi(ConsoleManager::getInstance()->getConfigs()["min-ins"]);
-    int maxInstructions = std::stoi(ConsoleManager::getInstance()->getConfigs()["max-ins"]);
-    int numInstructions = randint(minInstructions, maxInstructions);
+    const int minInstructions = std::stoi(ConsoleManager::getInstance()->getConfigs()["min-ins"]);
+    const int maxInstructions = std::stoi(ConsoleManager::getInstance()->getConfigs()["max-ins"]);
+    const int numInstructions = randint(minInstructions, maxInstructions);
 
     for (int i = 0; i < numInstructions; i++) {
         process->addCommand(AInstruction::PRINT);
@@ -82,7 +80,7 @@ bool SchedulerThread::createProcess(std::string name) {
     return true;
 }
 
-void SchedulerThread::registerProcess(std::shared_ptr<Process> process) {
+void SchedulerThread::registerProcess(const std::shared_ptr<Process> &process) {
     this->processes.push_back(process);
 }
 
