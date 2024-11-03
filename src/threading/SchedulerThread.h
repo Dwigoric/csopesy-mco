@@ -5,6 +5,7 @@
 #include "Thread.h"
 #include "CustomThread.h"
 #include "../process/FCFSScheduler.h"
+#include "../process/RoundRobinScheduler.h"
 
 class SchedulerThread final : public Thread {
 public:
@@ -14,7 +15,7 @@ public:
 
     static void destroy();
 
-    static void initialize();
+    static void initialize(const std::string& scheduler, int quantum);
 
     bool createProcess(const std::string &name);
 
@@ -33,9 +34,9 @@ public:
     void run() override;
 
 private:
-    SchedulerThread();
+    SchedulerThread(const std::string &scheduler, int quantum);
 
-    ~SchedulerThread() override = default;
+    ~SchedulerThread();
 
     SchedulerThread(SchedulerThread const &) {
     };
@@ -48,6 +49,7 @@ private:
     CustomThread *spawnerThread = nullptr;
 
     FCFSScheduler *schedulerFCFS = nullptr;
+    RoundRobinScheduler *schedulerRR = nullptr;
     // Add other schedulers here
 
     AScheduler *currentScheduler = nullptr;

@@ -9,12 +9,13 @@
 void InitializeCommand::execute()
 {
 	ConsoleManager::getInstance()->loadConfigs();
+	auto configs = ConsoleManager::getInstance()->getConfigs();
 
-	CPUWorker::delayPerExec = std::stoi(ConsoleManager::getInstance()->getConfigs().at("delay-per-exec"));
-	CPUManager::initialize(std::stoi(ConsoleManager::getInstance()->getConfigs().at("num-cpu")));
+	CPUWorker::delayPerExec = std::stoi(configs.at("delay-per-exec"));
+	CPUManager::initialize(std::stoi(configs.at("num-cpu")));
 	CPUManager::getInstance()->startAllCores();
 
-	SchedulerThread::initialize();
+	SchedulerThread::initialize(configs.at("scheduler"), std::stoi(configs.at("quantum-cycles")));
 	SchedulerThread::getInstance()->start();
 
 	ConsoleManager::getInstance()->setConfigInitialized();

@@ -5,10 +5,16 @@
 
 SchedulerThread *SchedulerThread::instance = nullptr;
 
-SchedulerThread::SchedulerThread() {
+SchedulerThread::SchedulerThread(const std::string &scheduler, int quantum) {
     this->schedulerFCFS = new FCFSScheduler();
+    this->schedulerRR = new RoundRobinScheduler(quantum);
 
-    this->currentScheduler = this->schedulerFCFS;
+    if (scheduler == "fcfs") {
+        this->currentScheduler = this->schedulerFCFS;
+    }
+    else if (scheduler == "rr") {
+        this->currentScheduler = this->schedulerRR;
+    }
 }
 
 void SchedulerThread::startSpawning() {
@@ -35,8 +41,11 @@ void SchedulerThread::stopScheduler() const {
 void SchedulerThread::switchScheduler(const std::string &scheduler) {
     this->currentScheduler->stop();
 
-    if (scheduler == "FCFS") {
+    if (scheduler == "fcfs") {
         this->currentScheduler = this->schedulerFCFS;
+    }
+    else if (scheduler == "rr") {
+        this->currentScheduler = this->schedulerRR;
     }
     // Add more schedulers here
     else {
@@ -51,7 +60,6 @@ void SchedulerThread::run() {
         throw std::runtime_error("Invalid scheduler");
     }
 
-    // this->startSpawning();
     this->currentScheduler->run();
 }
 
@@ -96,8 +104,12 @@ void SchedulerThread::destroy() {
     delete getInstance();
 }
 
-void SchedulerThread::initialize() {
+void SchedulerThread::initialize(const std::string &scheduler, int quantum) {
     if (instance == nullptr) {
-        instance = new SchedulerThread();
+        instance = new SchedulerThread(scheduler, quantum);
     }
+}
+
+SchedulerThread::~SchedulerThread() {
+    if (this->isSpawning) this->stopSpawning();
 }
