@@ -3,6 +3,7 @@
 
 
 #include "Thread.h"
+#include "CustomThread.h"
 #include "../process/FCFSScheduler.h"
 
 class SchedulerThread final : public Thread {
@@ -19,7 +20,7 @@ public:
 
     void registerProcess(std::shared_ptr<Process> process);
 
-    std::vector<std::shared_ptr<Process>> getProcessList();
+    std::vector<std::shared_ptr<Process> > getProcessList();
 
     void startSpawning();
 
@@ -43,7 +44,8 @@ private:
 
     bool isSpawning = false;
     int processCounter = 0;
-    std::vector<std::shared_ptr<Process>> processes;
+    std::vector<std::shared_ptr<Process> > processes;
+    CustomThread *spawnerThread = nullptr;
 
     FCFSScheduler *schedulerFCFS = nullptr;
     // Add other schedulers here

@@ -14,23 +14,20 @@ SchedulerThread::SchedulerThread() {
 }
 
 void SchedulerThread::startSpawning() {
-    //while (this->isSpawning) {
-    //    std::shared_ptr<Process> process = std::make_shared<Process>(this->processCounter++,
-    //                                                                 std::format("process_{}", this->processCounter));;
+    this->spawnerThread = new CustomThread([this]() {
+        while (this->isSpawning) {
+            this->createProcess(std::format("screen_{}", this->processCounter));
+        }
+    });
 
-    //    this->currentScheduler->scheduleProcess(*process);
-
-    //    // Add delay of 0.5s
-    //    sleep(500);
-    //}
-
-    for (int i = 0; i < 10; i++) {
-        this->createProcess(std::format("screen_{}", this->processCounter));
-    }
+    this->isSpawning = true;
+    this->spawnerThread->start();
 }
 
 void SchedulerThread::stopSpawning() {
     this->isSpawning = false;
+    this->spawnerThread->join();
+    this->spawnerThread = nullptr;
 }
 
 void SchedulerThread::stopScheduler() const {
@@ -61,8 +58,8 @@ void SchedulerThread::run() {
 }
 
 bool SchedulerThread::createProcess(std::string name) {
-    std::shared_ptr<Process> process = std::make_shared<Process>(this->processCounter, name);
-    std::shared_ptr<BaseScreen> screen = std::make_shared<BaseScreen>(process, name);
+    auto process = std::make_shared<Process>(this->processCounter, name);
+    auto screen = std::make_shared<BaseScreen>(process, name);
 
     if (!ConsoleManager::getInstance()->registerScreen(screen)) {
         // only switch screens if the registration was successful
@@ -89,7 +86,7 @@ void SchedulerThread::registerProcess(std::shared_ptr<Process> process) {
     this->processes.push_back(process);
 }
 
-std::vector<std::shared_ptr<Process>> SchedulerThread::getProcessList() {
+std::vector<std::shared_ptr<Process> > SchedulerThread::getProcessList() {
     return this->processes;
 }
 
