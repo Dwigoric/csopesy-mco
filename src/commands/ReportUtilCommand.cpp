@@ -13,6 +13,8 @@ void ReportUtilCommand::execute()
 
 void ReportUtilCommand::printProcesses(std::ostream& os)
 {
+    os << "(for testing only) NUM PROCESSES: " << SchedulerThread::getInstance()->getProcessList().size() << "\n";
+
     int max_cpu = std::stoi(ConsoleManager::getInstance()->getConfigs()["num-cpu"]);
     int used_cpu = 0;
 
@@ -22,7 +24,7 @@ void ReportUtilCommand::printProcesses(std::ostream& os)
         }
     }
 
-    float utilization = (float)used_cpu / (float)max_cpu;
+    float utilization = (float)used_cpu / (float)max_cpu;   
 
     os << "CPU Utilization: " << utilization * 100 << "%\n";
     os << "Cores used: " << used_cpu << "\n";

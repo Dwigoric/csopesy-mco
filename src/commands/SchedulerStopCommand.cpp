@@ -4,6 +4,5 @@
 
 void SchedulerStopCommand::execute() {
     SchedulerThread::getInstance()->stopSpawning();
-    SchedulerThread::getInstance()->stopScheduler();
 }
 
