@@ -22,7 +22,7 @@ void AScheduler::run() {
 void AScheduler::onTick() const {
     if (this->isSpawning) {
         SchedulerThread::getInstance()->createProcess(
-            std::format("screen_{}", SchedulerThread::getInstance()->getProcessCounter()));
+            std::format("process_{}", SchedulerThread::getInstance()->getProcessCounter()));
     }
 }
 
