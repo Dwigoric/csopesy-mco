@@ -17,7 +17,6 @@ SchedulerThread::SchedulerThread(const std::string &scheduler, const int quantum
     } else if (scheduler == "rr") {
         this->currentScheduler = new RoundRobinScheduler(quantum);
     }
-        // TODO: Adjust for RR
 
     this->globalTicker = new CustomThread([this]() {
         while (true) {

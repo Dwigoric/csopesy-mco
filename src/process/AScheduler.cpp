@@ -1,9 +1,11 @@
 #include "AScheduler.h"
 
+#include "../console/ConsoleManager.h"
 #include "../threading/SchedulerThread.h"
 
 AScheduler::AScheduler(const SchedulingAlgorithm algorithm) {
     this->algorithm = algorithm;
+    this->spawnFrequency = std::stoi(ConsoleManager::getInstance()->getConfigs().at("batch-process-freq"));
 }
 
 void AScheduler::scheduleProcess(const std::shared_ptr<Process> &process) {
@@ -19,10 +21,14 @@ void AScheduler::run() {
     }
 }
 
-void AScheduler::onTick() const {
-    if (this->isSpawning) {
+void AScheduler::onTick() {
+    if (this->isSpawning && this->spawnCounter >= this->spawnFrequency) {
         SchedulerThread::getInstance()->createProcess(
             std::format("process_{}", SchedulerThread::getInstance()->getProcessCounter()));
+
+        this->spawnCounter = 0;
+    } else {
+        this->spawnCounter++;
     }
 }
 

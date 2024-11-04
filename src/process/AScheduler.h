@@ -33,7 +33,7 @@ public:
 
     virtual void init() = 0;
 
-    void onTick() const;
+    void onTick();
 
     virtual void execute() = 0;
 
@@ -48,6 +48,9 @@ private:
     SchedulingAlgorithm algorithm;
 
     bool running = false;
+
+    int spawnFrequency;
+    int spawnCounter = 0;
 };
 
 
