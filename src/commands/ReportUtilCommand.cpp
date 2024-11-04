@@ -1,4 +1,5 @@
 #include "ReportUtilCommand.h"
+#include "../cpu/CPUManager.h"
 
 void ReportUtilCommand::execute()
 {
@@ -13,6 +14,10 @@ void ReportUtilCommand::execute()
 
 void ReportUtilCommand::printProcesses(std::ostream& os)
 {
+    for (CPUWorker* core : CPUManager::getInstance()->getCores()) {
+        core->mutex.lock();
+    }
+
     os << "(for testing only) NUM PROCESSES: " << SchedulerThread::getInstance()->getProcessList().size() << "\n";
 
     int max_cpu = std::stoi(ConsoleManager::getInstance()->getConfigs()["num-cpu"]);
@@ -50,4 +55,8 @@ void ReportUtilCommand::printProcesses(std::ostream& os)
     }
 
     os << "---------------------------------------------\n";
+
+    for (CPUWorker* core : CPUManager::getInstance()->getCores()) {
+        core->mutex.unlock();
+    }
 }
