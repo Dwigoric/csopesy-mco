@@ -10,6 +10,7 @@
 #include "AScheduler.h"
 #include "../instructions/PrintInstruction.h"
 #include "../threading/SchedulerThread.h"
+#include "../instructions/NoOpInstruction.h"
 
 Process::Process(const int id, std::string name) {
     this->id = id;
@@ -29,6 +30,9 @@ void Process::addCommand(AInstruction::InstructionType instructionType) {
     if (instructionType == AInstruction::PRINT) {
         std::string toPrint = "Hello world from " + this->name + "!";
         instruction = std::make_shared<PrintInstruction>(this->id, toPrint, this->outfile);
+    }
+    else if (instructionType == AInstruction::NOOP) {
+        instruction = std::make_shared<NoOpInstruction>();
     }
 
     this->instructionList.push_back(instruction);

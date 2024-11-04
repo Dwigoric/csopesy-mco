@@ -4,12 +4,15 @@
 class AInstruction {
 public:
 	enum InstructionType {
-		PRINT
+		PRINT,
+		NOOP
 	};
 
 	AInstruction(int pid, InstructionType instructionType);
 	InstructionType getInstructionType() const;
 	virtual void execute(int core) = 0;
+
+	AInstruction() = default;
 
 protected:
 	int pid;

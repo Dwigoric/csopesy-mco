@@ -62,7 +62,7 @@ bool SchedulerThread::createProcess(const std::string &name) {
     const int numInstructions = randint(minInstructions, maxInstructions);
 
     for (int i = 0; i < numInstructions; i++) {
-        process->addCommand(AInstruction::PRINT);
+        process->addCommand(AInstruction::NOOP);
     }
 
     this->registerProcess(process);

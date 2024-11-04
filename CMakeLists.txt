@@ -47,7 +47,7 @@ add_executable(CMakeTarget
         src/cpu/CPUWorker.cpp
         src/cpu/CPUManager.cpp 
         src/cpu/CPUManager.h
- "src/commands/InitializeCommand.cpp" "src/commands/InitializeCommand.h" "src/commands/ExitCommand.cpp" "src/commands/ExitCommand.h" "src/commands/ReportUtilCommand.h" "src/commands/ReportUtilCommand.cpp"
+ "src/commands/InitializeCommand.cpp" "src/commands/InitializeCommand.h" "src/commands/ExitCommand.cpp" "src/instructions/NoOpInstruction.h" "src/instructions/NoOpInstruction.cpp" "src/commands/ExitCommand.h" "src/commands/ReportUtilCommand.h" "src/commands/ReportUtilCommand.cpp"
         src/util/randint.h 
         src/util/randint.cpp
         src/threading/CustomThread.cpp
