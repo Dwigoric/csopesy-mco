@@ -50,7 +50,19 @@ void FCFSScheduler::execute() {
             // Unregister from console manager
             runningProcess->setState(Process::FINISHED);
             ConsoleManager::getInstance()->unregisterScreen(runningProcess->getName());
-            currentCore->assignProcess(nullptr);
+            if (!this->readyQueue.empty()) {
+                //std::cout << "Queueing process!";
+                std::shared_ptr<Process> nextProcess = this->readyQueue.front();
+                this->readyQueue.erase(this->readyQueue.begin());
+
+                nextProcess->setCore(std::distance(cores.begin(), it));
+                nextProcess->setState(Process::RUNNING);
+                nextProcess->setTimeExecuted();
+                currentCore->assignProcess(nextProcess);
+            }
+            else {
+                currentCore->assignProcess(nullptr);
+            }
         }
 
         if (!runningProcess) {
