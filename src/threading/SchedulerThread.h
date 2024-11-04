@@ -39,8 +39,6 @@ private:
 
     static SchedulerThread *instance;
 
-    Thread *globalTicker = nullptr;
-
     int processCounter = 0;
     std::vector<std::shared_ptr<Process> > processes;
 

@@ -1,13 +1,10 @@
 #include "SchedulerThread.h"
 
-#include "CustomThread.h"
 #include "../console/BaseScreen.h"
 #include "../console/ConsoleManager.h"
 #include "../util/randint.h"
 #include "../process/FCFSScheduler.h"
 #include "../process/RoundRobinScheduler.h"
-
-#include <thread>
 
 SchedulerThread *SchedulerThread::instance = nullptr;
 
@@ -17,16 +14,6 @@ SchedulerThread::SchedulerThread(const std::string &scheduler, const int quantum
     } else if (scheduler == "rr") {
         this->currentScheduler = new RoundRobinScheduler(quantum);
     }
-
-    this->globalTicker = new CustomThread([this]() {
-        while (true) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
-
-            this->currentScheduler->onTick();
-        }
-    });
-
-    this->globalTicker->start();
 }
 
 void SchedulerThread::startSpawning() const {

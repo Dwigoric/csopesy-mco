@@ -17,7 +17,9 @@ void AScheduler::run() {
     this->running = true;
     init();
     while (this->running) {
+        onTick();
         execute();
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
 
