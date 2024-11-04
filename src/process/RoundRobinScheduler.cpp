@@ -27,14 +27,36 @@ void RoundRobinScheduler::execute() {
             if (runningProcess->isFinished()) {
                 runningProcess->setState(Process::FINISHED);
                 ConsoleManager::getInstance()->unregisterScreen(runningProcess->getName());
-                currentCore->assignProcess(nullptr);
+                if (!this->readyQueue.empty()) {
+                    std::shared_ptr<Process> nextProcess = this->readyQueue.front();
+                    this->readyQueue.erase(this->readyQueue.begin());
+
+                    nextProcess->setCore(std::distance(cores.begin(), it));
+                    nextProcess->setState(Process::RUNNING);
+                    nextProcess->setTimeExecuted();
+                    currentCore->assignProcess(nextProcess);
+                }
+                else {
+                    currentCore->assignProcess(nullptr);
+                }
             }
 
             // Current quantum timeslice has finished
             else if (currentCore->getProcessCycles() >= this->quantum) {
                 runningProcess->setState(Process::READY);
                 this->readyQueue.push_back(runningProcess);
-                currentCore->assignProcess(nullptr);
+                if (!this->readyQueue.empty()) {
+                    std::shared_ptr<Process> nextProcess = this->readyQueue.front();
+                    this->readyQueue.erase(this->readyQueue.begin());
+
+                    nextProcess->setCore(std::distance(cores.begin(), it));
+                    nextProcess->setState(Process::RUNNING);
+                    nextProcess->setTimeExecuted();
+                    currentCore->assignProcess(nextProcess);
+                }
+                else {
+                    currentCore->assignProcess(nullptr);
+                }
             }
         }
 
