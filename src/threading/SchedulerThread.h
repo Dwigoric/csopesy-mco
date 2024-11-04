@@ -15,11 +15,9 @@ public:
 
     static void destroy();
 
-    static void initialize(const std::string& scheduler, int quantum);
+    static void initialize(const std::string &scheduler, int quantum);
 
     bool createProcess(const std::string &name);
-
-    void registerProcess(const std::shared_ptr<Process> &process);
 
     std::vector<std::shared_ptr<Process> > getProcessList();
 
@@ -53,6 +51,8 @@ private:
     // Add other schedulers here
 
     AScheduler *currentScheduler = nullptr;
+
+    void registerProcess(const std::shared_ptr<Process> &process);
 };
 
 
