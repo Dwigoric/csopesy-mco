@@ -21,7 +21,11 @@ public:
 
     explicit AScheduler(SchedulingAlgorithm algorithm);
 
-    void scheduleProcess(std::shared_ptr<Process> process);
+    void scheduleProcess(const std::shared_ptr<Process> &process);
+
+    void startSpawning();
+
+    void stopSpawning();
 
     void run();
 
@@ -29,12 +33,16 @@ public:
 
     virtual void init() = 0;
 
+    void onTick() const;
+
     virtual void execute() = 0;
 
 protected:
-    std::vector<std::shared_ptr<Process>> readyQueue;
+    std::vector<std::shared_ptr<Process> > readyQueue;
 
     std::mutex queueMutex;
+
+    bool isSpawning = false;
 
 private:
     SchedulingAlgorithm algorithm;

@@ -3,9 +3,7 @@
 
 
 #include "Thread.h"
-#include "CustomThread.h"
-#include "../process/FCFSScheduler.h"
-#include "../process/RoundRobinScheduler.h"
+#include "../process/AScheduler.h"
 
 class SchedulerThread final : public Thread {
 public:
@@ -21,34 +19,30 @@ public:
 
     std::vector<std::shared_ptr<Process> > getProcessList();
 
-    void startSpawning();
+    [[nodiscard]] int getProcessCounter() const;
 
-    void stopSpawning();
+    void startSpawning() const;
+
+    void stopSpawning() const;
 
     void stopScheduler() const;
-
-    void switchScheduler(const std::string &scheduler);
 
     void run() override;
 
 private:
     SchedulerThread(const std::string &scheduler, int quantum);
 
-    ~SchedulerThread();
+    // ~SchedulerThread();
 
     SchedulerThread(SchedulerThread const &) {
     };
 
     static SchedulerThread *instance;
 
-    bool isSpawning = false;
+    Thread *globalTicker = nullptr;
+
     int processCounter = 0;
     std::vector<std::shared_ptr<Process> > processes;
-    CustomThread *spawnerThread = nullptr;
-
-    FCFSScheduler *schedulerFCFS = nullptr;
-    RoundRobinScheduler *schedulerRR = nullptr;
-    // Add other schedulers here
 
     AScheduler *currentScheduler = nullptr;
 

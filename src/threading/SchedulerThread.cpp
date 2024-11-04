@@ -1,58 +1,41 @@
 #include "SchedulerThread.h"
+
+#include "CustomThread.h"
 #include "../console/BaseScreen.h"
 #include "../console/ConsoleManager.h"
 #include "../util/randint.h"
+#include "../process/FCFSScheduler.h"
+#include "../process/RoundRobinScheduler.h"
 
 SchedulerThread *SchedulerThread::instance = nullptr;
 
 SchedulerThread::SchedulerThread(const std::string &scheduler, int quantum) {
-    this->schedulerFCFS = new FCFSScheduler();
-    this->schedulerRR = new RoundRobinScheduler(quantum);
-
     if (scheduler == "fcfs") {
-        this->currentScheduler = this->schedulerFCFS;
+        this->currentScheduler = new FCFSScheduler();
+    } else if (scheduler == "rr") {
+        this->currentScheduler = new RoundRobinScheduler(quantum);
     }
-    else if (scheduler == "rr") {
-        this->currentScheduler = this->schedulerRR;
-    }
-}
 
-void SchedulerThread::startSpawning() {
-    this->spawnerThread = new CustomThread([this]() {
-        while (this->isSpawning) {
-            this->createProcess(std::format("screen_{}", this->processCounter));
+    this->globalTicker = new CustomThread([this]() {
+        // TODO: Adjust for RR
+        while (true) {
+            this->currentScheduler->onTick();
         }
     });
 
-    this->isSpawning = true;
-    this->spawnerThread->start();
+    this->globalTicker->start();
 }
 
-void SchedulerThread::stopSpawning() {
-    this->isSpawning = false;
-    this->spawnerThread->join();
-    this->spawnerThread = nullptr;
+void SchedulerThread::startSpawning() const {
+    this->currentScheduler->startSpawning();
+}
+
+void SchedulerThread::stopSpawning() const {
+    this->currentScheduler->stopSpawning();
 }
 
 void SchedulerThread::stopScheduler() const {
     this->currentScheduler->stop();
-}
-
-void SchedulerThread::switchScheduler(const std::string &scheduler) {
-    this->currentScheduler->stop();
-
-    if (scheduler == "fcfs") {
-        this->currentScheduler = this->schedulerFCFS;
-    }
-    else if (scheduler == "rr") {
-        this->currentScheduler = this->schedulerRR;
-    }
-    // Add more schedulers here
-    else {
-        throw std::runtime_error("Invalid scheduler");
-    }
-
-    this->currentScheduler->run();
 }
 
 void SchedulerThread::run() {
@@ -92,6 +75,10 @@ void SchedulerThread::registerProcess(const std::shared_ptr<Process> &process) {
     this->processes.push_back(process);
 }
 
+int SchedulerThread::getProcessCounter() const {
+    return this->processCounter;
+}
+
 std::vector<std::shared_ptr<Process> > SchedulerThread::getProcessList() {
     return this->processes;
 }
@@ -108,8 +95,4 @@ void SchedulerThread::initialize(const std::string &scheduler, int quantum) {
     if (instance == nullptr) {
         instance = new SchedulerThread(scheduler, quantum);
     }
-}
-
-SchedulerThread::~SchedulerThread() {
-    if (this->isSpawning) this->stopSpawning();
 }
