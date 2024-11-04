@@ -19,9 +19,9 @@ Process::Process(const int id, std::string name) {
 
     this->outfile = this->name + "_log.txt";
 
-    std::ofstream fs(this->outfile);
-    fs << "Process name: " << this->name << "\nLog:\n\n";
-    fs.close();
+    // std::ofstream fs(this->outfile);
+    // fs << "Process name: " << this->name << "\nLog:\n\n";
+    // fs.close();
 }
 
 void Process::addCommand(AInstruction::InstructionType instructionType) {

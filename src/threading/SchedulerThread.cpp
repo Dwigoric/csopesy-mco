@@ -7,6 +7,8 @@
 #include "../process/FCFSScheduler.h"
 #include "../process/RoundRobinScheduler.h"
 
+#include <thread>
+
 SchedulerThread *SchedulerThread::instance = nullptr;
 
 SchedulerThread::SchedulerThread(const std::string &scheduler, const int quantum) {
@@ -15,10 +17,12 @@ SchedulerThread::SchedulerThread(const std::string &scheduler, const int quantum
     } else if (scheduler == "rr") {
         this->currentScheduler = new RoundRobinScheduler(quantum);
     }
+        // TODO: Adjust for RR
 
     this->globalTicker = new CustomThread([this]() {
-        // TODO: Adjust for RR
         while (true) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
             this->currentScheduler->onTick();
         }
     });

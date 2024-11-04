@@ -183,6 +183,10 @@ void ConsoleManager::loadConfigs()
 		std::getline(fs, line);
 		tokens = tokenize(line);
 
+		if (tokens[1].starts_with('"')) {
+			tokens[1] = tokens[1].substr(1, tokens[1].length() - 2);
+		}
+
 		this->configs.insert(std::make_pair<>(tokens[0], tokens[1]));
 	}
 
