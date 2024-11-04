@@ -9,7 +9,7 @@
 
 SchedulerThread *SchedulerThread::instance = nullptr;
 
-SchedulerThread::SchedulerThread(const std::string &scheduler, int quantum) {
+SchedulerThread::SchedulerThread(const std::string &scheduler, const int quantum) {
     if (scheduler == "fcfs") {
         this->currentScheduler = new FCFSScheduler();
     } else if (scheduler == "rr") {
@@ -91,7 +91,7 @@ void SchedulerThread::destroy() {
     delete getInstance();
 }
 
-void SchedulerThread::initialize(const std::string &scheduler, int quantum) {
+void SchedulerThread::initialize(const std::string &scheduler, const int quantum) {
     if (instance == nullptr) {
         instance = new SchedulerThread(scheduler, quantum);
     }
