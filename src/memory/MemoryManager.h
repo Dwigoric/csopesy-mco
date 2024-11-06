@@ -2,6 +2,10 @@
 
 #include <cstdint>
 #include <iostream>
+#include <memory>
+
+#include "IMemoryAllocator.h"
+#include "FirstFitFlatAllocator.h"
 
 #include "../console/ConsoleManager.h"
 
@@ -13,9 +17,9 @@ public:
 
 private:
 	static MemoryManager* sharedInstance;
-	static int x;
 
 	uint8_t* memory;
+	std::shared_ptr<IMemoryAllocator> allocator;
 
 	MemoryManager();
 	~MemoryManager() = default;

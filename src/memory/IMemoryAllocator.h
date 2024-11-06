@@ -3,7 +3,10 @@
 #include <string>
 
 class IMemoryAllocator {
-	virtual void* allocate(size_t size) = 0;
-	virtual void deallocate(void* ptr) = 0;
+public:
+	virtual void* allocate(const int pid, size_t size) = 0;
+	virtual void deallocate(const int pid) = 0;
 	virtual std::string visualizeMemory() = 0;
+
+	virtual size_t getAllocatedSize() = 0;
 };
