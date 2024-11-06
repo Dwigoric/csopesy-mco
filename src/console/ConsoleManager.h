@@ -81,7 +81,13 @@ private:
 		std::make_pair<>("batch-process-freq", "1"),
 		std::make_pair<>("min-ins", "1000"),
 		std::make_pair<>("max-ins", "2000"),
-		std::make_pair<>("delay-per-exec", "0")
+		std::make_pair<>("delay-per-exec", "0"),
+
+		// MCO2 configs
+		std::make_pair<>("max-overall-mem", "16384"),
+		std::make_pair<>("mem-per-frame", "16"),
+		std::make_pair<>("min-mem-per-proc", "4096"),
+		std::make_pair<>("max-mem-per-proc", "4096")
 	};
 };
 
