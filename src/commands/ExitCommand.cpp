@@ -2,6 +2,7 @@
 #include "../console/ConsoleManager.h"
 #include "../cpu/CPUManager.h"
 #include "../threading/SchedulerThread.h"
+#include "../memory/MemoryManager.h"
 
 void ExitCommand::execute()
 {
@@ -10,6 +11,7 @@ void ExitCommand::execute()
 	if (ConsoleManager::getInstance()->getConfigInitialized()) {
 		SchedulerThread::getInstance()->stopScheduler();
 		SchedulerThread::destroy();
+		MemoryManager::destroy();
 		CPUManager::destroy();
 	}
 }
