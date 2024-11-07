@@ -38,9 +38,11 @@ void FCFSScheduler::execute() {
 
     std::vector<CPUWorker*> cores = CPUManager::getInstance()->getCores();
     CPUWorker* currentCore;
+    int coreId;
 
     for (auto it = cores.begin(); it != cores.end(); it++) {
         currentCore = *it;
+        coreId = std::distance(cores.begin(), it);
         std::shared_ptr<Process> runningProcess = currentCore->getProcess();
 
         if (runningProcess != nullptr && runningProcess->isFinished()) {
@@ -50,17 +52,7 @@ void FCFSScheduler::execute() {
             // Unregister from console manager
             runningProcess->setState(Process::FINISHED);
             ConsoleManager::getInstance()->unregisterScreen(runningProcess->getName());
-            if (!this->readyQueue.empty()) {
-                //std::cout << "Queueing process!";
-                std::shared_ptr<Process> nextProcess = this->readyQueue.front();
-                this->readyQueue.erase(this->readyQueue.begin());
-
-                nextProcess->setCore(std::distance(cores.begin(), it));
-                nextProcess->setState(Process::RUNNING);
-                nextProcess->setTimeExecuted();
-                currentCore->assignProcess(nextProcess);
-            }
-            else {
+            if (!this->assignQueuedProcess(currentCore, coreId)) {
                 currentCore->assignProcess(nullptr);
             }
         }
@@ -74,19 +66,7 @@ void FCFSScheduler::execute() {
                
             //std::unique_lock<std::mutex> queueLock(this->queueMutex);
             
-            if (!this->readyQueue.empty()) {
-                //std::cout << "Queueing process!";
-                std::shared_ptr<Process> nextProcess = this->readyQueue.front();
-                this->readyQueue.erase(this->readyQueue.begin());
-
-                nextProcess->setCore(std::distance(cores.begin(), it));
-                nextProcess->setState(Process::RUNNING);
-                nextProcess->setTimeExecuted();
-                currentCore->assignProcess(nextProcess);
-            }
-            else {
-                //std::cout << "Ready queue is empty!";
-            }
+            this->assignQueuedProcess(currentCore, coreId);
             //lock.unlock();
             //std::cout << "\n";
         }

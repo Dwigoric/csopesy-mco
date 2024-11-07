@@ -6,6 +6,7 @@
 #include <mutex>
 
 #include "Process.h"
+#include "../cpu/CPUWorker.h"
 
 
 class AScheduler {
@@ -22,6 +23,8 @@ public:
     explicit AScheduler(SchedulingAlgorithm algorithm);
 
     void scheduleProcess(const std::shared_ptr<Process> &process);
+
+    bool assignQueuedProcess(CPUWorker* core, int coreId);
 
     void startSpawning();
 

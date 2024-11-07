@@ -13,6 +13,22 @@ void AScheduler::scheduleProcess(const std::shared_ptr<Process> &process) {
     process->setState(Process::READY);
 }
 
+bool AScheduler::assignQueuedProcess(CPUWorker* core, int coreId) {
+    if (!this->readyQueue.empty()) {
+        std::shared_ptr<Process> nextProcess = this->readyQueue.front();
+        this->readyQueue.erase(this->readyQueue.begin());
+
+        nextProcess->setCore(coreId);
+        nextProcess->setState(Process::RUNNING);
+        nextProcess->setTimeExecuted();
+    	core->assignProcess(nextProcess);
+
+        return true;
+    }
+
+    return false;
+}
+
 void AScheduler::run() {
     this->running = true;
     init();
