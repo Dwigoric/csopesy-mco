@@ -1,6 +1,8 @@
 #include "MemoryManager.h"
 
-MemoryManager* MemoryManager::sharedInstance = nullptr;
+#include "FirstFitFlatAllocator.h"
+
+MemoryManager *MemoryManager::sharedInstance = nullptr;
 
 MemoryManager::MemoryManager() {
     this->totalMemory = std::stoi(
@@ -37,18 +39,37 @@ MemoryManager::MemoryManager() {
     */
 }
 
-void MemoryManager::initialize()
-{
+void MemoryManager::printDetails(std::ostream &os) const {
+    const auto now_time_t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+    const auto *localTime = std::localtime(&now_time_t);
+    os << "Timestamp: " << std::put_time(localTime, "(%m/%d/%Y %I:%M:%S%p)") << "\n";
+    os << "Number of processes in memory: " << "(TODO)" << "\n";
+    os << "Total external fragmentation in KB: " << this->computeExternalFragmentation() << "\n";
+
+    // TODO: Print the memory map
+}
+
+uint8_t MemoryManager::computeExternalFragmentation() const {
+    uint8_t fragmentation = 0;
+
+    for (size_t i = 0; i < this->totalMemory; i += this->frameSize) {
+        if (this->memory[i] == 0) {
+            fragmentation++;
+        }
+    }
+
+    return fragmentation;
+}
+
+void MemoryManager::initialize() {
     sharedInstance = new MemoryManager();
 }
 
-MemoryManager* MemoryManager::getInstance()
-{
+MemoryManager *MemoryManager::getInstance() {
     return sharedInstance;
 }
 
-void MemoryManager::destroy()
-{
+void MemoryManager::destroy() {
     if (sharedInstance->memory != nullptr) {
         delete sharedInstance->memory;
     }
