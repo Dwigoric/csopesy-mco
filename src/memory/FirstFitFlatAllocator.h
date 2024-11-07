@@ -14,7 +14,7 @@ public:
 	void deallocate(const int pid) override;
 	std::string visualizeMemory() override;
 
-	std::vector<int>& getAllocationMap();
+	std::vector<int>& getAllocationMap() override;
 	size_t getAllocatedSize() override;
 private:
 	uint8_t* memory;

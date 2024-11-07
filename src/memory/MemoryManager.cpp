@@ -1,6 +1,8 @@
 #include "MemoryManager.h"
 
 #include "FirstFitFlatAllocator.h"
+#include <set>
+#include <algorithm>
 
 MemoryManager *MemoryManager::sharedInstance = nullptr;
 
@@ -17,8 +19,7 @@ MemoryManager::MemoryManager() {
 
     this->allocator = std::make_shared<FirstFitFlatAllocator>(this->memory, this->totalMemory, this->frameSize);
 
-    /* 
-    --- FOR TESTING
+    /*
     uint8_t* mem = static_cast<uint8_t*>(this->allocator->allocate(0, 4096));
     std::fill(mem, mem + 4096, 'a');
 
@@ -35,30 +36,56 @@ MemoryManager::MemoryManager() {
     std::fill(mem4, mem4 + 4096, 'd');
 
     std::cout << this->allocator->visualizeMemory();
-    std::cout << this->allocator->getAllocatedSize() << "\n";
+
+    printDetails(std::cout);
     */
 }
 
 void MemoryManager::printDetails(std::ostream &os) const {
+    // Get allocation map
+    const std::vector<int>& allocationMap = this->allocator->getAllocationMap();
+    int blockStart = 0;
+    int blockValue = -1;
+
     const auto now_time_t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
     const auto *localTime = std::localtime(&now_time_t);
     os << "Timestamp: " << std::put_time(localTime, "(%m/%d/%Y %I:%M:%S%p)") << "\n";
-    os << "Number of processes in memory: " << "(TODO)" << "\n";
+
+    // Number of processes in memory is the number of unique integers in memory, aside from -1
+    os << "Number of processes in memory: " << std::set<int>(allocationMap.begin(), allocationMap.end()).size() - 1 << "\n";
     os << "Total external fragmentation in KB: " << this->computeExternalFragmentation() << "\n";
 
-    // TODO: Print the memory map
-}
+    // Print the memory map
+    os << "----end---- = " << this->totalMemory << "\n\n";
 
-uint8_t MemoryManager::computeExternalFragmentation() const {
-    uint8_t fragmentation = 0;
+    for (int i = allocationMap.size() - 1; i > -1; i--) {
+        if (allocationMap[i] != blockValue) {
+            // print the current block, if the value is not -1
+            if (blockValue != -1) {
+                os << blockStart * frameSize << "\n";
+                os << "P" << blockValue << "\n";
+                os << (i + 1) * frameSize << "\n\n";
+            }
 
-    for (size_t i = 0; i < this->totalMemory; i += this->frameSize) {
-        if (this->memory[i] == 0) {
-            fragmentation++;
+            blockStart = i + 1;
+            blockValue = allocationMap[i];
         }
     }
 
-    return fragmentation;
+    // print last block, if possible
+    if (blockValue != -1) {
+        os << blockStart * frameSize << "\n";
+        os << "P" << blockValue << "\n";
+        os << 0 << "\n\n";
+    }
+
+    os << "----start---- = 0" << "\n";
+}
+
+int MemoryManager::computeExternalFragmentation() const {
+    const std::vector<int>& allocationMap = this->allocator->getAllocationMap();
+
+    return std::count(allocationMap.begin(), allocationMap.end(), -1) * this->frameSize;
 }
 
 void MemoryManager::initialize() {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 class IMemoryAllocator {
 public:
@@ -8,5 +9,6 @@ public:
 	virtual void deallocate(const int pid) = 0;
 	virtual std::string visualizeMemory() = 0;
 
+	virtual std::vector<int>& getAllocationMap() = 0;
 	virtual size_t getAllocatedSize() = 0;
 };

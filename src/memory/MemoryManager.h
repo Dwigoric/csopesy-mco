@@ -34,5 +34,5 @@ private:
 	size_t totalMemory{};
 	size_t frameSize{};
 
-	[[nodiscard]] uint8_t computeExternalFragmentation() const;
+	[[nodiscard]] int computeExternalFragmentation() const;
 };
