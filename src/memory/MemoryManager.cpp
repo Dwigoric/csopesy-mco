@@ -29,8 +29,8 @@ MemoryManager::MemoryManager() {
     uint8_t* mem3 = static_cast<uint8_t*>(this->allocator->allocate(2, 4096));
     std::fill(mem3, mem3 + 4096, 'c');
 
-    this->allocator->deallocate(0);
-    this->allocator->deallocate(1);
+    //this->allocator->deallocate(0);
+    //this->allocator->deallocate(1);
 
     uint8_t* mem4 = static_cast<uint8_t*>(this->allocator->allocate(3, 4096));
     std::fill(mem4, mem4 + 4096, 'd');
@@ -52,7 +52,8 @@ void MemoryManager::printDetails(std::ostream &os) const {
     os << "Timestamp: " << std::put_time(localTime, "(%m/%d/%Y %I:%M:%S%p)") << "\n";
 
     // Number of processes in memory is the number of unique integers in memory, aside from -1
-    os << "Number of processes in memory: " << std::set<int>(allocationMap.begin(), allocationMap.end()).size() - 1 << "\n";
+    const auto uniqueProcesses = std::set(allocationMap.begin(), allocationMap.end());
+    os << "Number of processes in memory: " << uniqueProcesses.size() - uniqueProcesses.count(-1) << "\n";
     os << "Total external fragmentation in KB: " << this->computeExternalFragmentation() << "\n";
 
     // Print the memory map
