@@ -6,7 +6,7 @@
 
 class RoundRobinScheduler : public AScheduler {
 public:
-    RoundRobinScheduler(int quantum);
+    RoundRobinScheduler(int quantum, std::shared_ptr<IMemoryAllocator> memoryAllocator);
 
     void init() override;
 

@@ -6,7 +6,7 @@
 
 class FCFSScheduler : public AScheduler {
 public:
-    FCFSScheduler();
+    FCFSScheduler(std::shared_ptr<IMemoryAllocator> memoryAllocator);
 
     void init() override;
 

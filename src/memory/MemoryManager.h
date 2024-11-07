@@ -10,13 +10,15 @@
 
 class MemoryManager {
 public:
-	static MemoryManager *getInstance();
+	static MemoryManager* getInstance();
 
 	static void initialize();
 
 	static void destroy();
 
-	void printDetails(std::ostream &os) const;
+	void printDetails(std::ostream& os) const;
+
+	std::shared_ptr<IMemoryAllocator> getAllocator() const;
 
 private:
 	static MemoryManager *sharedInstance;

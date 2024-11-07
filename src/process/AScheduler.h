@@ -7,6 +7,7 @@
 
 #include "Process.h"
 #include "../cpu/CPUWorker.h"
+#include "../memory/IMemoryAllocator.h"
 
 
 class AScheduler {
@@ -20,7 +21,7 @@ public:
         SHORTEST_JOB_FIRST_NON_PREEMPTIVE,
     };
 
-    explicit AScheduler(SchedulingAlgorithm algorithm);
+    explicit AScheduler(SchedulingAlgorithm algorithm, std::shared_ptr<IMemoryAllocator> memoryAllocator);
 
     void scheduleProcess(const std::shared_ptr<Process> &process);
 
@@ -46,6 +47,8 @@ protected:
     std::mutex queueMutex;
 
     bool isSpawning = false;
+
+    std::shared_ptr<IMemoryAllocator> memoryAllocator;
 
 private:
     SchedulingAlgorithm algorithm;

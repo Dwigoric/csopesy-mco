@@ -3,8 +3,9 @@
 #include "../console/ConsoleManager.h"
 #include "../threading/SchedulerThread.h"
 
-AScheduler::AScheduler(const SchedulingAlgorithm algorithm) {
+AScheduler::AScheduler(const SchedulingAlgorithm algorithm, std::shared_ptr<IMemoryAllocator> memoryAllocator) {
     this->algorithm = algorithm;
+    this->memoryAllocator = memoryAllocator;
     this->spawnFrequency = std::stoi(ConsoleManager::getInstance()->getConfigs().at("batch-process-freq"));
 }
 

@@ -8,11 +8,11 @@
 
 SchedulerThread *SchedulerThread::instance = nullptr;
 
-SchedulerThread::SchedulerThread(const std::string &scheduler, const int quantum) {
+SchedulerThread::SchedulerThread(const std::string &scheduler, const int quantum, std::shared_ptr<IMemoryAllocator> memoryAllocator) {
     if (scheduler == "fcfs") {
-        this->currentScheduler = new FCFSScheduler();
+        this->currentScheduler = new FCFSScheduler(memoryAllocator);
     } else if (scheduler == "rr") {
-        this->currentScheduler = new RoundRobinScheduler(quantum);
+        this->currentScheduler = new RoundRobinScheduler(quantum, memoryAllocator);
     }
 }
 
@@ -81,8 +81,8 @@ void SchedulerThread::destroy() {
     delete getInstance();
 }
 
-void SchedulerThread::initialize(const std::string &scheduler, const int quantum) {
+void SchedulerThread::initialize(const std::string &scheduler, const int quantum, std::shared_ptr<IMemoryAllocator> memoryAllocator) {
     if (instance == nullptr) {
-        instance = new SchedulerThread(scheduler, quantum);
+        instance = new SchedulerThread(scheduler, quantum, memoryAllocator);
     }
 }

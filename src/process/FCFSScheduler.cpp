@@ -6,7 +6,7 @@
 #include "../cpu/CPUWorker.h"
 #include "../console/ConsoleManager.h"
 
-FCFSScheduler::FCFSScheduler() : AScheduler(FCFS) {
+FCFSScheduler::FCFSScheduler(std::shared_ptr<IMemoryAllocator> memoryAllocator) : AScheduler(FCFS, memoryAllocator) {
     
 }
 

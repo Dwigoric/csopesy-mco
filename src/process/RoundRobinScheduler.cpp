@@ -6,7 +6,7 @@
 #include "../cpu/CPUWorker.h"
 #include "../console/ConsoleManager.h"
 
-RoundRobinScheduler::RoundRobinScheduler(int quantum) : AScheduler(ROUND_ROBIN) {
+RoundRobinScheduler::RoundRobinScheduler(int quantum, std::shared_ptr<IMemoryAllocator> memoryAllocator) : AScheduler(ROUND_ROBIN, memoryAllocator) {
     this->quantum = quantum;
 }
 

@@ -89,6 +89,10 @@ int MemoryManager::computeExternalFragmentation() const {
     return std::count(allocationMap.begin(), allocationMap.end(), -1) * this->frameSize;
 }
 
+std::shared_ptr<IMemoryAllocator> MemoryManager::getAllocator() const {
+    return this->allocator;
+}
+
 void MemoryManager::initialize() {
     sharedInstance = new MemoryManager();
 }

@@ -20,7 +20,7 @@ void InitializeCommand::execute()
 	CPUManager::initialize(std::stoi(configs.at("num-cpu")));
 	CPUManager::getInstance()->startAllCores();
 
-	SchedulerThread::initialize(configs.at("scheduler"), std::stoi(configs.at("quantum-cycles")));
+	SchedulerThread::initialize(configs.at("scheduler"), std::stoi(configs.at("quantum-cycles")), MemoryManager::getInstance()->getAllocator());
 	SchedulerThread::getInstance()->start();
 
 
