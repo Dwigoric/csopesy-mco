@@ -50,6 +50,8 @@ public:
 
     void setTimeExecuted();
 
+    size_t getMemoryRequired();
+
     static size_t memPerProc;
 
 private:

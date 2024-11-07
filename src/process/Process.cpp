@@ -94,3 +94,8 @@ std::chrono::system_clock::time_point Process::getTimeExecuted() const {
 void Process::setTimeExecuted() {
 	this->timeExecuted = std::chrono::system_clock::now();
 }
+
+size_t Process::getMemoryRequired() {
+    return this->memoryRequired;
+}
+
