@@ -20,7 +20,7 @@ public:
         FINISHED,
     };
 
-    Process(int id, std::string name);
+    Process(int id, std::string name, size_t memoryRequired);
 
     void addCommand(AInstruction::InstructionType instructionType);
 
@@ -50,6 +50,8 @@ public:
 
     void setTimeExecuted();
 
+    static size_t memPerProc;
+
 private:
     int id;
     std::string name;
@@ -59,6 +61,7 @@ private:
     std::chrono::system_clock::time_point timeExecuted;
     ProcessState state = READY;
     std::vector<std::shared_ptr<AInstruction> > instructionList;
+    size_t memoryRequired;
 
     // TEMP: For Homework 6 Only
     std::string outfile;

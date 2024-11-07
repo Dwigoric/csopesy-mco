@@ -37,7 +37,7 @@ void SchedulerThread::run() {
 }
 
 bool SchedulerThread::createProcess(const std::string &name) {
-    auto process = std::make_shared<Process>(this->processCounter, name);
+    auto process = std::make_shared<Process>(this->processCounter, name, Process::memPerProc);
     auto screen = std::make_shared<BaseScreen>(process, name);
 
     if (!ConsoleManager::getInstance()->registerScreen(screen)) {

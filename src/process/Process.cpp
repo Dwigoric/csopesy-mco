@@ -12,9 +12,12 @@
 #include "../threading/SchedulerThread.h"
 #include "../instructions/NoOpInstruction.h"
 
-Process::Process(const int id, std::string name) {
+size_t Process::memPerProc = 0;
+
+Process::Process(const int id, std::string name, size_t memoryRequired) {
     this->id = id;
     this->name = std::move(name);
+    this->memoryRequired = memoryRequired;
     this->timeCreated = std::chrono::system_clock::now();
 
     this->outfile = this->name + "_log.txt";
