@@ -50,8 +50,10 @@ void FCFSScheduler::execute() {
             // Put it in finished list
             // Set state to finished
             // Unregister from console manager
+            // Deallocate process from memory
             runningProcess->setState(Process::FINISHED);
             ConsoleManager::getInstance()->unregisterScreen(runningProcess->getName());
+            this->memoryAllocator->deallocate(runningProcess->getId());
             if (!this->assignQueuedProcess(currentCore, coreId)) {
                 currentCore->assignProcess(nullptr);
             }

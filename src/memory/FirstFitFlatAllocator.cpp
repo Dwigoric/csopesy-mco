@@ -16,6 +16,11 @@ void* FirstFitFlatAllocator::allocate(const int pid, size_t size)
 
 	// loop until a block of memory with sufficient length is found
 	for (size_t i = 0; i < allocationMap.size(); i++) {
+		if (allocationMap[i] == pid) {
+			// TEMP ONLY
+			// if already allocated, stop
+			return memory + startIndex * frameSize;
+		}
 		if (allocationMap[i] == -1) {
 			blockLength++;
 		}

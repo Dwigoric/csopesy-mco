@@ -1,5 +1,6 @@
 #include "ReportUtilCommand.h"
 #include "../cpu/CPUManager.h"
+// #include "../memory/MemoryManager.h"
 
 void ReportUtilCommand::execute()
 {
@@ -55,6 +56,10 @@ void ReportUtilCommand::printProcesses(std::ostream& os)
     }
 
     os << "---------------------------------------------\n";
+
+    // FOR TESTING MEMORY MANAGER ONLY
+    // MemoryManager::getInstance()->printDetails(os);
+    // os << MemoryManager::getInstance()->getAllocator()->visualizeMemory();
 
     for (CPUWorker* core : CPUManager::getInstance()->getCores()) {
         core->mutex.unlock();

@@ -26,15 +26,18 @@ void RoundRobinScheduler::execute() {
 
         if (runningProcess) {
             // Current running process has finished
+            // Deallocate process from memory
             if (runningProcess->isFinished()) {
                 runningProcess->setState(Process::FINISHED);
                 ConsoleManager::getInstance()->unregisterScreen(runningProcess->getName());
+                this->memoryAllocator->deallocate(runningProcess->getId());
                 if (!this->assignQueuedProcess(currentCore, coreId)) {
                     currentCore->assignProcess(nullptr);
                 }
             }
 
             // Current quantum timeslice has finished
+            // TODO: Put process in backing store
             else if (currentCore->getProcessCycles() >= this->quantum) {
                 runningProcess->setState(Process::READY);
                 this->readyQueue.push_back(runningProcess);

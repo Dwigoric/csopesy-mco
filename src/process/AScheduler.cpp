@@ -19,12 +19,18 @@ bool AScheduler::assignQueuedProcess(CPUWorker* core, int coreId) {
         std::shared_ptr<Process> nextProcess = this->readyQueue.front();
         this->readyQueue.erase(this->readyQueue.begin());
 
-        nextProcess->setCore(coreId);
-        nextProcess->setState(Process::RUNNING);
-        nextProcess->setTimeExecuted();
-    	core->assignProcess(nextProcess);
+        // Only assign if enough space to allocate
+        if (this->memoryAllocator->allocate(nextProcess->getId(), nextProcess->getMemoryRequired()) != nullptr) {
+            nextProcess->setCore(coreId);
+            nextProcess->setState(Process::RUNNING);
+            nextProcess->setTimeExecuted();
+            core->assignProcess(nextProcess);
 
-        return true;
+            return true;
+        }
+
+        // No space, re-queue process
+        this->readyQueue.push_back(nextProcess);
     }
 
     return false;
