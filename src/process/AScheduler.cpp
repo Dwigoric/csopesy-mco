@@ -55,6 +55,7 @@ void AScheduler::onTick() {
     } else {
         this->spawnCounter++;
     }
+    this->ticks++;
 }
 
 void AScheduler::startSpawning() {

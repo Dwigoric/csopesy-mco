@@ -6,6 +6,9 @@
 #include "../cpu/CPUWorker.h"
 #include "../console/ConsoleManager.h"
 
+#include <fstream>
+#include "../memory/MemoryManager.h"
+
 RoundRobinScheduler::RoundRobinScheduler(int quantum, std::shared_ptr<IMemoryAllocator> memoryAllocator) : AScheduler(ROUND_ROBIN, memoryAllocator) {
     this->quantum = quantum;
 }
@@ -15,6 +18,13 @@ void RoundRobinScheduler::init() {
 }
 
 void RoundRobinScheduler::execute() {
+    // TEMP for Week 8 HW
+    if (this->ticks % this->quantum == 0) {
+        std::ofstream fs(std::format("memory_stamp_{}.txt", this->qq++));
+        MemoryManager::getInstance()->printDetails(fs);
+        fs.close();
+    }
+
     std::vector<CPUWorker*> cores = CPUManager::getInstance()->getCores();
     CPUWorker* currentCore;
     int coreId;
