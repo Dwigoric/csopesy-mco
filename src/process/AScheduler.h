@@ -51,7 +51,6 @@ protected:
     std::shared_ptr<IMemoryAllocator> memoryAllocator;
 
     int ticks = 0;
-    int qq = 0;
 
 private:
     SchedulingAlgorithm algorithm;
