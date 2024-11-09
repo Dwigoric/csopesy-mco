@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <vector>
 #include <sstream>
+#include <mutex>
 
 #include "IMemoryAllocator.h"
 

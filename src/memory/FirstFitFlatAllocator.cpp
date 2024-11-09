@@ -1,5 +1,7 @@
 #include "FirstFitFlatAllocator.h"
 
+#include <iostream>
+
 FirstFitFlatAllocator::FirstFitFlatAllocator(uint8_t* memory, size_t totalMemory, size_t frameSize)
 	: memory(memory), totalMemory(totalMemory), frameSize(frameSize), allocatedSize(0)
 {
@@ -11,13 +13,13 @@ void* FirstFitFlatAllocator::allocate(const int pid, size_t size)
 	size_t startIndex = 0;
 	size_t blockLength = 0;
 
+	auto it = std::find(allocationMap.begin(), allocationMap.end(), pid);
+	if (it != allocationMap.end()) {
+		return &(*it);
+	}
+
 	// loop until a block of memory with sufficient length is found
 	for (size_t i = 0; i < allocationMap.size(); i++) {
-		if (allocationMap[i] == pid) {
-			// TEMP ONLY
-			// if already allocated, stop
-			return memory + startIndex;
-		}
 		if (allocationMap[i] == -1) {
 			blockLength++;
 		}
@@ -53,6 +55,11 @@ void FirstFitFlatAllocator::deallocate(const int pid)
 			deallocateAt(startIndex, i - startIndex);
 			return;
 		}
+	}
+
+	// if the block extends to the end of the allocation map, dealloc
+	if (startIndex != -1) {
+		deallocateAt(startIndex, this->allocatedSize - startIndex);
 	}
 }
 
