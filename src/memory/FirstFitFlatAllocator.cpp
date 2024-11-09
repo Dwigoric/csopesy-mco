@@ -3,7 +3,7 @@
 FirstFitFlatAllocator::FirstFitFlatAllocator(uint8_t* memory, size_t totalMemory, size_t frameSize)
 	: memory(memory), totalMemory(totalMemory), frameSize(frameSize), allocatedSize(0)
 {
-	this->allocationMap = std::vector<int>(1 + ((totalMemory - 1) / frameSize), -1);
+	this->allocationMap = std::vector<int>(totalMemory, -1);
 }
 
 void* FirstFitFlatAllocator::allocate(const int pid, size_t size)
@@ -11,15 +11,12 @@ void* FirstFitFlatAllocator::allocate(const int pid, size_t size)
 	size_t startIndex = 0;
 	size_t blockLength = 0;
 
-	// quickly calc ceiling of size/framesize
-	size_t numFrames = 1 + ((size - 1) / this->frameSize);
-
 	// loop until a block of memory with sufficient length is found
 	for (size_t i = 0; i < allocationMap.size(); i++) {
 		if (allocationMap[i] == pid) {
 			// TEMP ONLY
 			// if already allocated, stop
-			return memory + startIndex * frameSize;
+			return memory + startIndex;
 		}
 		if (allocationMap[i] == -1) {
 			blockLength++;
@@ -29,9 +26,9 @@ void* FirstFitFlatAllocator::allocate(const int pid, size_t size)
 			blockLength = 0;
 		}
 
-		if (blockLength >= numFrames) {
-			allocateAt(pid, startIndex, numFrames);
-			return memory + startIndex * frameSize;
+		if (blockLength >= size) {
+			allocateAt(pid, startIndex, blockLength);
+			return memory + startIndex;
 		}
 	}
 

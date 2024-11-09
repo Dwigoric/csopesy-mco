@@ -29,8 +29,8 @@ MemoryManager::MemoryManager() {
     uint8_t* mem3 = static_cast<uint8_t*>(this->allocator->allocate(2, 4096));
     std::fill(mem3, mem3 + 4096, 'c');
 
-    //this->allocator->deallocate(0);
-    //this->allocator->deallocate(1);
+    this->allocator->deallocate(0);
+    this->allocator->deallocate(1);
 
     uint8_t* mem4 = static_cast<uint8_t*>(this->allocator->allocate(3, 4096));
     std::fill(mem4, mem4 + 4096, 'd');
@@ -39,6 +39,7 @@ MemoryManager::MemoryManager() {
 
     printDetails(std::cout);
     */
+    
 }
 
 void MemoryManager::printDetails(std::ostream &os) const {
@@ -63,9 +64,9 @@ void MemoryManager::printDetails(std::ostream &os) const {
         if (allocationMap[i] != blockValue) {
             // print the current block, if the value is not -1
             if (blockValue != -1) {
-                os << blockStart * frameSize << "\n";
+                os << blockStart << "\n";
                 os << "P" << blockValue << "\n";
-                os << (i + 1) * frameSize << "\n\n";
+                os << (i + 1) << "\n\n";
             }
 
             blockStart = i + 1;
@@ -75,7 +76,7 @@ void MemoryManager::printDetails(std::ostream &os) const {
 
     // print last block, if possible
     if (blockValue != -1) {
-        os << blockStart * frameSize << "\n";
+        os << blockStart << "\n";
         os << "P" << blockValue << "\n";
         os << 0 << "\n\n";
     }
@@ -86,7 +87,7 @@ void MemoryManager::printDetails(std::ostream &os) const {
 int MemoryManager::computeExternalFragmentation() const {
     const std::vector<int>& allocationMap = this->allocator->getAllocationMap();
 
-    return std::count(allocationMap.begin(), allocationMap.end(), -1) * this->frameSize;
+    return std::count(allocationMap.begin(), allocationMap.end(), -1);
 }
 
 std::shared_ptr<IMemoryAllocator> MemoryManager::getAllocator() const {
