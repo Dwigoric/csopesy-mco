@@ -2,11 +2,12 @@
 #define BACKINGSTORE_H
 
 #include <string>
+#include <vector>
 
 class BackingStore {
 public:
-	static void save(const std::string& data, const std::string& filename);
-	static std::string load(const std::string& filename);
+	static void savePage(int pageSize, const std::vector<size_t>& data, const std::string& filename, size_t page);
+	static std::vector<size_t> loadPage(int pageSize, const std::string& filename, size_t page);
 
 private:
 	BackingStore() = delete;
