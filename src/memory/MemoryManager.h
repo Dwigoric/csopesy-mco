@@ -10,6 +10,11 @@
 
 class MemoryManager {
 public:
+	enum AllocatorType {
+		FIRST_FIT_FLAT_ALLOCATOR,
+		PAGING_ALLOCATOR
+	};
+
 	static MemoryManager* getInstance();
 
 	static void initialize();
@@ -17,8 +22,11 @@ public:
 	static void destroy();
 
 	void printDetails(std::ostream& os) const;
+	size_t getTotalMemory() const;
+	std::unordered_map<int, int> getProcessMemoryUsage() const;
 
 	std::shared_ptr<IMemoryAllocator> getAllocator() const;
+
 
 private:
 	static MemoryManager *sharedInstance;
@@ -35,6 +43,8 @@ private:
 
 	size_t totalMemory{};
 	size_t frameSize{};
+
+	AllocatorType allocatorType;
 
 	[[nodiscard]] int computeExternalFragmentation() const;
 };

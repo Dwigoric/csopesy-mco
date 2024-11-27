@@ -7,6 +7,7 @@
 #include "../commands/ScreenCommand.h"
 #include "../commands/InitializeCommand.h"
 #include "../commands/ExitCommand.h"
+#include "../commands/ProcessSMICommand.h"
 
 void MainConsole::onEnabled() {
 	printHeader();
@@ -29,13 +30,15 @@ void MainConsole::process() {
 	if (command == "exit") ExitCommand::execute();
 	else if (ConsoleManager::getInstance()->getConfigInitialized()) {
 		if (command == "clear") clear();
-		
+
 		else if (command == "scheduler-test") SchedulerTestCommand::execute();
 		else if (command == "scheduler-stop") SchedulerStopCommand::execute();
 		else if (command == "report-util") report_util();
 		else if (command == "screen") {
 			ScreenCommand::execute(commandParameters);
 		}
+		else if (command == "vmstat") std::cout << "NotImplemented\n";
+		else if (command == "process-smi") ProcessSMICommand::execute();
 		else {
 			std::cout << "Commands list:\n";
 			std::cout << "exit - exit the program\n";
@@ -45,6 +48,8 @@ void MainConsole::process() {
 			std::cout << "scheduler-stop - stop the scheduler\n";
 			std::cout << "report-util - display the report utility\n";
 			std::cout << "screen - manage screens\n";
+			std::cout << "process-smi - display a high-level overview of available/used memory\n";
+			std::cout << "vmstat - display fine-grained memory details\n";
 		}
 	}
 	else if (command == "initialize") initialize();

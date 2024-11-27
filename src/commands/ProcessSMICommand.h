@@ -8,6 +8,7 @@
 #include "../process/Process.h"
 #include "../threading/SchedulerThread.h"
 #include "../cpu/CPUManager.h"
+#include "../memory/MemoryManager.h"
 
 class ProcessSMICommand : ACommand {
 public:
