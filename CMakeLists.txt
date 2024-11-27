@@ -50,7 +50,7 @@ add_executable(CMakeTarget
         "src/commands/InitializeCommand.cpp" "src/commands/InitializeCommand.h" "src/commands/ExitCommand.cpp" "src/instructions/NoOpInstruction.h" "src/instructions/NoOpInstruction.cpp" "src/commands/ExitCommand.h" "src/commands/ReportUtilCommand.h" "src/commands/ReportUtilCommand.cpp"
         src/util/randint.h
         src/util/randint.cpp
-        "src/process/RoundRobinScheduler.h" "src/process/RoundRobinScheduler.cpp" "src/memory/MemoryManager.h" "src/memory/MemoryManager.cpp" "src/memory/IMemoryAllocator.h"  "src/memory/FirstFitFlatAllocator.h" "src/memory/FirstFitFlatAllocator.cpp")
+        "src/process/RoundRobinScheduler.h" "src/process/RoundRobinScheduler.cpp" "src/memory/MemoryManager.h" "src/memory/MemoryManager.cpp" "src/memory/IMemoryAllocator.h"  "src/memory/FirstFitFlatAllocator.h" "src/memory/FirstFitFlatAllocator.cpp" "src/commands/ProcessSMICommand.cpp" "src/commands/ProcessSMICommand.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
     set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)

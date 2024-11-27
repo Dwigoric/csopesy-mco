@@ -18,13 +18,6 @@ void RoundRobinScheduler::init() {
 }
 
 void RoundRobinScheduler::execute() {
-    // TEMP for Week 8 HW
-    if (this->ticks % this->quantum == 0) {
-        std::ofstream fs(std::format("memory_stamp_{}.txt", this->ticks));
-        MemoryManager::getInstance()->printDetails(fs);
-        fs.close();
-    }
-
     std::vector<CPUWorker*> cores = CPUManager::getInstance()->getCores();
     CPUWorker* currentCore;
     int coreId;
