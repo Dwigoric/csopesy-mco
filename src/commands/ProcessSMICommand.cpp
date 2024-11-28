@@ -33,7 +33,7 @@ void ProcessSMICommand::execute()
 
     std::cout << "CPU-Util: " << utilization * 100 << "%\n";
     std::cout << "Memory Usage: " << totalMemoryUsage << "KB / " << totalMemory << "KB\n";
-    std::cout << "Memory Util: " << (totalMemoryUsage * 100) / (totalMemory * 100) << "%\n\n";
+    std::cout << "Memory Util: " << ((float) totalMemoryUsage) / ((float) totalMemory) * 100 << "%\n\n";
 
     std::cout << "---------------------------------------------\n";
     std::cout << "Running processes and memory usage: \n";
