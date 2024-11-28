@@ -28,6 +28,16 @@ void CPUWorker::stop() {
     this->isRunning = false;
 }
 
+int CPUWorker::getActiveCycles()
+{
+    return this->activeCycles;
+}
+
+int CPUWorker::getInactiveCycles()
+{
+    return this->inactiveCycles;
+}
+
 void CPUWorker::run() {
     while (isRunning) {
     	std::unique_lock<std::mutex> lock(this->mutex);
@@ -37,7 +47,11 @@ void CPUWorker::run() {
             if (this->runningProcess != nullptr) {
                 if (!this->runningProcess->isFinished()) {
                     this->runningProcess->executeCurrentInstruction();
+                    this->activeCycles++;
                 }
+            }
+            else {
+                this->inactiveCycles++;
             }
         }
     }

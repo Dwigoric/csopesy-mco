@@ -52,3 +52,24 @@ void CPUManager::stopAllCores() {
 		(*it)->stop();
 	}
 }
+
+size_t CPUManager::getActiveCycles() {
+	size_t activeCycles = 0;
+	
+	for (auto core : this->cores) {
+		activeCycles += core->getActiveCycles();
+	}
+
+	return activeCycles;
+}
+
+size_t CPUManager::getInactiveCycles()
+{
+	size_t inactiveCycles = 0;
+
+	for (auto core : this->cores) {
+		inactiveCycles += core->getInactiveCycles();
+	}
+
+	return inactiveCycles;
+}

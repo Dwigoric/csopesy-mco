@@ -41,6 +41,8 @@ public:
 
     virtual void execute() = 0;
 
+    int getTicks();
+
 protected:
     std::vector<std::shared_ptr<Process> > readyQueue;
 

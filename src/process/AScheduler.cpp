@@ -58,6 +58,11 @@ void AScheduler::onTick() {
     this->ticks++;
 }
 
+int AScheduler::getTicks()
+{
+    return this->ticks;
+}
+
 void AScheduler::startSpawning() {
     this->isSpawning = true;
 }

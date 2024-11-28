@@ -14,6 +14,9 @@ public:
 	void startAllCores();
 	void stopAllCores();
 
+	size_t getActiveCycles();
+	size_t getInactiveCycles();
+
 private:
 	CPUManager(int numCores);
 	~CPUManager();
@@ -23,7 +26,6 @@ private:
 	static CPUManager* instance;
 
 	std::vector<CPUWorker*> cores;
-
 };
 
 #endif //CPUMANAGER_H

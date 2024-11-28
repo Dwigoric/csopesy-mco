@@ -8,6 +8,7 @@
 #include "../commands/InitializeCommand.h"
 #include "../commands/ExitCommand.h"
 #include "../commands/ProcessSMICommand.h"
+#include "../commands/VMStatCommand.h"
 
 void MainConsole::onEnabled() {
 	printHeader();
@@ -37,7 +38,7 @@ void MainConsole::process() {
 		else if (command == "screen") {
 			ScreenCommand::execute(commandParameters);
 		}
-		else if (command == "vmstat") std::cout << "NotImplemented\n";
+		else if (command == "vmstat") VMStatCommand::execute();
 		else if (command == "process-smi") ProcessSMICommand::execute();
 		else {
 			std::cout << "Commands list:\n";
