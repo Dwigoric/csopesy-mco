@@ -59,7 +59,7 @@ void FirstFitFlatAllocator::deallocate(const int pid)
 
 	// if the block extends to the end of the allocation map, dealloc
 	if (startIndex != -1) {
-		deallocateAt(startIndex, this->allocatedSize - startIndex);
+		deallocateAt(startIndex, this->totalMemory - startIndex);
 	}
 }
 
