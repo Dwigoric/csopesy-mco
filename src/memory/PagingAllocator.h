@@ -3,6 +3,7 @@
 
 #include <set>
 #include <unordered_map>
+#include <mutex>
 
 #include "IMemoryAllocator.h"
 #include "../process/Process.h"
@@ -26,6 +27,7 @@ private:
     std::vector<size_t> freeFrameList;
     std::vector<std::shared_ptr<Process>> backingStoreQueue;
     std::set<int> backingStore;
+    std::mutex mutex;
 
     size_t allocateFrames(size_t numFrames, size_t processId, const std::vector<size_t>& pageSizes);
     void deallocateFrames(size_t numFrames, size_t frameIndex, const std::vector<size_t>& pageSizes);
