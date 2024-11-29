@@ -46,7 +46,7 @@ void BackingStore::savePage(const std::string& filename, int pid, int instructio
 
 std::vector<int> BackingStore::loadPage(const std::string& filename) {
 	std::filesystem::create_directories("bkstore/pg");
-	const std::string path = "bkstore/pg/" + filename;
+	const std::string path = "bkstore/pg/" + filename + ".txt";
 
 	std::ifstream inFile(path, std::ios::in | std::ios::binary);
 	if (!inFile.is_open()) {
@@ -80,16 +80,16 @@ void BackingStore::saveProcess(const std::string& filename, int pid, int instruc
 
 	std::ofstream outFile(path, std::ios::out | std::ios::binary);
 	// Store pid, instruction line, and total instruction lines
-	outFile.write(reinterpret_cast<const char*>(pidString.c_str()), sizeof(pid));
-	outFile.write(reinterpret_cast<const char*>(instructionLineString.c_str()), sizeof(instructionLine));
-	outFile.write(reinterpret_cast<const char*>(totalInstructionLinesString.c_str()), sizeof(totalInstructionLines));
+	outFile.write(reinterpret_cast<const char*>(pidString.c_str()), sizeof(pidString.c_str()));
+	outFile.write(reinterpret_cast<const char*>(instructionLineString.c_str()), sizeof(instructionLineString.c_str()));
+	outFile.write(reinterpret_cast<const char*>(totalInstructionLinesString.c_str()), sizeof(totalInstructionLinesString.c_str()));
 
 	outFile.close();
 }
 
 std::vector<int> BackingStore::loadProcess(const std::string& filename) {
 	std::filesystem::create_directories("bkstore/proc");
-	const std::string path = "bkstore/proc/" + filename;
+	const std::string path = "bkstore/proc/" + filename + ".txt";
 
 	std::ifstream inFile(path, std::ios::in | std::ios::binary);
 	if (!inFile.is_open()) {
