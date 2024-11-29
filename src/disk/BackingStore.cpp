@@ -33,3 +33,27 @@ std::vector<size_t> loadPage(int pageSize, const std::string& filename, size_t p
 
 	return data;
 }
+
+void BackingStore::saveProcess(int pageSize, const std::vector<size_t>& data, const std::string& filename) {
+	std::ofstream outFile(filename, std::ios::out | std::ios::binary);
+
+	if (!outFile.is_open()) {
+		throw std::runtime_error("File not found");
+	}
+
+	outFile.write(reinterpret_cast<const char*>(data.data()), data.size());
+	outFile.close();
+}
+
+std::vector<size_t> BackingStore::loadProcess(int pageSize, const std::string& filename) {
+	std::ifstream inFile(filename, std::ios::in | std::ios::binary);
+
+	if (!inFile.is_open()) {
+		throw std::runtime_error("File not found");
+	}
+
+	std::vector<size_t> data(pageSize);
+	inFile.read(reinterpret_cast<char*>(data.data()), pageSize);
+	inFile.close();
+}
+
