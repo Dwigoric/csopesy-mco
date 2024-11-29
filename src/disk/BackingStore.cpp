@@ -23,8 +23,6 @@ void BackingStore::destroy()
 }
 
 void BackingStore::savePage(const std::string& filename, int pid, int instructionLine, int totalInstructionLines, int pageSize) {
-	std::cout << "called ";
-
 	std::filesystem::create_directories("bkstore/pg");
 	const std::string path = "bkstore/pg/" + filename;
 
