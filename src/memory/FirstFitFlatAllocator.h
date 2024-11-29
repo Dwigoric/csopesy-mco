@@ -1,4 +1,6 @@
-#pragma once
+#ifndef FIRSTFITFLATALLOCATOR_H
+#define FIRSTFITFLATALLOCATOR_H
+
 
 #include <cstdint>
 #include <vector>
@@ -28,3 +30,6 @@ private:
 	void allocateAt(const int pid, size_t start, size_t size);
 	void deallocateAt(size_t start, size_t size);
 };
+
+#endif //FIRSTFITFLATALLOCATOR_H
+

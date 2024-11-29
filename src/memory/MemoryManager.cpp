@@ -3,6 +3,7 @@
 #include "FirstFitFlatAllocator.h"
 #include <set>
 #include <algorithm>
+#include <iomanip>
 
 MemoryManager *MemoryManager::sharedInstance = nullptr;
 

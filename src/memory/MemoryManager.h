@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MEMORYMANAGER_H
+#define MEMORYMANAGER_H
 
 #include <cstdint>
 #include <iostream>
@@ -51,3 +52,4 @@ private:
 
 	[[nodiscard]] int computeExternalFragmentation() const;
 };
+#endif //MEMORYMANAGER_H
