@@ -12,7 +12,7 @@ PagingAllocator::PagingAllocator(size_t maxMemorySize)
 }
 
 void* PagingAllocator::allocate(std::shared_ptr<Process> process) {
-    std::unique_lock lock(this->mutex);
+    std::unique_lock lock(this->allocateMutex);
 
     size_t processId = process->getId();
     size_t numFramesNeeded = process->getNumPages();
@@ -52,6 +52,8 @@ void* PagingAllocator::allocate(std::shared_ptr<Process> process) {
 }
 
 void PagingAllocator::deallocate(std::shared_ptr<Process> process) {
+    std::unique_lock lock(this->deallocateMutex);
+
     size_t processId = process->getId();
 
     // Find frames allocated to the process and deallocate
