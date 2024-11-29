@@ -33,7 +33,6 @@ void* PagingAllocator::allocate(std::shared_ptr<Process> process) {
     }
 
     if (numFramesNeeded > freeFrameList.size()) {
-        std::cerr <<  "Memory allocation failed. Not enough free frames.\n";
         return nullptr;
     }
 
