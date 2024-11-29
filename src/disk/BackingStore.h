@@ -12,11 +12,11 @@ public:
 	static BackingStore* getInstance();
 	static void destroy();
 
-	void savePage(int pageSize, const std::vector<size_t>& data, const std::string& filename, size_t page);
-	std::vector<size_t> loadPage(int pageSize, const std::string& filename, size_t page);
+	void savePage(const std::string& filename, int pid, int instructionLine, int totalInstructionLines, int pageSize);
+	std::vector<int> loadPage(const std::string& filename);
 
-	void saveProcess(int pageSize, const std::vector<size_t>& data, const std::string& filename);
-	std::vector<size_t> loadProcess(int pageSize, const std::string& filename);
+	void saveProcess(const std::string& filename, int pid, int instructionLine, int totalInstructionLines);
+	std::vector<int> loadProcess(const std::string& filename);
 
 	size_t getNumPagedIn();
 	size_t getNumPagedOut();
