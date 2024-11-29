@@ -52,6 +52,10 @@ public:
 
     size_t getMemoryRequired();
 
+    bool isInMemory();
+
+    void setInMemory(bool inMemory);
+
     // Example page sizes in bytes (e.g., 4KB, 8KB, 16KB)
     std::vector<size_t> getPageSizes();
     size_t getNumPages();
@@ -72,6 +76,7 @@ private:
     std::vector<std::shared_ptr<AInstruction> > instructionList;
     size_t memoryRequired;
     size_t numPages;
+    bool inMemory = false;
 
     // TEMP: For Homework 6 Only
     std::string outfile;

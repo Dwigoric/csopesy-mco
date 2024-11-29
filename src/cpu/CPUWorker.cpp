@@ -1,6 +1,8 @@
 #include "CPUWorker.h"
 #include <iostream>
 
+#include "../memory/MemoryManager.h"
+
 int CPUWorker::delayPerExec = 0;
 
 void CPUWorker::assignProcess(std::shared_ptr<Process> queuedProcess) {
@@ -46,6 +48,9 @@ void CPUWorker::run() {
         if (this->cycles++ % (delayPerExec + 1) ==  0) {
             if (this->runningProcess != nullptr) {
                 if (!this->runningProcess->isFinished()) {
+                    if (!this->runningProcess->isInMemory()) {
+                        MemoryManager::getInstance()->getAllocator()->allocate(this->runningProcess);
+                    }
                     this->runningProcess->executeCurrentInstruction();
                     this->activeCycles++;
                 }

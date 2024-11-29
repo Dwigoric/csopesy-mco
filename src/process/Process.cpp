@@ -117,3 +117,10 @@ std::vector<size_t> Process::getPageSizes() {
     return examplePageSizes;
 }
 
+bool Process::isInMemory() {
+    return this->inMemory;
+}
+
+void Process::setInMemory(bool inMemory) {
+    this->inMemory = inMemory;
+}

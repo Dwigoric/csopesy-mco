@@ -46,6 +46,7 @@ void* PagingAllocator::allocate(std::shared_ptr<Process> process) {
     // Allocate frames for the process
     size_t frameIndex = allocateFrames(numFramesNeeded, processId, process->getPageSizes());
     backingStoreQueue.push_back(process);
+    process->setInMemory(true);
     return reinterpret_cast<void*>(frameIndex);
 }
 
@@ -60,6 +61,8 @@ void PagingAllocator::deallocate(std::shared_ptr<Process> process) {
         deallocateFrames(1, frameIndex, process->getPageSizes());
         it = std::find_if(frameMap.begin(), frameMap.end(), [processId](const auto& entry) { return entry.second == processId; });
     }
+
+    process->setInMemory(false);
 }
 
 std::string PagingAllocator::visualizeMemory() {
