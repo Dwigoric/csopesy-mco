@@ -68,8 +68,8 @@ size_t PagingAllocator::allocateFrames(size_t numFrames, size_t processId, const
     size_t frameIndex;
 
     for (int i = 0; i < numFrames; i++) {
-        frameIndex = freeFrameList.back();
-        freeFrameList.pop_back();
+        frameIndex = freeFrameList.front();
+        freeFrameList.erase(freeFrameList.begin());
         frameMap[frameIndex] = processId;
     }
 
