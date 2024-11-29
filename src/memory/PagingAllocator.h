@@ -1,6 +1,8 @@
 #ifndef PAGINGALLOCATOR_H
 #define PAGINGALLOCATOR_H
 
+#include <unordered_map>
+
 #include "IMemoryAllocator.h"
 #include "../process/Process.h"
 
