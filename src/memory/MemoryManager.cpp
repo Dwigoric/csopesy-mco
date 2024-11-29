@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <iomanip>
 
+#include "PagingAllocator.h"
+
 MemoryManager *MemoryManager::sharedInstance = nullptr;
 
 MemoryManager::MemoryManager() {
@@ -19,8 +21,15 @@ MemoryManager::MemoryManager() {
     this->memory = new uint8_t[this->totalMemory];
 
     // TODO: implement paging allocator
-    this->allocator = std::make_shared<FirstFitFlatAllocator>(this->memory, this->totalMemory, this->frameSize);
-    this->allocatorType = AllocatorType::FIRST_FIT_FLAT_ALLOCATOR;
+
+    if (frameSize == totalMemory) {
+        this->allocator = std::make_shared<FirstFitFlatAllocator>(this->memory, this->totalMemory, this->frameSize);
+        this->allocatorType = AllocatorType::FIRST_FIT_FLAT_ALLOCATOR;
+    } else {
+        // ASSUMED THAT totalMemory IS DIVISIBLE BY frameSize
+        this->allocator = std::make_shared<PagingAllocator>(this->totalMemory / this->frameSize);
+        this->allocatorType = AllocatorType::PAGING_ALLOCATOR;
+    }
 
     /*
     uint8_t* mem = static_cast<uint8_t*>(this->allocator->allocate(0, 4096));
