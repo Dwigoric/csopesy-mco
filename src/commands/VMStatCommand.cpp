@@ -11,13 +11,8 @@ void VMStatCommand::execute()
     auto processMemoryUsage = MemoryManager::getInstance()->getProcessMemoryUsage();
     int totalMemoryUsage = 0;
 
-    for (auto core : CPUManager::getInstance()->getCores()) {
-        auto p = core->getProcess();
-        if (p) {
-            if (processMemoryUsage.contains(p->getId())) {
-                totalMemoryUsage += processMemoryUsage.at(p->getId());
-            }
-        }
+    for (auto entry : processMemoryUsage) {
+        totalMemoryUsage += entry.second;
     }
 
     // total memory in KB

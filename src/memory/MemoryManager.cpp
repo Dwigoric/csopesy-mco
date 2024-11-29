@@ -100,11 +100,13 @@ std::unordered_map<int, int> MemoryManager::getProcessMemoryUsage() const
         const std::vector<int>& allocationMap = this->allocator->getAllocationMap();
 
         for (int processId : allocationMap) {
-            if (output.contains(processId)) {
-                output[processId] += 1;
-            }
-            else {
-                output[processId] = 1;
+            if (processId != -1) {
+                if (output.contains(processId)) {
+                    output[processId] += 1;
+                }
+                else {
+                    output[processId] = 1;
+                }
             }
         }
     }

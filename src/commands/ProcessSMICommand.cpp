@@ -17,16 +17,21 @@ void ProcessSMICommand::execute()
     size_t totalMemory = MemoryManager::getInstance()->getTotalMemory();
 
     auto processMemoryUsage = MemoryManager::getInstance()->getProcessMemoryUsage();
+    /* for (auto a : processMemoryUsage) {
+        std::cout << a.first << ": " << a.second << std::endl;
+    }*/
+
     int totalMemoryUsage = 0;
 
     for (auto core : CPUManager::getInstance()->getCores()) {
         auto p = core->getProcess();
         if (p) {
             used_cpu++;
-            if (processMemoryUsage.contains(p->getId())) {
-                totalMemoryUsage += processMemoryUsage.at(p->getId());
-            }
         }
+    }
+
+    for (auto entry : processMemoryUsage) {
+        totalMemoryUsage += entry.second;
     }
 
     float utilization = (float)used_cpu / (float)max_cpu;
@@ -54,7 +59,7 @@ void ProcessSMICommand::execute()
     std::cout << "---------------------------------------------\n";
 
     // DEBUG: show whole memory map
-    // MemoryManager::getInstance()->printDetails(std::cout);
+    // std::cout << MemoryManager::getInstance()->getAllocator()->visualizeMemory() << std::endl;
 
     for (CPUWorker* core : CPUManager::getInstance()->getCores()) {
         core->mutex.unlock();
