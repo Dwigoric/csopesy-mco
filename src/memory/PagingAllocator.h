@@ -16,6 +16,7 @@ public:
 
     std::vector<int>& getAllocationMap() override;
     size_t getAllocatedSize() override;
+    std::unordered_map<size_t, size_t> getFrameMap() const;
 
 private:
     size_t maxMemorySize;

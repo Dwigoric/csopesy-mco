@@ -87,5 +87,9 @@ void PagingAllocator::deallocateFrames(size_t numFrames, size_t frameIndex, cons
     }
 }
 
+std::unordered_map<size_t, size_t> PagingAllocator::getFrameMap() const
+{
+    return this->frameMap;
+}
 
 

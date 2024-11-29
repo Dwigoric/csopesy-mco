@@ -121,7 +121,20 @@ std::unordered_map<int, int> MemoryManager::getProcessMemoryUsage() const
     }
 
     else {
-        // Not yet implemented
+        std::shared_ptr<PagingAllocator> pagingAllocator = std::static_pointer_cast<PagingAllocator>(this->allocator);
+        auto frameMap = pagingAllocator->getFrameMap();
+
+        for (auto entry : frameMap) {
+            const int processId = entry.second;
+            if (processId != -1) {
+                if (output.contains(processId)) {
+                    output[processId] += Process::pageSize;
+                }
+                else {
+                    output[processId] = Process::pageSize;
+                }
+            }
+        }
     }
 
     return output;
