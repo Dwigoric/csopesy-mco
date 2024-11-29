@@ -5,14 +5,14 @@
 #include <stdexcept>
 
 void BackingStore::savePage(int pageSize, const std::vector<size_t>& data, const std::string& filename, size_t page) {
-	filename = "bkstore/pg/" + filename;
+	const std::string path = "bkstore/pg/" + filename;
 
 	// Check page size
 	if (data.size() != pageSize) {
 		throw std::runtime_error("Data size does not match page size");
 	}
 
-	std::ofstream outFile(filename, std::ios::out | std::ios::binary);
+	std::ofstream outFile(path, std::ios::out | std::ios::binary);
 	if (!outFile.is_open()) {
 		throw std::runtime_error("File not found");
 	}
@@ -23,9 +23,9 @@ void BackingStore::savePage(int pageSize, const std::vector<size_t>& data, const
 }
 
 std::vector<size_t> loadPage(int pageSize, const std::string& filename, size_t page) {
-	filename = "bkstore/pg/" + filename;
+	const std::string path = "bkstore/pg/" + filename;
 
-	std::ifstream inFile(filename, std::ios::in | std::ios::binary);
+	std::ifstream inFile(path, std::ios::in | std::ios::binary);
 	if (!inFile.is_open()) {
 		throw std::runtime_error("File not found");
 	}
@@ -39,9 +39,9 @@ std::vector<size_t> loadPage(int pageSize, const std::string& filename, size_t p
 }
 
 void BackingStore::saveProcess(int pageSize, const std::vector<size_t>& data, const std::string& filename) {
-	filename = "bkstore/proc/" + filename;
+	const std::string path = "bkstore/pg/" + filename;
 
-	std::ofstream outFile(filename, std::ios::out | std::ios::binary);
+	std::ofstream outFile(path, std::ios::out | std::ios::binary);
 
 	if (!outFile.is_open()) {
 		throw std::runtime_error("File not found");
@@ -52,9 +52,9 @@ void BackingStore::saveProcess(int pageSize, const std::vector<size_t>& data, co
 }
 
 std::vector<size_t> BackingStore::loadProcess(int pageSize, const std::string& filename) {
-	filename = "bkstore/proc/" + filename;
+	const std::string path = "bkstore/pg/" + filename;
 
-	std::ifstream inFile(filename, std::ios::in | std::ios::binary);
+	std::ifstream inFile(path, std::ios::in | std::ios::binary);
 
 	if (!inFile.is_open()) {
 		throw std::runtime_error("File not found");
