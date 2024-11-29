@@ -31,6 +31,8 @@ void BackingStore::savePage(const std::string& filename, int pid, int instructio
 	outFile.write(reinterpret_cast<const char*>(&totalInstructionLines), sizeof(totalInstructionLines));
 	outFile.write(reinterpret_cast<const char*>(&pageSize), sizeof(pageSize));
 
+	numPagedOut++;
+
 	outFile.close();
 }
 
@@ -53,6 +55,8 @@ std::vector<int> BackingStore::loadPage(const std::string& filename) {
 	inFile.read(reinterpret_cast<char*>(&pageSize), sizeof(pageSize));
 
 	inFile.close();
+
+	numPagedIn++;
 
 	return { pid, instructionLine, totalInstructionLines, pageSize };
 }
