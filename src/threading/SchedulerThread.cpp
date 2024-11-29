@@ -2,6 +2,7 @@
 
 #include "../console/BaseScreen.h"
 #include "../console/ConsoleManager.h"
+#include "../memory/MemoryManager.h"
 #include "../util/randint.h"
 #include "../process/FCFSScheduler.h"
 #include "../process/RoundRobinScheduler.h"
@@ -37,7 +38,11 @@ void SchedulerThread::run() {
 }
 
 size_t generateRandomProcessSize() {
-    return randint(Process::minMemPerProc, Process::maxMemPerProc);
+    if (MemoryManager::getInstance()->getAllocatorType() == MemoryManager::PAGING_ALLOCATOR) {
+        return randint(Process::minMemPerProc / Process::pageSize, Process::maxMemPerProc / Process::pageSize) * Process::pageSize;
+    } else {
+        return randint(Process::minMemPerProc, Process::maxMemPerProc);
+    }
 }
 
 bool SchedulerThread::createProcess(const std::string &name) {

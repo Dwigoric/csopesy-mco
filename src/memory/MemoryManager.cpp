@@ -159,3 +159,8 @@ void MemoryManager::destroy() {
         delete sharedInstance;
     }
 }
+
+MemoryManager::AllocatorType MemoryManager::getAllocatorType()
+{
+    return this->allocatorType;
+}

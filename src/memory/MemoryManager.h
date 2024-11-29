@@ -28,6 +28,7 @@ public:
 
 	std::shared_ptr<IMemoryAllocator> getAllocator() const;
 
+	AllocatorType getAllocatorType();
 
 private:
 	static MemoryManager *sharedInstance;
