@@ -39,7 +39,7 @@ std::vector<size_t> loadPage(int pageSize, const std::string& filename, size_t p
 }
 
 void BackingStore::saveProcess(int pageSize, const std::vector<size_t>& data, const std::string& filename) {
-	const std::string path = "bkstore/pg/" + filename;
+	const std::string path = "bkstore/proc/" + filename;
 
 	std::ofstream outFile(path, std::ios::out | std::ios::binary);
 
@@ -52,7 +52,7 @@ void BackingStore::saveProcess(int pageSize, const std::vector<size_t>& data, co
 }
 
 std::vector<size_t> BackingStore::loadProcess(int pageSize, const std::string& filename) {
-	const std::string path = "bkstore/pg/" + filename;
+	const std::string path = "bkstore/proc/" + filename;
 
 	std::ifstream inFile(path, std::ios::in | std::ios::binary);
 
