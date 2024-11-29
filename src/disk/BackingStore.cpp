@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <stdexcept>
+#include <filesystem>
 
 BackingStore* BackingStore::sharedInstance = nullptr;
 
@@ -22,6 +23,9 @@ void BackingStore::destroy()
 }
 
 void BackingStore::savePage(const std::string& filename, int pid, int instructionLine, int totalInstructionLines, int pageSize) {
+	std::cout << "called ";
+
+	std::filesystem::create_directories("bkstore/pg");
 	const std::string path = "bkstore/pg/" + filename;
 
 	std::ofstream outFile(path, std::ios::out | std::ios::binary);
@@ -37,6 +41,7 @@ void BackingStore::savePage(const std::string& filename, int pid, int instructio
 }
 
 std::vector<int> BackingStore::loadPage(const std::string& filename) {
+	std::filesystem::create_directories("bkstore/pg");
 	const std::string path = "bkstore/pg/" + filename;
 
 	std::ifstream inFile(path, std::ios::in | std::ios::binary);
@@ -62,6 +67,7 @@ std::vector<int> BackingStore::loadPage(const std::string& filename) {
 }
 
 void BackingStore::saveProcess(const std::string& filename, int pid, int instructionLine, int totalInstructionLines) {
+	std::filesystem::create_directories("bkstore/proc");
 	const std::string path = "bkstore/proc/" + filename;
 
 	std::ofstream outFile(path, std::ios::out | std::ios::binary);
@@ -74,6 +80,7 @@ void BackingStore::saveProcess(const std::string& filename, int pid, int instruc
 }
 
 std::vector<int> BackingStore::loadProcess(const std::string& filename) {
+	std::filesystem::create_directories("bkstore/proc");
 	const std::string path = "bkstore/proc/" + filename;
 
 	std::ifstream inFile(path, std::ios::in | std::ios::binary);
