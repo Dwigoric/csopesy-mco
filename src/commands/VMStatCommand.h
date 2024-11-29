@@ -16,5 +16,5 @@ class VMStatCommand : ACommand {
 public:
     static void execute();
 private:
-    static void printStat(std::string label, int value);
+    static void printStat(std::string label, size_t value);
 };

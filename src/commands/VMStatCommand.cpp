@@ -47,7 +47,7 @@ void VMStatCommand::execute()
     }
 }
 
-void VMStatCommand::printStat(std::string label, int value)
+void VMStatCommand::printStat(std::string label, size_t value)
 {
     printf("%14ld %s\n", value, label.c_str());
 }
