@@ -10,6 +10,7 @@
 #include "../threading/SchedulerThread.h"
 #include "../cpu/CPUManager.h"
 #include "../memory/MemoryManager.h"
+#include "../disk/BackingStore.h"
 
 class VMStatCommand : ACommand {
 public:

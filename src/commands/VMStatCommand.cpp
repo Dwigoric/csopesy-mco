@@ -42,10 +42,10 @@ void VMStatCommand::execute()
     printStat("Total CPU Ticks", activeCycles + inactiveCycles);
 
 	// num paged in
-    printStat("Num paged in", -1);
+    printStat("Num paged in", BackingStore::getInstance()->getNumPagedIn());
 
 	// num paged out
-    printStat("Num paged out", -1);
+    printStat("Num paged out", BackingStore::getInstance()->getNumPagedOut());
 
     for (CPUWorker* core : CPUManager::getInstance()->getCores()) {
         core->mutex.unlock();

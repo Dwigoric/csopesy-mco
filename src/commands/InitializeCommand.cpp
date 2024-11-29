@@ -4,6 +4,7 @@
 #include "../threading/SchedulerThread.h"
 #include "../cpu/CPUWorker.h"
 #include "../memory/MemoryManager.h"
+#include "../disk/BackingStore.h"
 
 #include <iostream>
 
@@ -23,6 +24,7 @@ void InitializeCommand::execute()
 	SchedulerThread::initialize(configs.at("scheduler"), std::stoi(configs.at("quantum-cycles")), MemoryManager::getInstance()->getAllocator());
 	SchedulerThread::getInstance()->start();
 
+	BackingStore::initialize();
 
 	ConsoleManager::getInstance()->setConfigInitialized();
 	

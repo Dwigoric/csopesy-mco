@@ -4,6 +4,23 @@
 #include <vector>
 #include <stdexcept>
 
+BackingStore* BackingStore::sharedInstance = nullptr;
+
+void BackingStore::initialize()
+{
+	sharedInstance = new BackingStore();
+}
+
+BackingStore* BackingStore::getInstance()
+{
+	return sharedInstance;
+}
+
+void BackingStore::destroy()
+{
+	delete sharedInstance;
+}
+
 void BackingStore::savePage(int pageSize, const std::vector<size_t>& data, const std::string& filename, size_t page) {
 	const std::string path = "bkstore/pg/" + filename;
 
@@ -17,12 +34,14 @@ void BackingStore::savePage(int pageSize, const std::vector<size_t>& data, const
 		throw std::runtime_error("File not found");
 	}
 
+	numPagedOut++;
+
 	outFile.seekp(page * pageSize);
 	outFile.write(reinterpret_cast<const char*>(data.data()), pageSize);
 	outFile.close();
 }
 
-std::vector<size_t> loadPage(int pageSize, const std::string& filename, size_t page) {
+std::vector<size_t> BackingStore::loadPage(int pageSize, const std::string& filename, size_t page) {
 	const std::string path = "bkstore/pg/" + filename;
 
 	std::ifstream inFile(path, std::ios::in | std::ios::binary);
@@ -34,6 +53,8 @@ std::vector<size_t> loadPage(int pageSize, const std::string& filename, size_t p
 	inFile.seekg(page * pageSize);
 	inFile.read(reinterpret_cast<char*>(data.data()), pageSize);
 	inFile.close();
+
+	numPagedIn++;
 
 	return data;
 }
@@ -67,3 +88,16 @@ std::vector<size_t> BackingStore::loadProcess(int pageSize, const std::string& f
 	return data;
 }
 
+size_t BackingStore::getNumPagedIn()
+{
+	return this->numPagedIn;
+}
+
+size_t BackingStore::getNumPagedOut()
+{
+	return this->numPagedOut;
+}
+
+BackingStore::BackingStore()
+{
+}

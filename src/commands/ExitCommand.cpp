@@ -3,6 +3,7 @@
 #include "../cpu/CPUManager.h"
 #include "../threading/SchedulerThread.h"
 #include "../memory/MemoryManager.h"
+#include "../disk/BackingStore.h"
 
 void ExitCommand::execute()
 {
@@ -13,6 +14,7 @@ void ExitCommand::execute()
 		SchedulerThread::destroy();
 		MemoryManager::destroy();
 		CPUManager::destroy();
+		BackingStore::destroy();
 	}
 }
 

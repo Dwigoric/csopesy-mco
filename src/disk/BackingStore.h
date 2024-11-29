@@ -4,20 +4,30 @@
 #include <string>
 #include <vector>
 
+#include "../memory/MemoryManager.h"
+
 class BackingStore {
 public:
-	static void savePage(int pageSize, const std::vector<size_t>& data, const std::string& filename, size_t page);
-	static std::vector<size_t> loadPage(int pageSize, const std::string& filename, size_t page);
+	static void initialize();
+	static BackingStore* getInstance();
+	static void destroy();
 
-	static void saveProcess(int pageSize, const std::vector<size_t>& data, const std::string& filename);
-	static std::vector<size_t> loadProcess(int pageSize, const std::string& filename);
+	void savePage(int pageSize, const std::vector<size_t>& data, const std::string& filename, size_t page);
+	std::vector<size_t> loadPage(int pageSize, const std::string& filename, size_t page);
 
+	void saveProcess(int pageSize, const std::vector<size_t>& data, const std::string& filename);
+	std::vector<size_t> loadProcess(int pageSize, const std::string& filename);
+
+	size_t getNumPagedIn();
+	size_t getNumPagedOut();
 private:
-	BackingStore() = delete;
-	~BackingStore() = delete;
+	static BackingStore* sharedInstance;
 
-	BackingStore(const BackingStore&) = delete;
-	BackingStore& operator=(const BackingStore&) = delete;
+	size_t numPagedIn = 0;
+	size_t numPagedOut = 0;
+
+	BackingStore();
+	~BackingStore() = default;
 };
 
 #endif // BACKINGSTORE_H

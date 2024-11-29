@@ -44,6 +44,9 @@ private:
 	size_t totalMemory{};
 	size_t frameSize{};
 
+	size_t numPagedIn = 0;
+	size_t numPagedOut = 0;
+
 	AllocatorType allocatorType;
 
 	[[nodiscard]] int computeExternalFragmentation() const;
