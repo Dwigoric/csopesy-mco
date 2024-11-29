@@ -25,7 +25,7 @@ void BackingStore::destroy()
 
 void BackingStore::savePage(const std::string& filename, int pid, int instructionLine, int totalInstructionLines, int pageSize) {
 	std::filesystem::create_directories("bkstore/pg");
-	const std::string path = "bkstore/pg/" + filename;
+	const std::string path = "bkstore/pg/" + filename + ".txt";
 
 	std::string pidString = std::to_string(pid);
 	std::string instructionLineString = std::to_string(instructionLine);
@@ -72,7 +72,7 @@ std::vector<int> BackingStore::loadPage(const std::string& filename) {
 
 void BackingStore::saveProcess(const std::string& filename, int pid, int instructionLine, int totalInstructionLines) {
 	std::filesystem::create_directories("bkstore/proc");
-	const std::string path = "bkstore/proc/" + filename;
+	const std::string path = "bkstore/proc/" + filename + ".txt";
 
 	std::string pidString = std::to_string(pid);
 	std::string instructionLineString = std::to_string(instructionLine);
