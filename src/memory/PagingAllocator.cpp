@@ -65,13 +65,14 @@ size_t PagingAllocator::getAllocatedSize() {
 }
 
 size_t PagingAllocator::allocateFrames(size_t numFrames, size_t processId, const std::vector<size_t> &pageSizes) {
-    size_t frameIndex = freeFrameList.back();
-    freeFrameList.pop_back();
+    size_t frameIndex;
 
-    // Map allocated frames to the process ID
-    for (size_t i = 0; i < numFrames; ++i) {
-        frameMap[frameIndex + i] = processId;
+    for (int i = 0; i < numFrames; i++) {
+        frameIndex = freeFrameList.back();
+        freeFrameList.pop_back();
+        frameMap[frameIndex] = processId;
     }
+
     return frameIndex;
 }
 
