@@ -38,7 +38,7 @@ void SchedulerThread::run() {
 }
 
 size_t generateRandomProcessSize() {
-    if (MemoryManager::getInstance()->getAllocatorType() == MemoryManager::PAGING_ALLOCATOR) {
+    if (MemoryManager::getInstance()->getAllocatorType() == MemoryManager::PAGING_ALLOCATOR && Process::minMemPerProc >= Process::pageSize) {
         return randint(Process::minMemPerProc / Process::pageSize, Process::maxMemPerProc / Process::pageSize) * Process::pageSize;
     } else {
         return randint(Process::minMemPerProc, Process::maxMemPerProc);

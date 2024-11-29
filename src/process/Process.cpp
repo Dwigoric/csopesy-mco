@@ -6,6 +6,7 @@
 
 #include <utility>
 #include <fstream>
+#include <cmath>
 
 #include "AScheduler.h"
 #include "../instructions/PrintInstruction.h"
@@ -13,17 +14,16 @@
 #include "../instructions/NoOpInstruction.h"
 
 //size_t Process::memPerProc = 0;
-size_t Process::minMemPerProc = 0;
-size_t Process::maxMemPerProc = 0;
-size_t Process::pageSize = 0;
+size_t Process::minMemPerProc = 1;
+size_t Process::maxMemPerProc = 1;
+size_t Process::pageSize = 1;
 
 Process::Process(const int id, std::string name, size_t memoryRequired) {
     this->id = id;
     this->name = std::move(name);
     this->memoryRequired = memoryRequired;
 
-    // ASSUME DIVISIBLE
-    this->numPages = memoryRequired / pageSize;
+    this->numPages = ceil(static_cast<float>(memoryRequired) / static_cast<float>(pageSize));
 
     this->timeCreated = std::chrono::system_clock::now();
 
