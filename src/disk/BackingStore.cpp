@@ -63,5 +63,7 @@ std::vector<size_t> BackingStore::loadProcess(int pageSize, const std::string& f
 	std::vector<size_t> data(pageSize);
 	inFile.read(reinterpret_cast<char*>(data.data()), pageSize);
 	inFile.close();
+
+	return data;
 }
 
