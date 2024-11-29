@@ -52,6 +52,10 @@ public:
 
     size_t getMemoryRequired();
 
+    // Example page sizes in bytes (e.g., 4KB, 8KB, 16KB)
+    std::vector<size_t> getPageSizes();
+    size_t getNumPages();
+
     static size_t memPerProc;
 
 private:

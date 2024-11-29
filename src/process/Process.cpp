@@ -99,3 +99,16 @@ size_t Process::getMemoryRequired() {
     return this->memoryRequired;
 }
 
+size_t Process::getNumPages() {
+    //TODO: Implement Get Number of Pages
+    size_t exampleNumPages = 12;
+    return exampleNumPages;
+}
+
+
+std::vector<size_t> Process::getPageSizes() {
+    //TODO: Implement Get Page Sizes
+    std::vector<size_t> examplePageSizes = {4096, 8192, 16384};
+    return examplePageSizes;
+}
+
