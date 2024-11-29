@@ -8,13 +8,14 @@
 #include <mutex>
 
 #include "IMemoryAllocator.h"
+#include "../process/Process.h"
 
 class FirstFitFlatAllocator : public IMemoryAllocator {
 public:
 	FirstFitFlatAllocator(uint8_t* memory, size_t totalMemory, size_t frameSize);
 
-	void* allocate(const int pid, size_t size) override;
-	void deallocate(const int pid) override;
+	void* allocate(std::shared_ptr<Process> process) override;
+	void deallocate(std::shared_ptr<Process> process) override;
 	std::string visualizeMemory() override;
 
 	std::vector<int>& getAllocationMap() override;

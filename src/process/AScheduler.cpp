@@ -20,7 +20,7 @@ bool AScheduler::assignQueuedProcess(CPUWorker* core, int coreId) {
         this->readyQueue.erase(this->readyQueue.begin());
 
         // Only assign if enough space to allocate
-        if (this->memoryAllocator->allocate(nextProcess->getId(), nextProcess->getMemoryRequired()) != nullptr) {
+        if (this->memoryAllocator->allocate(nextProcess) != nullptr) {
             nextProcess->setCore(coreId);
             nextProcess->setState(Process::RUNNING);
             nextProcess->setTimeExecuted();

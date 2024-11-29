@@ -10,9 +10,12 @@ class PagingAllocator : public IMemoryAllocator{
 public:
     explicit PagingAllocator(size_t maxMemorySize);
 
-    void* allocate(Process* process);
-    void deallocate(Process* process);
-    void visualizeMemory() const;
+    void* allocate(std::shared_ptr<Process> process) override;
+    void deallocate(std::shared_ptr<Process> process) override;
+    std::string visualizeMemory() override;
+
+    std::vector<int>& getAllocationMap() override;
+    size_t getAllocatedSize() override;
 
 private:
     size_t maxMemorySize;

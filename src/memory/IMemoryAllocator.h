@@ -4,10 +4,12 @@
 #include <string>
 #include <vector>
 
+#include "../process/Process.h"
+
 class IMemoryAllocator {
 public:
-	virtual void* allocate(const int pid, size_t size) = 0;
-	virtual void deallocate(const int pid) = 0;
+	virtual void* allocate(std::shared_ptr<Process> process) = 0;
+	virtual void deallocate(std::shared_ptr<Process> process) = 0;
 	virtual std::string visualizeMemory() = 0;
 
 	virtual std::vector<int>& getAllocationMap() = 0;

@@ -9,7 +9,7 @@ PagingAllocator::PagingAllocator(size_t maxMemorySize)
     }
 }
 
-void* PagingAllocator::allocate(Process* process) {
+void* PagingAllocator::allocate(std::shared_ptr<Process> process) {
     size_t processId = process->getId();
     size_t numFramesNeeded = process->getNumPages();
     if (numFramesNeeded > freeFrameList.size()) {
@@ -22,7 +22,7 @@ void* PagingAllocator::allocate(Process* process) {
     return reinterpret_cast<void*>(frameIndex);
 }
 
-void PagingAllocator::deallocate(Process* process) {
+void PagingAllocator::deallocate(std::shared_ptr<Process> process) {
     size_t processId = process->getId();
 
     // Find frames allocated to the process and deallocate
@@ -35,17 +35,33 @@ void PagingAllocator::deallocate(Process* process) {
     }
 }
 
-void PagingAllocator::visualizeMemory() const {
-    std::cout << "Memory Visualization:\n";
+std::string PagingAllocator::visualizeMemory() {
+    std::stringstream ss("");
+
+    ss << "Memory Visualization:\n";
     for (size_t frameIndex = 0; frameIndex < numFrames; ++frameIndex) {
         auto it = frameMap.find(frameIndex);
         if (it != frameMap.end()) {
-            std::cout << "Frame " << frameIndex << " -> Process " << it->second << "\n";
+            ss << "Frame " << frameIndex << " -> Process " << it->second << "\n";
         } else {
-            std::cout << "Frame " << frameIndex << " -> Free\n";
+            ss << "Frame " << frameIndex << " -> Free\n";
         }
     }
-    std::cout << "---------------------------------\n";
+    ss << "---------------------------------\n";
+
+    return ss.str();
+}
+
+std::vector<int>& PagingAllocator::getAllocationMap()
+{
+    // TODO: IMPLEMENT
+    std::vector<int> allocationMap;
+    return allocationMap;
+}
+
+size_t PagingAllocator::getAllocatedSize() {
+    // TODO: IMPLEMENT
+	return -1;
 }
 
 size_t PagingAllocator::allocateFrames(size_t numFrames, size_t processId, const std::vector<size_t> &pageSizes) {

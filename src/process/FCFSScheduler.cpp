@@ -53,7 +53,7 @@ void FCFSScheduler::execute() {
             // Deallocate process from memory
             runningProcess->setState(Process::FINISHED);
             ConsoleManager::getInstance()->unregisterScreen(runningProcess->getName());
-            this->memoryAllocator->deallocate(runningProcess->getId());
+            this->memoryAllocator->deallocate(runningProcess);
             if (!this->assignQueuedProcess(currentCore, coreId)) {
                 currentCore->assignProcess(nullptr);
             }

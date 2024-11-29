@@ -8,8 +8,11 @@ FirstFitFlatAllocator::FirstFitFlatAllocator(uint8_t* memory, size_t totalMemory
 	this->allocationMap = std::vector<int>(totalMemory, -1);
 }
 
-void* FirstFitFlatAllocator::allocate(const int pid, size_t size)
+void* FirstFitFlatAllocator::allocate(const std::shared_ptr<Process> process)
 {
+	const int pid = process->getId();
+	const size_t size = process->getMemoryRequired();
+
 	size_t startIndex = 0;
 	size_t blockLength = 0;
 
@@ -38,8 +41,10 @@ void* FirstFitFlatAllocator::allocate(const int pid, size_t size)
 	return nullptr;
 }
 
-void FirstFitFlatAllocator::deallocate(const int pid)
+void FirstFitFlatAllocator::deallocate(const std::shared_ptr<Process> process)
 {
+	const int pid = process->getId();
+
 	size_t startIndex = -1;
 
 	// assumes that memory of each process is a contiguous block
