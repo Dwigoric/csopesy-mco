@@ -1,6 +1,7 @@
 #ifndef PAGINGALLOCATOR_H
 #define PAGINGALLOCATOR_H
 
+#include <set>
 #include <unordered_map>
 
 #include "IMemoryAllocator.h"
@@ -23,6 +24,8 @@ private:
     size_t numFrames;
     std::unordered_map<size_t, size_t> frameMap;
     std::vector<size_t> freeFrameList;
+    std::vector<std::shared_ptr<Process>> backingStoreQueue;
+    std::set<int> backingStore;
 
     size_t allocateFrames(size_t numFrames, size_t processId, const std::vector<size_t>& pageSizes);
     void deallocateFrames(size_t numFrames, size_t frameIndex, const std::vector<size_t>& pageSizes);

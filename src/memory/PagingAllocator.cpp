@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "../disk/BackingStore.h"
+
 PagingAllocator::PagingAllocator(size_t maxMemorySize)
 : maxMemorySize(maxMemorySize), numFrames(maxMemorySize) {
     for (size_t i = 0; i < numFrames; ++i) {
@@ -12,13 +14,38 @@ PagingAllocator::PagingAllocator(size_t maxMemorySize)
 void* PagingAllocator::allocate(std::shared_ptr<Process> process) {
     size_t processId = process->getId();
     size_t numFramesNeeded = process->getNumPages();
+
+    while (numFramesNeeded > freeFrameList.size() && !backingStoreQueue.empty()) {
+        // backing store operation
+        auto toStore = backingStoreQueue.front();
+        backingStoreQueue.erase(backingStoreQueue.begin());
+        deallocate(toStore);
+
+        for (int i = 0; i < toStore->getNumPages(); i++)
+        {
+            std::string filename = "process_" + std::to_string(toStore->getId()) + "_page_" + std::to_string(i);
+            BackingStore::getInstance()->savePage(filename, toStore->getId(), toStore->getCurrentInstructionLine(), toStore->getMaxInstructionLine(), Process::pageSize);
+        }
+
+        backingStore.insert(toStore->getId());
+    }
+
     if (numFramesNeeded > freeFrameList.size()) {
         std::cerr <<  "Memory allocation failed. Not enough free frames.\n";
         return nullptr;
     }
 
+    if (backingStore.contains(processId)) {
+        for (int i = 0; i < process->getNumPages(); i++) {
+            std::string filename = "process_" + std::to_string(processId) + "_page_" + std::to_string(i);
+            BackingStore::getInstance()->loadPage(filename);
+        }
+        backingStore.erase(processId);
+    }
+
     // Allocate frames for the process
     size_t frameIndex = allocateFrames(numFramesNeeded, processId, process->getPageSizes());
+    backingStoreQueue.push_back(process);
     return reinterpret_cast<void*>(frameIndex);
 }
 
