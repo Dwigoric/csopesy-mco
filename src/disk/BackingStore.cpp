@@ -21,27 +21,20 @@ void BackingStore::destroy()
 	delete sharedInstance;
 }
 
-void BackingStore::savePage(int pageSize, const std::vector<size_t>& data, const std::string& filename, size_t page) {
+void BackingStore::savePage(const std::string& filename, int pid, int instructionLine, int totalInstructionLines, int pageSize) {
 	const std::string path = "bkstore/pg/" + filename;
 
-	// Check page size
-	if (data.size() != pageSize) {
-		throw std::runtime_error("Data size does not match page size");
-	}
-
 	std::ofstream outFile(path, std::ios::out | std::ios::binary);
-	if (!outFile.is_open()) {
-		throw std::runtime_error("File not found");
-	}
+	// Store pid, instruction line, total instruction lines, and page size
+	outFile.write(reinterpret_cast<const char*>(&pid), sizeof(pid));
+	outFile.write(reinterpret_cast<const char*>(&instructionLine), sizeof(instructionLine));
+	outFile.write(reinterpret_cast<const char*>(&totalInstructionLines), sizeof(totalInstructionLines));
+	outFile.write(reinterpret_cast<const char*>(&pageSize), sizeof(pageSize));
 
-	numPagedOut++;
-
-	outFile.seekp(page * pageSize);
-	outFile.write(reinterpret_cast<const char*>(data.data()), pageSize);
 	outFile.close();
 }
 
-std::vector<size_t> BackingStore::loadPage(int pageSize, const std::string& filename, size_t page) {
+std::vector<int> BackingStore::loadPage(const std::string& filename) {
 	const std::string path = "bkstore/pg/" + filename;
 
 	std::ifstream inFile(path, std::ios::in | std::ios::binary);
@@ -49,43 +42,52 @@ std::vector<size_t> BackingStore::loadPage(int pageSize, const std::string& file
 		throw std::runtime_error("File not found");
 	}
 
-	std::vector<size_t> data(pageSize);
-	inFile.seekg(page * pageSize);
-	inFile.read(reinterpret_cast<char*>(data.data()), pageSize);
+	// Read pid, instruction line, total instruction lines, and page size
+	int pid;
+	int instructionLine;
+	int totalInstructionLines;
+	int pageSize;
+	inFile.read(reinterpret_cast<char*>(&pid), sizeof(pid));
+	inFile.read(reinterpret_cast<char*>(&instructionLine), sizeof(instructionLine));
+	inFile.read(reinterpret_cast<char*>(&totalInstructionLines), sizeof(totalInstructionLines));
+	inFile.read(reinterpret_cast<char*>(&pageSize), sizeof(pageSize));
+
 	inFile.close();
 
-	numPagedIn++;
-
-	return data;
+	return { pid, instructionLine, totalInstructionLines, pageSize };
 }
 
-void BackingStore::saveProcess(int pageSize, const std::vector<size_t>& data, const std::string& filename) {
+void BackingStore::saveProcess(const std::string& filename, int pid, int instructionLine, int totalInstructionLines) {
 	const std::string path = "bkstore/proc/" + filename;
 
 	std::ofstream outFile(path, std::ios::out | std::ios::binary);
+	// Store pid, instruction line, and total instruction lines
+	outFile.write(reinterpret_cast<const char*>(&pid), sizeof(pid));
+	outFile.write(reinterpret_cast<const char*>(&instructionLine), sizeof(instructionLine));
+	outFile.write(reinterpret_cast<const char*>(&totalInstructionLines), sizeof(totalInstructionLines));
 
-	if (!outFile.is_open()) {
-		throw std::runtime_error("File not found");
-	}
-
-	outFile.write(reinterpret_cast<const char*>(data.data()), data.size());
 	outFile.close();
 }
 
-std::vector<size_t> BackingStore::loadProcess(int pageSize, const std::string& filename) {
+std::vector<int> BackingStore::loadProcess(const std::string& filename) {
 	const std::string path = "bkstore/proc/" + filename;
 
 	std::ifstream inFile(path, std::ios::in | std::ios::binary);
-
 	if (!inFile.is_open()) {
 		throw std::runtime_error("File not found");
 	}
 
-	std::vector<size_t> data(pageSize);
-	inFile.read(reinterpret_cast<char*>(data.data()), pageSize);
+	// Read pid, instruction line, and total instruction lines
+	int pid;
+	int instructionLine;
+	int totalInstructionLines;
+	inFile.read(reinterpret_cast<char*>(&pid), sizeof(pid));
+	inFile.read(reinterpret_cast<char*>(&instructionLine), sizeof(instructionLine));
+	inFile.read(reinterpret_cast<char*>(&totalInstructionLines), sizeof(totalInstructionLines));
+
 	inFile.close();
 
-	return data;
+	return { pid, instructionLine, totalInstructionLines };
 }
 
 size_t BackingStore::getNumPagedIn()
