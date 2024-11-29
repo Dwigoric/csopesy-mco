@@ -15,15 +15,13 @@
 //size_t Process::memPerProc = 0;
 size_t Process::minMemPerProc = 0;
 size_t Process::maxMemPerProc = 0;
+size_t Process::pageSize = 0;
 
 Process::Process(const int id, std::string name, size_t memoryRequired) {
     this->id = id;
     this->name = std::move(name);
     this->memoryRequired = memoryRequired;
 
-    const int pageSize = std::stoi(
-        ConsoleManager::getInstance()->getConfigs().at("mem-per-frame")
-    );
     // ASSUME DIVISIBLE
     this->numPages = memoryRequired / pageSize;
 

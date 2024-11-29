@@ -59,6 +59,7 @@ public:
     //static size_t memPerProc;
     static size_t minMemPerProc;
     static size_t maxMemPerProc;
+    static size_t pageSize;
 
 private:
     int id;
