@@ -4,6 +4,7 @@
 #include <vector>
 #include <stdexcept>
 #include <filesystem>
+#include <string>
 
 BackingStore* BackingStore::sharedInstance = nullptr;
 
@@ -26,12 +27,17 @@ void BackingStore::savePage(const std::string& filename, int pid, int instructio
 	std::filesystem::create_directories("bkstore/pg");
 	const std::string path = "bkstore/pg/" + filename;
 
-	std::ofstream outFile(path, std::ios::out | std::ios::binary);
+	std::string pidString = std::to_string(pid);
+	std::string instructionLineString = std::to_string(instructionLine);
+	std::string totalInstructionLinesString = std::to_string(totalInstructionLines);
+	std::string pageSizeString = std::to_string(pageSize);
+
+	std::ofstream outFile(path, std::ios::out);
 	// Store pid, instruction line, total instruction lines, and page size
-	outFile.write(reinterpret_cast<const char*>(&pid), sizeof(pid));
-	outFile.write(reinterpret_cast<const char*>(&instructionLine), sizeof(instructionLine));
-	outFile.write(reinterpret_cast<const char*>(&totalInstructionLines), sizeof(totalInstructionLines));
-	outFile.write(reinterpret_cast<const char*>(&pageSize), sizeof(pageSize));
+	outFile.write(reinterpret_cast<const char*>(pidString.c_str()), sizeof(pid));
+	outFile.write(reinterpret_cast<const char*>(instructionLineString.c_str()), sizeof(instructionLine));
+	outFile.write(reinterpret_cast<const char*>(totalInstructionLinesString.c_str()), sizeof(totalInstructionLines));
+	outFile.write(reinterpret_cast<const char*>(pageSizeString.c_str()), sizeof(pageSize));
 
 	numPagedOut++;
 
@@ -68,11 +74,15 @@ void BackingStore::saveProcess(const std::string& filename, int pid, int instruc
 	std::filesystem::create_directories("bkstore/proc");
 	const std::string path = "bkstore/proc/" + filename;
 
+	std::string pidString = std::to_string(pid);
+	std::string instructionLineString = std::to_string(instructionLine);
+	std::string totalInstructionLinesString = std::to_string(totalInstructionLines);
+
 	std::ofstream outFile(path, std::ios::out | std::ios::binary);
 	// Store pid, instruction line, and total instruction lines
-	outFile.write(reinterpret_cast<const char*>(&pid), sizeof(pid));
-	outFile.write(reinterpret_cast<const char*>(&instructionLine), sizeof(instructionLine));
-	outFile.write(reinterpret_cast<const char*>(&totalInstructionLines), sizeof(totalInstructionLines));
+	outFile.write(reinterpret_cast<const char*>(pidString.c_str()), sizeof(pid));
+	outFile.write(reinterpret_cast<const char*>(instructionLineString.c_str()), sizeof(instructionLine));
+	outFile.write(reinterpret_cast<const char*>(totalInstructionLinesString.c_str()), sizeof(totalInstructionLines));
 
 	outFile.close();
 }
