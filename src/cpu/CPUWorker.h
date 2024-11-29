@@ -18,6 +18,9 @@ public:
     std::mutex mutex;
     static int delayPerExec;
 
+    int getActiveCycles();
+    int getInactiveCycles();
+
 private:
     void run() override;
 
@@ -25,6 +28,9 @@ private:
     bool isRunning = false;
     int cycles = 0;
     int processCycles = 0;
+    
+    int activeCycles = 0;
+    int inactiveCycles = 0;
 };
 
 #endif //CPUWORKER_H

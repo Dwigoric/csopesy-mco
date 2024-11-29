@@ -20,7 +20,7 @@ public:
         FINISHED,
     };
 
-    Process(int id, std::string name);
+    Process(int id, std::string name, size_t memoryRequired);
 
     void addCommand(AInstruction::InstructionType instructionType);
 
@@ -50,6 +50,21 @@ public:
 
     void setTimeExecuted();
 
+    size_t getMemoryRequired();
+
+    bool isInMemory();
+
+    void setInMemory(bool inMemory);
+
+    // Example page sizes in bytes (e.g., 4KB, 8KB, 16KB)
+    std::vector<size_t> getPageSizes();
+    size_t getNumPages();
+
+    //static size_t memPerProc;
+    static size_t minMemPerProc;
+    static size_t maxMemPerProc;
+    static size_t pageSize;
+
 private:
     int id;
     std::string name;
@@ -59,6 +74,9 @@ private:
     std::chrono::system_clock::time_point timeExecuted;
     ProcessState state = READY;
     std::vector<std::shared_ptr<AInstruction> > instructionList;
+    size_t memoryRequired;
+    size_t numPages;
+    bool inMemory = false;
 
     // TEMP: For Homework 6 Only
     std::string outfile;

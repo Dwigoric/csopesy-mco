@@ -1,32 +1,20 @@
 #include "SchedulerThread.h"
 
-#include "CustomThread.h"
 #include "../console/BaseScreen.h"
 #include "../console/ConsoleManager.h"
+#include "../memory/MemoryManager.h"
 #include "../util/randint.h"
 #include "../process/FCFSScheduler.h"
 #include "../process/RoundRobinScheduler.h"
 
-#include <thread>
-
 SchedulerThread *SchedulerThread::instance = nullptr;
 
-SchedulerThread::SchedulerThread(const std::string &scheduler, const int quantum) {
+SchedulerThread::SchedulerThread(const std::string &scheduler, const int quantum, std::shared_ptr<IMemoryAllocator> memoryAllocator) {
     if (scheduler == "fcfs") {
-        this->currentScheduler = new FCFSScheduler();
+        this->currentScheduler = new FCFSScheduler(memoryAllocator);
     } else if (scheduler == "rr") {
-        this->currentScheduler = new RoundRobinScheduler(quantum);
+        this->currentScheduler = new RoundRobinScheduler(quantum, memoryAllocator);
     }
-
-    this->globalTicker = new CustomThread([this]() {
-        while (true) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
-
-            this->currentScheduler->onTick();
-        }
-    });
-
-    this->globalTicker->start();
 }
 
 void SchedulerThread::startSpawning() const {
@@ -49,8 +37,16 @@ void SchedulerThread::run() {
     this->currentScheduler->run();
 }
 
+size_t generateRandomProcessSize() {
+    if (MemoryManager::getInstance()->getAllocatorType() == MemoryManager::PAGING_ALLOCATOR && Process::minMemPerProc >= Process::pageSize) {
+        return randint(Process::minMemPerProc / Process::pageSize, Process::maxMemPerProc / Process::pageSize) * Process::pageSize;
+    } else {
+        return randint(Process::minMemPerProc, Process::maxMemPerProc);
+    }
+}
+
 bool SchedulerThread::createProcess(const std::string &name) {
-    auto process = std::make_shared<Process>(this->processCounter, name);
+    auto process = std::make_shared<Process>(this->processCounter, name, generateRandomProcessSize());
     auto screen = std::make_shared<BaseScreen>(process, name);
 
     if (!ConsoleManager::getInstance()->registerScreen(screen)) {
@@ -94,8 +90,8 @@ void SchedulerThread::destroy() {
     delete getInstance();
 }
 
-void SchedulerThread::initialize(const std::string &scheduler, const int quantum) {
+void SchedulerThread::initialize(const std::string &scheduler, const int quantum, std::shared_ptr<IMemoryAllocator> memoryAllocator) {
     if (instance == nullptr) {
-        instance = new SchedulerThread(scheduler, quantum);
+        instance = new SchedulerThread(scheduler, quantum, memoryAllocator);
     }
 }

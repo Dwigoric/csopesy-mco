@@ -13,7 +13,7 @@ public:
 
     static void destroy();
 
-    static void initialize(const std::string &scheduler, int quantum);
+    static void initialize(const std::string &scheduler, int quantum, std::shared_ptr<IMemoryAllocator> memoryAllocator);
 
     bool createProcess(const std::string &name);
 
@@ -30,7 +30,7 @@ public:
     void run() override;
 
 private:
-    SchedulerThread(const std::string &scheduler, int quantum);
+    SchedulerThread(const std::string &scheduler, int quantum, std::shared_ptr<IMemoryAllocator> memoryAllocator);
 
     // ~SchedulerThread();
 
@@ -38,8 +38,6 @@ private:
     };
 
     static SchedulerThread *instance;
-
-    Thread *globalTicker = nullptr;
 
     int processCounter = 0;
     std::vector<std::shared_ptr<Process> > processes;

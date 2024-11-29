@@ -43,16 +43,17 @@ add_executable(CMakeTarget
         src/commands/SchedulerTestCommand.h
         src/commands/SchedulerStopCommand.cpp
         src/commands/SchedulerStopCommand.h
-        src/cpu/CPUWorker.h 
+        src/cpu/CPUWorker.h
         src/cpu/CPUWorker.cpp
-        src/cpu/CPUManager.cpp 
+        src/cpu/CPUManager.cpp
         src/cpu/CPUManager.h
- "src/commands/InitializeCommand.cpp" "src/commands/InitializeCommand.h" "src/commands/ExitCommand.cpp" "src/instructions/NoOpInstruction.h" "src/instructions/NoOpInstruction.cpp" "src/commands/ExitCommand.h" "src/commands/ReportUtilCommand.h" "src/commands/ReportUtilCommand.cpp"
-        src/util/randint.h 
+        "src/commands/InitializeCommand.cpp" "src/commands/InitializeCommand.h" "src/commands/ExitCommand.cpp" "src/instructions/NoOpInstruction.h" "src/instructions/NoOpInstruction.cpp" "src/commands/ExitCommand.h" "src/commands/ReportUtilCommand.h" "src/commands/ReportUtilCommand.cpp"
+        src/util/randint.h
         src/util/randint.cpp
-        src/threading/CustomThread.cpp
-        src/threading/CustomThread.h
- "src/process/RoundRobinScheduler.h" "src/process/RoundRobinScheduler.cpp")
+        "src/process/RoundRobinScheduler.h" "src/process/RoundRobinScheduler.cpp" "src/memory/MemoryManager.h" "src/memory/MemoryManager.cpp" "src/memory/IMemoryAllocator.h"  "src/memory/FirstFitFlatAllocator.h" "src/memory/FirstFitFlatAllocator.cpp" "src/disk/BackingStore.cpp" "src/disk/BackingStore.h" "src/commands/ProcessSMICommand.cpp" "src/commands/ProcessSMICommand.h" "src/commands/VMStatCommand.h" "src/commands/VMStatCommand.cpp"
+        src/memory/MemoryManager.cpp
+        src/memory/PagingAllocator.h
+        src/memory/PagingAllocator.cpp)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
     set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)
