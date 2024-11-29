@@ -49,6 +49,6 @@ void VMStatCommand::execute()
 
 void VMStatCommand::printStat(std::string label, int value)
 {
-    printf("%14d %s\n", value, label.c_str());
+    printf("%14ld %s\n", value, label.c_str());
 }
 
