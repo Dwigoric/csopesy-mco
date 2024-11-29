@@ -56,7 +56,9 @@ public:
     std::vector<size_t> getPageSizes();
     size_t getNumPages();
 
-    static size_t memPerProc;
+    //static size_t memPerProc;
+    static size_t minMemPerProc;
+    static size_t maxMemPerProc;
 
 private:
     int id;
@@ -68,6 +70,7 @@ private:
     ProcessState state = READY;
     std::vector<std::shared_ptr<AInstruction> > instructionList;
     size_t memoryRequired;
+    size_t numPages;
 
     // TEMP: For Homework 6 Only
     std::string outfile;

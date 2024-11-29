@@ -86,9 +86,9 @@ private:
 		// MCO2 configs
 		std::make_pair<>("max-overall-mem", "16384"),
 		std::make_pair<>("mem-per-frame", "16"),
-		//std::make_pair<>("min-mem-per-proc", "4096"),
-		//std::make_pair<>("max-mem-per-proc", "4096"),
-		std::make_pair<>("mem-per-proc", "4096") // TEMP for week 8 HW only, TODO implement max/min
+		std::make_pair<>("min-mem-per-proc", "4096"),
+		std::make_pair<>("max-mem-per-proc", "4096"),
+		//std::make_pair<>("mem-per-proc", "4096") // TEMP for week 8 HW only, TODO implement max/min
 	};
 };
 

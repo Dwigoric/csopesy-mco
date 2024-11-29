@@ -36,8 +36,12 @@ void SchedulerThread::run() {
     this->currentScheduler->run();
 }
 
+size_t generateRandomProcessSize() {
+    return randint(Process::minMemPerProc, Process::maxMemPerProc);
+}
+
 bool SchedulerThread::createProcess(const std::string &name) {
-    auto process = std::make_shared<Process>(this->processCounter, name, Process::memPerProc);
+    auto process = std::make_shared<Process>(this->processCounter, name, generateRandomProcessSize());
     auto screen = std::make_shared<BaseScreen>(process, name);
 
     if (!ConsoleManager::getInstance()->registerScreen(screen)) {

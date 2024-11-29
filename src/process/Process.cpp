@@ -12,12 +12,21 @@
 #include "../threading/SchedulerThread.h"
 #include "../instructions/NoOpInstruction.h"
 
-size_t Process::memPerProc = 0;
+//size_t Process::memPerProc = 0;
+size_t Process::minMemPerProc = 0;
+size_t Process::maxMemPerProc = 0;
 
 Process::Process(const int id, std::string name, size_t memoryRequired) {
     this->id = id;
     this->name = std::move(name);
     this->memoryRequired = memoryRequired;
+
+    const int pageSize = std::stoi(
+        ConsoleManager::getInstance()->getConfigs().at("mem-per-frame")
+    );
+    // ASSUME DIVISIBLE
+    this->numPages = memoryRequired / pageSize;
+
     this->timeCreated = std::chrono::system_clock::now();
 
     this->outfile = this->name + "_log.txt";
@@ -100,9 +109,7 @@ size_t Process::getMemoryRequired() {
 }
 
 size_t Process::getNumPages() {
-    //TODO: Implement Get Number of Pages
-    size_t exampleNumPages = 12;
-    return exampleNumPages;
+    return this->numPages;
 }
 
 

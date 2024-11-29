@@ -15,7 +15,8 @@ void InitializeCommand::execute()
 
 	MemoryManager::initialize();
 
-	Process::memPerProc = std::stoi(configs.at("mem-per-proc"));
+	Process::minMemPerProc = std::stoi(configs.at("min-mem-per-proc"));
+	Process::maxMemPerProc = std::stoi(configs.at("max-mem-per-proc"));
 
 	CPUWorker::delayPerExec = std::stoi(configs.at("delay-per-exec"));
 	CPUManager::initialize(std::stoi(configs.at("num-cpu")));
